@@ -1,0 +1,251 @@
+{
+  "site": {
+    "title": "What's Left Together",
+    "subtitle": "Lo que nos queda juntos",
+    "tagline": "Un espejo estadístico del tiempo que te queda con quienes quieres"
+  },
+  "nav": {
+    "calculator": "Calculadora",
+    "methodology": "Cómo funciona",
+    "why": "Por qué importa",
+    "about": "Acerca de"
+  },
+  "hero": {
+    "title": "What's Left Together",
+    "subtitle": "Un espejo estadístico de cuántas veces más podrías ver a las personas que quieres, si sigues viviendo como hasta ahora.",
+    "belowButton": "Usamos tablas de vida oficiales por edad y país, junto con tu frecuencia actual de visitas, para estimar cuántos momentos presenciales es probable que compartas desde hoy en adelante. No es una predicción. Es una llamada de atención.",
+    "cta": "Calcular cuántas veces más"
+  },
+  "calculator": {
+    "title": "Calculadora",
+    "subtitle": "Completa la información para calcular encuentros esperados",
+    "yourInfo": "Tu información",
+    "theirInfo": "Información de la otra persona",
+    "yourAge": "Edad de la persona que consulta",
+    "theirAge": "Edad de la otra persona",
+    "relationship": "Relación",
+    "frequency": "Cuántas veces se ven en persona al año, en promedio",
+    "frequencyNote": "Incluye visitas, viajes, fines de semana juntos, pero no videollamadas.",
+    "age": "Edad",
+    "sex": "Sexo",
+    "country": "Tu país",
+    "theirCountry": "País de la otra persona",
+    "visitsPerYear": "Visitas por año",
+    "frequency": "Frecuencia de encuentros",
+    "frequencyCustom": "O ingresa un valor personalizado (visitas por año):",
+    "male": "Hombre",
+    "female": "Mujer",
+    "calculate": "Calcular cuántas veces más",
+    "directMode": "Quiero ver el resultado en modo directo",
+    "directModeHelp": "El modo directo usa el mismo cálculo, pero con lenguaje más crudo.",
+    "relations": {
+      "mother": "Madre",
+      "father": "Padre",
+      "grandmother_maternal": "Abuela materna",
+      "grandmother_paternal": "Abuela paterna",
+      "grandfather_maternal": "Abuelo materno",
+      "grandfather_paternal": "Abuelo paterno",
+      "partner": "Pareja",
+      "friend": "Amiga o amigo",
+      "other_family": "Otro familiar",
+      "other": "Otra persona importante"
+    },
+    "frequencyPresets": {
+      "weekly": "Semanal (~52 veces/año)",
+      "monthly": "Mensual (~12 veces/año)",
+      "quarterly": "Trimestral (~4 veces/año)",
+      "yearly": "Anual (1 vez/año)",
+      "custom": "Personalizado"
+    }
+  },
+  "results": {
+    "normalMode": {
+      "title": "Si todo sigue igual, podrías ver a {relation} unas {min} a {max} veces más en tu vida.",
+      "explanation": "Según los datos de esperanza de vida para {country} y las edades de ambos, es razonable esperar que sigan con vida, al mismo tiempo, alrededor de {yearsMin} a {yearsMax} años más.\n\nSi ves a {relation} {frequency} veces al año, eso se traduce en un rango aproximado de {min} a {max} visitas presenciales futuras.\n\nEs solo una estimación estadística, no conoce la salud real de ninguno, ni accidentes, ni cambios de vida. Pero sí te muestra algo cierto: el número no es infinito.",
+      "actionTitle": "Puedes decidir qué hacer con esta información.",
+      "actionIntro": "Algunas personas eligen:",
+      "action1": "Aumentar la frecuencia de visitas",
+      "action2": "Alargar el tiempo que pasan juntas en cada encuentro",
+      "action3": "O simplemente dejar de postergar una conversación importante"
+    },
+    "directMode": {
+      "title": "A este ritmo, te quedan pocas visitas con {relation}.",
+      "mainStat": "Si nada cambia, es probable que solo veas a {relation} unas {min} a {max} veces más en toda tu vida.",
+      "closing": "No es una amenaza ni un pronóstico médico. Es aritmética aplicada a datos de mortalidad reales. Tú decides qué haces con eso hoy."
+    },
+    "visitsCount": "{count} veces más",
+    "range": "{min} a {max} visitas",
+    "yearsWithBoth": "Años esperados con ambos vivos",
+    "years": "{count} años",
+    "yearsRange": "{min} a {max} años",
+    "timeAlreadySpent": "Tiempo ya compartido",
+    "timeAlreadySpentPercent": "~{percent}% del tiempo típico juntos ya se vivió",
+    "seeMethodology": "Ver cómo funciona",
+    "assumptions": {
+      "title": "Qué calculamos y qué no",
+      "source": "Datos: {source} ({year})",
+      "what": "Visitas presenciales esperadas entre dos personas, basadas en tablas de vida por edad, sexo y país.",
+      "whatNot": "Qué no hace esta herramienta",
+      "point1": "No predice cuándo morirá nadie",
+      "point2": "No debe usarse para decisiones médicas",
+      "point3": "No conoce enfermedades concretas ni factores individuales",
+      "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)"
+    }
+  },
+  "methodology": {
+    "title": "Cómo funciona",
+    "section1": {
+      "title": "1. Qué calculamos",
+      "text": "Visitas presenciales esperadas que quedan entre dos personas."
+    },
+    "section2": {
+      "title": "2. De dónde salen los datos",
+      "text": "Tablas de vida por edad, país y sexo de las Naciones Unidas (World Population Prospects 2024) y la Organización Mundial de la Salud."
+    },
+    "section3": {
+      "title": "3. Qué supuestos hacemos",
+      "text": "La frecuencia de visitas se mantiene estable. No incorporamos enfermedades concretas ni factores individuales."
+    },
+    "section4": {
+      "title": "4. Qué no hace esta herramienta",
+      "text": "No predice cuándo morirá nadie. No debe usarse para decisiones médicas."
+    },
+    "section5": {
+      "title": "5. Por qué creemos que mostrar este número es útil",
+      "text": "La gente tiende a subestimar cuán finito es su tiempo con los demás. Un número concreto ayuda a tomar decisiones más conscientes sobre prioridades."
+    }
+  },
+  "why": {
+    "title": "Por qué importa",
+    "intro": "Cuando percibimos que el tiempo es limitado, priorizamos lo que realmente importa.",
+    "seeMethodology": "Ver metodología completa",
+    "section1": {
+      "title": "El tiempo se consume sin que lo notemos",
+      "text": "Datos del American Time Use Survey muestran que la mayor parte del tiempo con padres se concentra antes de los 20 años. Después, la frecuencia disminuye dramáticamente."
+    },
+    "section2": {
+      "title": "Teoría de la selectividad socioemocional",
+      "text": "Cuando percibimos que el tiempo es limitado, priorizamos relaciones cercanas y metas emocionales por encima de la exploración. (Carstensen, 1999)"
+    },
+    "section3": {
+      "title": "No es para asustar, es para actuar",
+      "text": "El objetivo no es generar angustia, sino hacer explícita una realidad que normalmente permanece abstracta. Con esa información, puedes decidir mejor."
+    }
+  },
+  "footer": {
+    "title": "What's Left Together",
+    "tagline": "Un espejo estadístico del tiempo que te queda con quienes quieres",
+    "links": "Enlaces",
+    "methodology": "Cómo funciona",
+    "github": "Código abierto (GitHub)",
+    "about": "Acerca de",
+    "dataSources": "Fuentes de datos",
+    "unData": "UN World Population Prospects 2024",
+    "moreSources": "Fuentes adicionales",
+    "notMedical": "Esta herramienta no es médica. Solo para reflexión.",
+    "copyright": "Licencia MIT • Código abierto • Uso ético y educativo"
+  },
+  "ethical": {
+    "warning": "Aviso importante",
+    "notMedical": "Esta herramienta NO es un consejo médico ni una predicción individual.",
+    "whatIsNot": "Qué NO es:",
+    "whatIs": "Qué SÍ es:",
+    "notIs1": "Una predicción médica personal",
+    "notIs2": "Un consejo sobre decisiones de vida",
+    "notIs3": "Una razón para decisiones extremas",
+    "is1": "Una aproximación basada en promedios poblacionales",
+    "is2": "Un espejo estadístico para reflexión",
+    "is3": "Un recordatorio de la naturaleza finita del tiempo",
+    "is4": "Un punto de partida para priorización consciente",
+    "useResponsibly": "Úsala con responsabilidad: como herramienta de reflexión, no de angustia. Como motivador para acción positiva (más tiempo juntos), no para resignación.",
+    "seekSupport": "Si experimentas ansiedad al usar esta herramienta, busca apoyo emocional de personas de confianza o profesionales.",
+    "understood": "Entiendo y acepto continuar"
+  },
+  "about": {
+    "title": "Acerca de este proyecto",
+    "subtitle": "Propósito, motivación y contexto",
+    "backToHome": "Volver al inicio",
+    "sections": {
+      "purpose": {
+        "title": "Por qué existe esta herramienta",
+        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos \"tiempo después\" para ver a las personas importantes en nuestras vidas.",
+        "p2": "La distancia física, las obligaciones laborales, y la inercia del día a día hacen que posterguemos visitas, llamadas, o simplemente estar presentes. Asumimos que siempre habrá una próxima vez.",
+        "p3": "Esta herramienta no pretende asustar, sino hacer explícito algo que normalmente permanece abstracto: si seguimos viviendo como hasta ahora, con la misma frecuencia de encuentros, ¿cuántas veces más nos veremos realmente?"
+      },
+      "inspiration": {
+        "title": "Inspiración",
+        "p1": "Este proyecto está inspirado en el artículo \"The Tail End\" de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
+        "p2": "A diferencia de ese artículo, que usa estimaciones genéricas, esta herramienta incorpora datos demográficos oficiales por edad, país y sexo, para hacer la estimación más precisa y personalizada.",
+        "linkText": "\"The Tail End\""
+      },
+      "audience": {
+        "title": "Para quién es esta herramienta",
+        "card1": {
+          "title": "Personas que viven lejos de su familia",
+          "text": "Si emigraste, estudias en otra ciudad, o simplemente la vida te llevó lejos de tus padres, hermanos, o seres queridos."
+        },
+        "card2": {
+          "title": "Quienes priorizan carrera o metas personales",
+          "text": "Si estás enfocado en tu desarrollo profesional o proyectos personales y sientes que \"después habrá tiempo\" para visitas familiares."
+        },
+        "card3": {
+          "title": "Personas en relaciones a distancia",
+          "text": "Si mantienes una relación de pareja, amistad profunda, o mentoría a distancia, y quieres reflexionar sobre el valor del tiempo compartido."
+        },
+        "card4": {
+          "title": "Investigadores y educadores",
+          "text": "Como herramienta educativa sobre demografía, tablas de vida, o psicología de la percepción temporal."
+        }
+      },
+      "whatToDo": {
+        "title": "Qué hacer con esta información",
+        "intro": "El objetivo no es generar ansiedad, sino claridad.",
+        "action1": {
+          "title": "Priorizar:",
+          "text": "Tal vez decidas aumentar la frecuencia de visitas, hacer ese viaje que llevas posponiendo, o simplemente llamar más seguido."
+        },
+        "action2": {
+          "title": "Reflexionar:",
+          "text": "Puede que te des cuenta de que el equilibrio actual te satisface, y eso también es válido."
+        },
+        "action3": {
+          "title": "Planificar:",
+          "text": "Si el número te sorprende, puedes usarlo como motivación para reorganizar prioridades o negociar arreglos laborales más flexibles."
+        },
+        "action4": {
+          "title": "Compartir:",
+          "text": "A veces, mostrar este número a la otra persona puede abrir conversaciones importantes sobre lo que ambos valoran."
+        }
+      },
+      "openSource": {
+        "title": "Código abierto y transparencia",
+        "intro": "Todo el código de este proyecto es público y auditable. Puedes revisar:",
+        "item1": "Cómo se calculan las probabilidades de supervivencia",
+        "item2": "Qué datos demográficos se usan (y de dónde vienen)",
+        "item3": "Cómo se procesan las tablas de vida de la ONU",
+        "item4": "Toda la lógica de la interfaz y visualización",
+        "contribute": "Si encuentras un error, tienes una sugerencia, o quieres contribuir, eres bienvenido.",
+        "viewCode": "Ver código en GitHub"
+      },
+      "contact": {
+        "title": "Contacto y colaboración",
+        "intro": "Si tienes preguntas, comentarios, o quieres reportar un problema técnico:",
+        "github": "GitHub Issues:",
+        "githubLink": "Reportar un problema o sugerencia",
+        "email": "Email:",
+        "note": "Este proyecto es sin fines de lucro y se mantiene por interés personal. Responderé cuando pueda."
+      },
+      "ethics": {
+        "title": "Límites éticos importantes",
+        "warningTitle": "Esta herramienta NO debe usarse para:",
+        "warning1": "Tomar decisiones médicas o de seguros de vida",
+        "warning2": "Presionar a otras personas para que cambien su comportamiento",
+        "warning3": "Generar culpa o manipulación emocional",
+        "warning4": "Predicciones individuales sobre cuándo morirá alguien",
+        "warning5": "Cualquier uso comercial sin autorización explícita",
+        "note": "Si después de usar esta herramienta sientes ansiedad persistente, considera hablar con un profesional de salud mental. Los números no deben reemplazar el autocuidado."
+      }
+    },
+    "backToCalculator": "Volver a la calculadora"
+  }
+}

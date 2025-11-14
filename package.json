@@ -1,0 +1,38 @@
+{
+  "name": "whats-left-together",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "process-life-tables": "node scripts/process-life-tables.js",
+    "process-life-tables-xlsx": "node scripts/process-life-tables-xlsx.js",
+    "process-life-expectancy": "node scripts/process-life-expectancy-xlsx.js",
+    "process-life-tables-f06": "node scripts/process-life-tables-f06.js"
+  },
+  "dependencies": {
+    "lucide-react": "^0.553.0",
+    "next": "^14.2.0",
+    "next-intl": "^3.17.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "recharts": "^2.12.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.0",
+    "csv-parser": "^3.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0",
+    "xlsx": "^0.18.5"
+  }
+}

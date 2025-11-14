@@ -1,0 +1,569 @@
+[
+  {
+    "code": "ARG",
+    "name": "Argentina",
+    "nameEs": "Argentina",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "AUS",
+    "name": "Australia",
+    "nameEs": "Australia",
+    "region": "Oceania",
+    "hasData": true
+  },
+  {
+    "code": "AUT",
+    "name": "Austria",
+    "nameEs": "Austria",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "BEL",
+    "name": "Belgium",
+    "nameEs": "Belgium",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "BGD",
+    "name": "Bangladesh",
+    "nameEs": "Bangladesh",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "BGR",
+    "name": "Bulgaria",
+    "nameEs": "Bulgaria",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "BOL",
+    "name": "Bolivia",
+    "nameEs": "Bolivia",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "BRA",
+    "name": "Brazil",
+    "nameEs": "Brazil",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "CAN",
+    "name": "Canada",
+    "nameEs": "Canada",
+    "region": "North America",
+    "hasData": true
+  },
+  {
+    "code": "CHE",
+    "name": "Switzerland",
+    "nameEs": "Switzerland",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "CHL",
+    "name": "Chile",
+    "nameEs": "Chile",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "CHN",
+    "name": "China",
+    "nameEs": "China",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "COL",
+    "name": "Colombia",
+    "nameEs": "Colombia",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "CRI",
+    "name": "Costa Rica",
+    "nameEs": "Costa Rica",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "CUB",
+    "name": "Cuba",
+    "nameEs": "Cuba",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "CZE",
+    "name": "Czech Republic",
+    "nameEs": "Czech Republic",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "DEU",
+    "name": "Germany",
+    "nameEs": "Germany",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "DNK",
+    "name": "Denmark",
+    "nameEs": "Denmark",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "DOM",
+    "name": "Dominican Republic",
+    "nameEs": "Dominican Republic",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "DZA",
+    "name": "Algeria",
+    "nameEs": "Algeria",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "ECU",
+    "name": "Ecuador",
+    "nameEs": "Ecuador",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "EGY",
+    "name": "Egypt",
+    "nameEs": "Egypt",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "ESP",
+    "name": "Spain",
+    "nameEs": "Spain",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "EST",
+    "name": "Estonia",
+    "nameEs": "Estonia",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "ETH",
+    "name": "Ethiopia",
+    "nameEs": "Ethiopia",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "FIN",
+    "name": "Finland",
+    "nameEs": "Finland",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "FRA",
+    "name": "France",
+    "nameEs": "France",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "GBR",
+    "name": "United Kingdom",
+    "nameEs": "United Kingdom",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "GHA",
+    "name": "Ghana",
+    "nameEs": "Ghana",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "GRC",
+    "name": "Greece",
+    "nameEs": "Greece",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "GTM",
+    "name": "Guatemala",
+    "nameEs": "Guatemala",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "HND",
+    "name": "Honduras",
+    "nameEs": "Honduras",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "HRV",
+    "name": "Croatia",
+    "nameEs": "Croatia",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "HUN",
+    "name": "Hungary",
+    "nameEs": "Hungary",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "IDN",
+    "name": "Indonesia",
+    "nameEs": "Indonesia",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "IND",
+    "name": "India",
+    "nameEs": "India",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "IRL",
+    "name": "Ireland",
+    "nameEs": "Ireland",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "IRN",
+    "name": "Iran",
+    "nameEs": "Iran",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "IRQ",
+    "name": "Iraq",
+    "nameEs": "Iraq",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "ISR",
+    "name": "Israel",
+    "nameEs": "Israel",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "ITA",
+    "name": "Italy",
+    "nameEs": "Italy",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "JPN",
+    "name": "Japan",
+    "nameEs": "Japan",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "KAZ",
+    "name": "Kazakhstan",
+    "nameEs": "Kazakhstan",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "KEN",
+    "name": "Kenya",
+    "nameEs": "Kenya",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "KOR",
+    "name": "South Korea",
+    "nameEs": "South Korea",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "LTU",
+    "name": "Lithuania",
+    "nameEs": "Lithuania",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "LVA",
+    "name": "Latvia",
+    "nameEs": "Latvia",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "MAR",
+    "name": "Morocco",
+    "nameEs": "Morocco",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "MEX",
+    "name": "Mexico",
+    "nameEs": "Mexico",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "MYS",
+    "name": "Malaysia",
+    "nameEs": "Malaysia",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "NGA",
+    "name": "Nigeria",
+    "nameEs": "Nigeria",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "NIC",
+    "name": "Nicaragua",
+    "nameEs": "Nicaragua",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "NLD",
+    "name": "Netherlands",
+    "nameEs": "Netherlands",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "NOR",
+    "name": "Norway",
+    "nameEs": "Norway",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "NZL",
+    "name": "New Zealand",
+    "nameEs": "New Zealand",
+    "region": "Oceania",
+    "hasData": true
+  },
+  {
+    "code": "PAK",
+    "name": "Pakistan",
+    "nameEs": "Pakistan",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "PAN",
+    "name": "Panama",
+    "nameEs": "Panama",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "PER",
+    "name": "Peru",
+    "nameEs": "Peru",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "PHL",
+    "name": "Philippines",
+    "nameEs": "Philippines",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "POL",
+    "name": "Poland",
+    "nameEs": "Poland",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "PRT",
+    "name": "Portugal",
+    "nameEs": "Portugal",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "PRY",
+    "name": "Paraguay",
+    "nameEs": "Paraguay",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "ROU",
+    "name": "Romania",
+    "nameEs": "Romania",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "RUS",
+    "name": "Russia",
+    "nameEs": "Russia",
+    "region": "Other",
+    "hasData": true
+  },
+  {
+    "code": "SAU",
+    "name": "Saudi Arabia",
+    "nameEs": "Saudi Arabia",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "SGP",
+    "name": "Singapore",
+    "nameEs": "Singapore",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "SLV",
+    "name": "El Salvador",
+    "nameEs": "El Salvador",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "SVK",
+    "name": "Slovakia",
+    "nameEs": "Slovakia",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "SVN",
+    "name": "Slovenia",
+    "nameEs": "Slovenia",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "SWE",
+    "name": "Sweden",
+    "nameEs": "Sweden",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "THA",
+    "name": "Thailand",
+    "nameEs": "Thailand",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "TUR",
+    "name": "Turkey",
+    "nameEs": "Turkey",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "TZA",
+    "name": "Tanzania",
+    "nameEs": "Tanzania",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "UGA",
+    "name": "Uganda",
+    "nameEs": "Uganda",
+    "region": "Africa",
+    "hasData": true
+  },
+  {
+    "code": "UKR",
+    "name": "Ukraine",
+    "nameEs": "Ukraine",
+    "region": "Europe",
+    "hasData": true
+  },
+  {
+    "code": "URY",
+    "name": "Uruguay",
+    "nameEs": "Uruguay",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "USA",
+    "name": "United States",
+    "nameEs": "United States",
+    "region": "North America",
+    "hasData": true
+  },
+  {
+    "code": "UZB",
+    "name": "Uzbekistan",
+    "nameEs": "Uzbekistan",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "VEN",
+    "name": "Venezuela",
+    "nameEs": "Venezuela",
+    "region": "Latin America",
+    "hasData": true
+  },
+  {
+    "code": "VNM",
+    "name": "Vietnam",
+    "nameEs": "Vietnam",
+    "region": "Asia",
+    "hasData": true
+  },
+  {
+    "code": "ZAF",
+    "name": "South Africa",
+    "nameEs": "South Africa",
+    "region": "Africa",
+    "hasData": true
+  }
+]

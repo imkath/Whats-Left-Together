@@ -1,0 +1,251 @@
+{
+  "site": {
+    "title": "What's Left Together",
+    "subtitle": "What's Left Together",
+    "tagline": "A statistical mirror of your time left with the people you love"
+  },
+  "nav": {
+    "calculator": "Calculator",
+    "methodology": "How It Works",
+    "why": "Why It Matters",
+    "about": "About"
+  },
+  "hero": {
+    "title": "What's Left Together",
+    "subtitle": "A statistical mirror of how many times you might still see the people you love, if you keep living the way you do now.",
+    "belowButton": "We use official life tables by age and country, plus your current visiting habits, to estimate how many in-person moments you are likely to share from today on. It is not a prediction. It is a wake-up call.",
+    "cta": "Calculate your remaining visits"
+  },
+  "calculator": {
+    "title": "Calculator",
+    "subtitle": "Complete the information to calculate expected encounters",
+    "yourInfo": "Your information",
+    "theirInfo": "Their information",
+    "yourAge": "Age of person asking",
+    "theirAge": "Age of other person",
+    "relationship": "Relationship",
+    "frequency": "How many times you see each other in person per year, on average",
+    "frequencyNote": "Includes visits, trips, weekends together, but not video calls.",
+    "age": "Age",
+    "sex": "Sex",
+    "country": "Your country",
+    "theirCountry": "Their country",
+    "visitsPerYear": "Visits per year",
+    "frequency": "Frequency of encounters",
+    "frequencyCustom": "Or enter a custom value (visits per year):",
+    "male": "Male",
+    "female": "Female",
+    "calculate": "Calculate remaining visits",
+    "directMode": "I want to see the result in direct mode",
+    "directModeHelp": "Direct mode uses the same calculation, but with blunter language.",
+    "relations": {
+      "mother": "Mother",
+      "father": "Father",
+      "grandmother_maternal": "Maternal grandmother",
+      "grandmother_paternal": "Paternal grandmother",
+      "grandfather_maternal": "Maternal grandfather",
+      "grandfather_paternal": "Paternal grandfather",
+      "partner": "Partner",
+      "friend": "Friend",
+      "other_family": "Other family member",
+      "other": "Other important person"
+    },
+    "frequencyPresets": {
+      "weekly": "Weekly (~52 times/year)",
+      "monthly": "Monthly (~12 times/year)",
+      "quarterly": "Quarterly (~4 times/year)",
+      "yearly": "Yearly (1 time/year)",
+      "custom": "Custom"
+    }
+  },
+  "results": {
+    "normalMode": {
+      "title": "If everything stays the same, you might see {relation} about {min} to {max} more times in your life.",
+      "explanation": "According to life expectancy data for {country} and both of your ages, it is reasonable to expect that you will both be alive, at the same time, for about {yearsMin} to {yearsMax} more years.\n\nIf you see {relation} {frequency} times per year, that translates to an approximate range of {min} to {max} future in-person visits.\n\nThis is only a statistical estimate. It doesn't know either person's actual health, accidents, or life changes. But it does show you something true: the number is not infinite.",
+      "actionTitle": "You can decide what to do with this information.",
+      "actionIntro": "Some people choose to:",
+      "action1": "Increase the frequency of visits",
+      "action2": "Extend the time spent together on each visit",
+      "action3": "Or simply stop postponing an important conversation"
+    },
+    "directMode": {
+      "title": "At this rate, you don't have many visits left with {relation}.",
+      "mainStat": "If nothing changes, you will likely only see {relation} about {min} to {max} more times in your entire life.",
+      "closing": "This is not a threat or a medical prognosis. It is arithmetic applied to real mortality data. You decide what you do with that today."
+    },
+    "visitsCount": "{count} more times",
+    "range": "{min} to {max} visits",
+    "yearsWithBoth": "Expected years with both alive",
+    "years": "{count} years",
+    "yearsRange": "{min} to {max} years",
+    "timeAlreadySpent": "Time already shared",
+    "timeAlreadySpentPercent": "~{percent}% of typical time together already lived",
+    "seeMethodology": "See how it works",
+    "assumptions": {
+      "title": "What we calculate and what we don't",
+      "source": "Data: {source} ({year})",
+      "what": "Expected in-person visits between two people, based on life tables by age, sex, and country.",
+      "whatNot": "What this tool doesn't do",
+      "point1": "It doesn't predict when anyone will die",
+      "point2": "It shouldn't be used for medical decisions",
+      "point3": "It doesn't know specific illnesses or individual factors",
+      "point4": "Visit frequency is assumed stable (in real life it can change)"
+    }
+  },
+  "methodology": {
+    "title": "How It Works",
+    "section1": {
+      "title": "1. What we calculate",
+      "text": "Expected in-person visits remaining between two people."
+    },
+    "section2": {
+      "title": "2. Where the data comes from",
+      "text": "Life tables by age, country, and sex from the United Nations (World Population Prospects 2024) and the World Health Organization."
+    },
+    "section3": {
+      "title": "3. What assumptions we make",
+      "text": "Visit frequency remains stable. We don't incorporate specific illnesses or individual factors."
+    },
+    "section4": {
+      "title": "4. What this tool doesn't do",
+      "text": "It doesn't predict when anyone will die. It shouldn't be used for medical decisions."
+    },
+    "section5": {
+      "title": "5. Why we believe showing this number is useful",
+      "text": "People tend to underestimate how finite their time with others is. A concrete number helps make more conscious decisions about priorities."
+    }
+  },
+  "why": {
+    "title": "Why It Matters",
+    "intro": "When we perceive time as limited, we prioritize what truly matters.",
+    "seeMethodology": "See full methodology",
+    "section1": {
+      "title": "Time passes without us noticing",
+      "text": "Data from the American Time Use Survey shows that most time with parents is concentrated before age 20. After that, frequency drops dramatically."
+    },
+    "section2": {
+      "title": "Socioemotional Selectivity Theory",
+      "text": "When we perceive that time is limited, we prioritize close relationships and emotional goals over exploration. (Carstensen, 1999)"
+    },
+    "section3": {
+      "title": "Not to scare, but to act",
+      "text": "The goal isn't to create anxiety, but to make explicit a reality that usually remains abstract. With that information, you can decide better."
+    }
+  },
+  "footer": {
+    "title": "What's Left Together",
+    "tagline": "A statistical mirror of your time left with the people you love",
+    "links": "Links",
+    "methodology": "How it works",
+    "github": "Open source (GitHub)",
+    "about": "About",
+    "dataSources": "Data sources",
+    "unData": "UN World Population Prospects 2024",
+    "moreSources": "More sources",
+    "notMedical": "Not a medical tool. For reflection only.",
+    "copyright": "MIT License • Open source • Ethical and educational use"
+  },
+  "ethical": {
+    "warning": "Important notice",
+    "notMedical": "This tool is NOT medical advice or an individual prediction.",
+    "whatIsNot": "What it is NOT:",
+    "whatIs": "What it IS:",
+    "notIs1": "A personal medical prediction",
+    "notIs2": "Advice on life decisions",
+    "notIs3": "A reason for extreme decisions",
+    "is1": "An approximation based on population averages",
+    "is2": "A statistical mirror for reflection",
+    "is3": "A reminder of the finite nature of time",
+    "is4": "A starting point for conscious prioritization",
+    "useResponsibly": "Use it responsibly: as a tool for reflection, not distress. As a motivator for positive action (more time together), not resignation.",
+    "seekSupport": "If you experience anxiety when using this tool, seek emotional support from trusted people or professionals.",
+    "understood": "I understand and accept to continue"
+  },
+  "about": {
+    "title": "About this project",
+    "subtitle": "Purpose, motivation, and context",
+    "backToHome": "Back to home",
+    "sections": {
+      "purpose": {
+        "title": "Why this tool exists",
+        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we'll have \"time later\" to see the important people in our lives.",
+        "p2": "Physical distance, work obligations, and the inertia of daily life make us postpone visits, calls, or simply being present. We assume there will always be a next time.",
+        "p3": "This tool doesn't aim to scare, but to make explicit something that normally remains abstract: if we keep living as we do now, with the same frequency of encounters, how many more times will we actually see each other?"
+      },
+      "inspiration": {
+        "title": "Inspiration",
+        "p1": "This project is inspired by Tim Urban's article \"The Tail End\" (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
+        "p2": "Unlike that article, which uses generic estimates, this tool incorporates official demographic data by age, country, and sex, to make the estimate more precise and personalized.",
+        "linkText": "\"The Tail End\""
+      },
+      "audience": {
+        "title": "Who this tool is for",
+        "card1": {
+          "title": "People who live far from their family",
+          "text": "If you emigrated, study in another city, or life simply took you away from your parents, siblings, or loved ones."
+        },
+        "card2": {
+          "title": "Those prioritizing career or personal goals",
+          "text": "If you're focused on professional development or personal projects and feel that \"there will be time later\" for family visits."
+        },
+        "card3": {
+          "title": "People in long-distance relationships",
+          "text": "If you maintain a romantic relationship, deep friendship, or mentorship from afar, and want to reflect on the value of shared time."
+        },
+        "card4": {
+          "title": "Researchers and educators",
+          "text": "As an educational tool about demography, life tables, or psychology of temporal perception."
+        }
+      },
+      "whatToDo": {
+        "title": "What to do with this information",
+        "intro": "The goal is not to generate anxiety, but clarity.",
+        "action1": {
+          "title": "Prioritize:",
+          "text": "You might decide to increase visit frequency, take that trip you've been postponing, or simply call more often."
+        },
+        "action2": {
+          "title": "Reflect:",
+          "text": "You might realize that the current balance satisfies you, and that's valid too."
+        },
+        "action3": {
+          "title": "Plan:",
+          "text": "If the number surprises you, you can use it as motivation to reorganize priorities or negotiate more flexible work arrangements."
+        },
+        "action4": {
+          "title": "Share:",
+          "text": "Sometimes, showing this number to the other person can open important conversations about what you both value."
+        }
+      },
+      "openSource": {
+        "title": "Open source and transparency",
+        "intro": "All the code for this project is public and auditable. You can review:",
+        "item1": "How survival probabilities are calculated",
+        "item2": "What demographic data is used (and where it comes from)",
+        "item3": "How UN life tables are processed",
+        "item4": "All interface and visualization logic",
+        "contribute": "If you find an error, have a suggestion, or want to contribute, you're welcome.",
+        "viewCode": "View code on GitHub"
+      },
+      "contact": {
+        "title": "Contact and collaboration",
+        "intro": "If you have questions, comments, or want to report a technical issue:",
+        "github": "GitHub Issues:",
+        "githubLink": "Report an issue or suggestion",
+        "email": "Email:",
+        "note": "This project is non-profit and maintained out of personal interest. I'll respond when I can."
+      },
+      "ethics": {
+        "title": "Important ethical limits",
+        "warningTitle": "This tool should NOT be used for:",
+        "warning1": "Making medical or life insurance decisions",
+        "warning2": "Pressuring others to change their behavior",
+        "warning3": "Generating guilt or emotional manipulation",
+        "warning4": "Individual predictions about when someone will die",
+        "warning5": "Any commercial use without explicit authorization",
+        "note": "If you feel persistent anxiety after using this tool, consider talking to a mental health professional. Numbers should not replace self-care."
+      }
+    },
+    "backToCalculator": "Back to calculator"
+  }
+}
