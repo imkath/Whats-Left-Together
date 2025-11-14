@@ -1,37 +1,35 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { Clock, Heart, Target, BookOpen } from 'lucide-react'
-import { useTranslations, useLocale } from 'next-intl'
-import Calculator from '@/components/Calculator'
-import Hero from '@/components/Hero'
-import EthicalWarning from '@/components/EthicalWarning'
-import Footer from '@/components/Footer'
+import { useState, useEffect } from 'react';
+import { Clock, Heart, Target, BookOpen } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
+import Calculator from '@/components/Calculator';
+import Hero from '@/components/Hero';
+import EthicalWarning from '@/components/EthicalWarning';
+import Footer from '@/components/Footer';
 
 export default function HomePage() {
-  const [hasAcceptedWarning, setHasAcceptedWarning] = useState(true) // Start as true to avoid flash
-  const t = useTranslations('why')
-  const locale = useLocale()
+  const [hasAcceptedWarning, setHasAcceptedWarning] = useState(true); // Start as true to avoid flash
+  const t = useTranslations('why');
+  const locale = useLocale();
 
   useEffect(() => {
     // Check if user has already accepted the warning
-    const accepted = localStorage.getItem('ethicalWarningAccepted')
+    const accepted = localStorage.getItem('ethicalWarningAccepted');
     if (!accepted) {
-      setHasAcceptedWarning(false)
+      setHasAcceptedWarning(false);
     }
-  }, [])
+  }, []);
 
   const handleAcceptWarning = () => {
-    localStorage.setItem('ethicalWarningAccepted', 'true')
-    setHasAcceptedWarning(true)
-  }
+    localStorage.setItem('ethicalWarningAccepted', 'true');
+    setHasAcceptedWarning(true);
+  };
 
   return (
     <main className="min-h-screen">
       {/* Ethical warning modal */}
-      {!hasAcceptedWarning && (
-        <EthicalWarning onAccept={handleAcceptWarning} />
-      )}
+      {!hasAcceptedWarning && <EthicalWarning onAccept={handleAcceptWarning} />}
 
       {/* Hero section */}
       <Hero />
@@ -54,9 +52,7 @@ export default function HomePage() {
                 <Clock size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section1.title')}</h3>
-              <p className="text-neutral-700">
-                {t('section1.text')}
-              </p>
+              <p className="text-neutral-700">{t('section1.text')}</p>
             </div>
 
             <div className="card hover:shadow-md transition-shadow">
@@ -64,9 +60,7 @@ export default function HomePage() {
                 <Heart size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section2.title')}</h3>
-              <p className="text-neutral-700">
-                {t('section2.text')}
-              </p>
+              <p className="text-neutral-700">{t('section2.text')}</p>
             </div>
 
             <div className="card hover:shadow-md transition-shadow">
@@ -74,9 +68,7 @@ export default function HomePage() {
                 <Target size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section3.title')}</h3>
-              <p className="text-neutral-700">
-                {t('section3.text')}
-              </p>
+              <p className="text-neutral-700">{t('section3.text')}</p>
             </div>
           </div>
 
@@ -94,5 +86,5 @@ export default function HomePage() {
 
       <Footer />
     </main>
-  )
+  );
 }

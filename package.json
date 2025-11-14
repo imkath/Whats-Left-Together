@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
+    "prepare": "husky",
     "process-life-tables": "node scripts/process-life-tables.js",
     "process-life-tables-xlsx": "node scripts/process-life-tables-xlsx.js",
     "process-life-expectancy": "node scripts/process-life-expectancy-xlsx.js",
@@ -23,6 +27,8 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
@@ -30,7 +36,12 @@
     "csv-parser": "^3.0.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "postcss": "^8.4.0",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.5.0",
     "xlsx": "^0.18.5"

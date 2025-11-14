@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { AlertCircle, X, Check } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { AlertCircle, X, Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface EthicalWarningProps {
-  onAccept: () => void
+  onAccept: () => void;
 }
 
 export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
-  const t = useTranslations('ethical')
+  const t = useTranslations('ethical');
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -19,9 +19,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
         </div>
 
         <div className="space-y-4 text-neutral-700">
-          <p className="text-lg font-medium text-neutral-900">
-            {t('notMedical')}
-          </p>
+          <p className="text-lg font-medium text-neutral-900">{t('notMedical')}</p>
 
           <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded">
             <p className="font-semibold mb-3 text-neutral-900 flex items-center gap-2">
@@ -69,13 +67,9 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
             </ul>
           </div>
 
-          <p className="text-sm">
-            {t('useResponsibly')}
-          </p>
+          <p className="text-sm">{t('useResponsibly')}</p>
 
-          <p className="text-sm text-neutral-600">
-            {t('seekSupport')}
-          </p>
+          <p className="text-sm text-neutral-600">{t('seekSupport')}</p>
         </div>
 
         <div className="mt-8 flex justify-end">
@@ -85,5 +79,5 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

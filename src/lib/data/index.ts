@@ -17,7 +17,7 @@ export interface Country {
  * Get list of available countries
  */
 export function getAvailableCountries(): Country[] {
-  return countries.filter(c => c.hasData);
+  return countries.filter((c) => c.hasData);
 }
 
 /**
@@ -26,10 +26,7 @@ export function getAvailableCountries(): Country[] {
  * In production, this would fetch from a database or API.
  * For now, we'll use sample data or load from static files.
  */
-export async function getLifeTable(
-  countryCode: string,
-  sex: Sex
-): Promise<LifeTable> {
+export async function getLifeTable(countryCode: string, sex: Sex): Promise<LifeTable> {
   // TODO: In production, fetch from actual data files
   // For now, return sample Chilean data as fallback
 
@@ -39,7 +36,7 @@ export async function getLifeTable(
       throw new Error(`Life table not found for ${countryCode} ${sex}`);
     }
     return await response.json();
-  } catch (error) {
+  } catch {
     console.warn(`Failed to load life table for ${countryCode} ${sex}, using sample data`);
     return getSampleLifeTable(countryCode, sex);
   }
@@ -95,7 +92,7 @@ function getSampleLifeTable(countryCode: string, sex: Sex): LifeTable {
     country: countryCode,
     sex,
     year: 2024,
-    entries
+    entries,
   };
 }
 
@@ -103,7 +100,7 @@ function getSampleLifeTable(countryCode: string, sex: Sex): LifeTable {
  * Get country name in specified language
  */
 export function getCountryName(countryCode: string, locale: 'es' | 'en'): string {
-  const country = countries.find(c => c.code === countryCode);
+  const country = countries.find((c) => c.code === countryCode);
   if (!country) return countryCode;
 
   return locale === 'es' ? country.nameEs : country.name;

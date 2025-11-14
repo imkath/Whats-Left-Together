@@ -1,49 +1,45 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import type { RelationshipInput, CalculationResult } from '@/types'
-import { calculateExpectedEncounters } from '@/lib/models/actuarial'
-import { getLifeTable, getCountryName } from '@/lib/data'
-import VisualizationChart from './VisualizationChart'
+import { useEffect, useState } from 'react';
+import type { RelationshipInput, CalculationResult } from '@/types';
+import { calculateExpectedEncounters } from '@/lib/models/actuarial';
+import { getLifeTable, getCountryName } from '@/lib/data';
+import VisualizationChart from './VisualizationChart';
 
 interface ResultsProps {
-  input: RelationshipInput
-  directMode?: boolean
+  input: RelationshipInput;
+  directMode?: boolean;
 }
 
 export default function Results({ input, directMode = false }: ResultsProps) {
-  const [result, setResult] = useState<CalculationResult | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [result, setResult] = useState<CalculationResult | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function calculate() {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
 
       try {
         // Load life tables
-        const yourLifeTable = await getLifeTable(input.you.country, input.you.sex)
-        const theirLifeTable = await getLifeTable(input.them.country, input.them.sex)
+        const yourLifeTable = await getLifeTable(input.you.country, input.you.sex);
+        const theirLifeTable = await getLifeTable(input.them.country, input.them.sex);
 
         // Calculate
-        const calculation = calculateExpectedEncounters(
-          input,
-          yourLifeTable,
-          theirLifeTable
-        )
+        const calculation = calculateExpectedEncounters(input, yourLifeTable, theirLifeTable);
 
-        setResult(calculation)
+        setResult(calculation);
       } catch (err) {
-        console.error('Calculation error:', err)
-        setError('Error al calcular. Por favor verifica los datos ingresados.')
+        console.error('Calculation error:', err);
+        setError('Error al calcular. Por favor verifica los datos ingresados.');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    calculate()
-  }, [input])
+    calculate();
+  }, [input]);
 
   if (loading) {
     return (
@@ -53,7 +49,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
           <p className="text-neutral-600">Calculando...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error || !result) {
@@ -61,7 +57,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
       <div className="card bg-red-50 border-red-200">
         <p className="text-red-700">{error || 'Error desconocido'}</p>
       </div>
-    )
+    );
   }
 
   const relationLabels: Record<string, string> = {
@@ -75,15 +71,15 @@ export default function Results({ input, directMode = false }: ResultsProps) {
     friend: 'esta persona',
     other_family: 'esta persona',
     other: 'esta persona',
-  }
+  };
 
-  const relationLabel = relationLabels[input.relationType] || 'esta persona'
-  const countryName = getCountryName(input.them.country, 'es')
+  const relationLabel = relationLabels[input.relationType] || 'esta persona';
+  const countryName = getCountryName(input.them.country, 'es');
 
-  const min = result.expectedVisitsRange.p25
-  const max = result.expectedVisitsRange.p75
-  const yearsMin = Math.floor(result.yearsWithBothAlive.min)
-  const yearsMax = Math.ceil(result.yearsWithBothAlive.max)
+  const min = result.expectedVisitsRange.p25;
+  const max = result.expectedVisitsRange.p75;
+  const yearsMin = Math.floor(result.yearsWithBothAlive.min);
+  const yearsMax = Math.ceil(result.yearsWithBothAlive.max);
 
   // MODO NORMAL
   if (!directMode) {
@@ -92,19 +88,27 @@ export default function Results({ input, directMode = false }: ResultsProps) {
         {/* Main result - Normal mode */}
         <div className="card bg-gradient-to-br from-primary-50 to-white border-primary-200">
           <h3 className="text-2xl mb-6 text-center">
-            Si todo sigue igual, podrías ver a {relationLabel} unas {min} a {max} veces más en tu vida.
+            Si todo sigue igual, podrías ver a {relationLabel} unas {min} a {max} veces más en tu
+            vida.
           </h3>
 
           <div className="prose prose-neutral max-w-none">
             <p className="text-neutral-700 leading-relaxed">
-              Según los datos de esperanza de vida para {countryName} y las edades de ambos,
-              es razonable esperar que sigan con vida, al mismo tiempo, alrededor de{' '}
-              <strong>{yearsMin} a {yearsMax} años más</strong>.
+              Según los datos de esperanza de vida para {countryName} y las edades de ambos, es
+              razonable esperar que sigan con vida, al mismo tiempo, alrededor de{' '}
+              <strong>
+                {yearsMin} a {yearsMax} años más
+              </strong>
+              .
             </p>
 
             <p className="text-neutral-700 leading-relaxed">
-              Si ves a {relationLabel} <strong>{input.visitsPerYear} veces al año</strong>,
-              eso se traduce en un rango aproximado de <strong>{min} a {max} visitas presenciales futuras</strong>.
+              Si ves a {relationLabel} <strong>{input.visitsPerYear} veces al año</strong>, eso se
+              traduce en un rango aproximado de{' '}
+              <strong>
+                {min} a {max} visitas presenciales futuras
+              </strong>
+              .
             </p>
 
             <p className="text-neutral-700 leading-relaxed">
@@ -144,16 +148,14 @@ export default function Results({ input, directMode = false }: ResultsProps) {
           <h4 className="text-lg font-semibold mb-4">Probabilidad de supervivencia año a año</h4>
           <VisualizationChart data={result.yearByYearSurvival} />
           <p className="text-xs text-neutral-600 mt-4">
-            Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro,
-            basado en las tablas de vida de {result.assumptions.dataSource}.
+            Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro, basado
+            en las tablas de vida de {result.assumptions.dataSource}.
           </p>
         </div>
 
         {/* Assumptions and disclaimers */}
         <div className="card bg-neutral-50 border-neutral-300">
-          <h4 className="text-sm font-semibold mb-3 text-neutral-800">
-            Qué calculamos y qué no
-          </h4>
+          <h4 className="text-sm font-semibold mb-3 text-neutral-800">Qué calculamos y qué no</h4>
 
           <p className="text-sm text-neutral-700 mb-3">
             <strong>Qué calculamos:</strong> Visitas presenciales esperadas entre dos personas,
@@ -184,9 +186,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
           </ul>
 
           <div className="mt-4 pt-4 border-t border-neutral-300">
-            <p className="text-xs text-neutral-700 font-medium mb-2">
-              Fuente de datos:
-            </p>
+            <p className="text-xs text-neutral-700 font-medium mb-2">Fuente de datos:</p>
             <p className="text-xs text-neutral-600 mb-1">
               {result.assumptions.dataSource} ({result.assumptions.dataYear})
             </p>
@@ -210,7 +210,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   // MODO DIRECTO
@@ -225,13 +225,16 @@ export default function Results({ input, directMode = false }: ResultsProps) {
         <div className="bg-white rounded-lg p-8 border-2 border-neutral-300 mb-6">
           <p className="text-lg text-neutral-800 leading-relaxed">
             Si nada cambia, es probable que solo veas a {relationLabel} unas{' '}
-            <strong className="text-2xl text-neutral-900">{min} a {max} veces más</strong>{' '}
+            <strong className="text-2xl text-neutral-900">
+              {min} a {max} veces más
+            </strong>{' '}
             en toda tu vida.
           </p>
         </div>
 
         <p className="text-neutral-700 leading-relaxed">
-          No es una amenaza ni un pronóstico médico. Es aritmética aplicada a datos de mortalidad reales.
+          No es una amenaza ni un pronóstico médico. Es aritmética aplicada a datos de mortalidad
+          reales.
           <br />
           <strong>Tú decides qué haces con eso hoy.</strong>
         </p>
@@ -277,5 +280,5 @@ export default function Results({ input, directMode = false }: ResultsProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
