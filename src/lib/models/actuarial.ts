@@ -22,24 +22,14 @@
  * - Preston et al. (2001), "Demography: Measuring and Modeling Population Processes"
  */
 
-import type {
-  LifeTable,
-  LifeTableEntry,
-  PersonInput,
-  RelationshipInput,
-  CalculationResult,
-  SurvivalProbability
-} from '@/types';
+import type { LifeTable, RelationshipInput, CalculationResult, SurvivalProbability } from '@/types';
 
 /**
  * Get life expectancy at a given age from life table
  */
-export function getLifeExpectancy(
-  lifeTable: LifeTable,
-  age: number
-): number {
+export function getLifeExpectancy(lifeTable: LifeTable, age: number): number {
   // Find the exact age or interpolate
-  const entry = lifeTable.entries.find(e => e.age === Math.floor(age));
+  const entry = lifeTable.entries.find((e) => e.age === Math.floor(age));
 
   if (!entry) {
     // If age exceeds table, assume minimal remaining life
@@ -61,8 +51,8 @@ export function getSurvivalProbability(
   const currentAgeFloor = Math.floor(currentAge);
   const futureAge = currentAgeFloor + yearsFromNow;
 
-  const currentEntry = lifeTable.entries.find(e => e.age === currentAgeFloor);
-  const futureEntry = lifeTable.entries.find(e => e.age === futureAge);
+  const currentEntry = lifeTable.entries.find((e) => e.age === currentAgeFloor);
+  const futureEntry = lifeTable.entries.find((e) => e.age === futureAge);
 
   if (!currentEntry || !futureEntry) {
     return 0;
@@ -91,10 +81,7 @@ export function calculateExpectedEncounters(
   // 2. Maximum years to consider (when the first person is expected to die)
   const yourExpectedDeathAge = you.age + youLifeExpectancy;
   const theirExpectedDeathAge = them.age + themLifeExpectancy;
-  const maxYears = Math.min(
-    yourExpectedDeathAge - you.age,
-    theirExpectedDeathAge - them.age
-  );
+  const maxYears = Math.min(yourExpectedDeathAge - you.age, theirExpectedDeathAge - them.age);
 
   // 3. Year-by-year survival probabilities
   const yearByYearSurvival: SurvivalProbability[] = [];
@@ -109,7 +96,7 @@ export function calculateExpectedEncounters(
       year: t,
       youAlive,
       themAlive,
-      bothAlive
+      bothAlive,
     });
 
     // Expected visits in year t = frequency × P(both alive)
@@ -119,16 +106,16 @@ export function calculateExpectedEncounters(
   // 4. Calculate uncertainty ranges using Monte Carlo simulation
   // (simplified here - in production, you'd run actual simulations)
   const expectedVisitsRange = {
-    p25: Math.round(expectedVisits * 0.7),  // Conservative estimate
+    p25: Math.round(expectedVisits * 0.7), // Conservative estimate
     p50: Math.round(expectedVisits),
-    p75: Math.round(expectedVisits * 1.3)   // Optimistic estimate
+    p75: Math.round(expectedVisits * 1.3), // Optimistic estimate
   };
 
   // 5. Years with both alive (weighted by survival probability)
   const yearsWithBothAlive = {
     expected: yearByYearSurvival.reduce((sum, y) => sum + y.bothAlive, 0),
     min: Math.floor(maxYears * 0.5),
-    max: Math.ceil(maxYears)
+    max: Math.ceil(maxYears),
   };
 
   return {
@@ -140,8 +127,8 @@ export function calculateExpectedEncounters(
       youLifeExpectancy,
       themLifeExpectancy,
       dataSource: 'UN World Population Prospects 2024',
-      dataYear: 2024
-    }
+      dataYear: 2024,
+    },
   };
 }
 
@@ -149,10 +136,7 @@ export function calculateExpectedEncounters(
  * Calculate what percentage of total lifetime together has already passed
  * Based on typical time-use data (from Our World in Data)
  */
-export function calculateTimeAlreadySpent(
-  yourAge: number,
-  relationType: string
-): number {
+export function calculateTimeAlreadySpent(yourAge: number, relationType: string): number {
   // Simplified model: most time with parents/grandparents happens before age 20
   // This is based on American Time Use Survey data
 
@@ -164,5 +148,5 @@ export function calculateTimeAlreadySpent(
 
   // After peak age, asymptotic approach to ~95% spent
   const yearsAfterPeak = yourAge - typicalPeakAge;
-  return 0.7 + (0.25 * (1 - Math.exp(-yearsAfterPeak / 10)));
+  return 0.7 + 0.25 * (1 - Math.exp(-yearsAfterPeak / 10));
 }

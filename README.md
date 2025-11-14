@@ -32,12 +32,14 @@ npm run dev
 ## Data Sources
 
 ### Primary Source
+
 - **UN World Population Prospects 2024** - Official life tables by age, sex, and country
 - Coverage: 81 countries (expandable to 237)
 - Year: 2023 (most recent estimates)
 - URL: https://population.un.org/wpp/
 
 ### Validation Sources
+
 - WHO Global Health Observatory
 - Human Mortality Database
 
@@ -48,10 +50,12 @@ See [SOURCES.md](SOURCES.md) for complete references.
 ### Core Calculation
 
 For each person, we obtain:
+
 - Current age: `a`
 - Residual life expectancy: `eₐ` (expected remaining years, conditional on being alive at age a)
 
 **Expected encounters**:
+
 ```
 E[visits] = Σ(t=0 to T) f × P(both alive in year t)
 
@@ -102,6 +106,7 @@ python3 scripts/process_life_tables.py
 ```
 
 **Source files needed**:
+
 - `WPP2024_MORT_F06_2_SINGLE_AGE_LIFE_TABLE_ESTIMATES_MALE.xlsx`
 - `WPP2024_MORT_F06_3_SINGLE_AGE_LIFE_TABLE_ESTIMATES_FEMALE.xlsx`
 
@@ -110,6 +115,7 @@ Download from: https://population.un.org/wpp/Download/Standard/Mortality/
 ## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+
 - Voice and tone guidelines
 - Code style
 - How to add countries
@@ -118,11 +124,13 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 ## Ethical Guidelines
 
 ### This tool is NOT:
+
 - A medical prediction
 - Advice for life decisions
 - A reason for anxiety or extreme actions
 
 ### This tool IS:
+
 - A statistical approximation based on population averages
 - A reflection tool for conscious prioritization
 - A reminder of time's finite nature
@@ -134,6 +142,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 MIT License - See [LICENSE](LICENSE)
 
 **Expectation**: This project is intended for ethical and educational use. While open source, we expect users to:
+
 - Not use for commercial exploitation without attribution
 - Not use to manipulate or pressure others
 - Not present as medical or insurance advice

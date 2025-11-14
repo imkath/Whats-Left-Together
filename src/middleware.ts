@@ -8,10 +8,10 @@ export default createMiddleware({
   defaultLocale: 'es',
 
   // Detectar idioma del navegador
-  localeDetection: true
+  localeDetection: true,
 });
 
 export const config = {
   // Aplicar middleware a todas las rutas excepto:
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };

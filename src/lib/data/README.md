@@ -5,6 +5,7 @@ Este directorio contiene las tablas de vida procesadas de la ONU (WPP-2024).
 ## Fuente oficial
 
 **UN World Population Prospects 2024**
+
 - URL: https://population.un.org/wpp/Download/Standard/Mortality/
 - Dataset: Life tables by age (single year) and sex
 - Fecha de descarga: [TO BE FILLED]
@@ -66,6 +67,7 @@ Las tablas de vida muestran:
 - **ex**: Esperanza de vida residual a edad x (años esperados restantes)
 
 La probabilidad de supervivencia de edad a hasta edad a+t es:
+
 ```
 P(sobrevivir de a a a+t) = l(a+t) / l(a)
 ```

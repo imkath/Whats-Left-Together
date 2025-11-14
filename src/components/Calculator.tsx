@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
-import type { RelationshipInput, Sex, RelationType } from '@/types'
-import Results from './Results'
-import { getAvailableCountries } from '@/lib/data'
+import { useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import type { RelationshipInput, Sex, RelationType } from '@/types';
+import Results from './Results';
+import { getAvailableCountries } from '@/lib/data';
 
 export default function Calculator() {
-  const t = useTranslations('calculator')
-  const locale = useLocale()
-  const countries = getAvailableCountries()
+  const t = useTranslations('calculator');
+  const locale = useLocale();
+  const countries = getAvailableCountries();
 
   const [formData, setFormData] = useState<RelationshipInput>({
     you: {
@@ -24,47 +24,41 @@ export default function Calculator() {
     },
     relationType: 'mother' as RelationType,
     visitsPerYear: 12,
-  })
+  });
 
-  const [showResults, setShowResults] = useState(false)
-  const [directMode, setDirectMode] = useState(false)
+  const [showResults, setShowResults] = useState(false);
+  const [directMode, setDirectMode] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setShowResults(true)
-  }
+    e.preventDefault();
+    setShowResults(true);
+  };
 
-  const updateFormData = (section: 'you' | 'them', field: string, value: any) => {
-    setFormData(prev => ({
+  const updateFormData = (section: 'you' | 'them', field: string, value: string | number) => {
+    setFormData((prev) => ({
       ...prev,
       [section]: {
         ...prev[section],
         [field]: value,
-      }
-    }))
-  }
+      },
+    }));
+  };
 
   return (
     <div id="calculator" className="space-y-8">
       <div className="text-center mb-8">
         <h2>{t('title')}</h2>
-        <p className="text-neutral-600 mt-2">
-          {t('subtitle')}
-        </p>
+        <p className="text-neutral-600 mt-2">{t('subtitle')}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="card max-w-3xl mx-auto">
         {/* Your information */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">
-            {t('yourInfo')}
-          </h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('yourInfo')}</h3>
 
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                {t('age')}
-              </label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('age')}</label>
               <input
                 type="number"
                 min="0"
@@ -77,9 +71,7 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                {t('sex')}
-              </label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('sex')}</label>
               <select
                 value={formData.you.sex}
                 onChange={(e) => updateFormData('you', 'sex', e.target.value)}
@@ -113,9 +105,7 @@ export default function Calculator() {
 
         {/* Their information */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">
-            {t('theirInfo')}
-          </h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('theirInfo')}</h3>
 
           <div className="grid md:grid-cols-4 gap-4">
             <div>
@@ -124,7 +114,9 @@ export default function Calculator() {
               </label>
               <select
                 value={formData.relationType}
-                onChange={(e) => setFormData(prev => ({ ...prev, relationType: e.target.value as RelationType }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, relationType: e.target.value as RelationType }))
+                }
                 className="input-field"
                 required
               >
@@ -142,9 +134,7 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                {t('age')}
-              </label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('age')}</label>
               <input
                 type="number"
                 min="0"
@@ -157,9 +147,7 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                {t('sex')}
-              </label>
+              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('sex')}</label>
               <select
                 value={formData.them.sex}
                 onChange={(e) => updateFormData('them', 'sex', e.target.value)}
@@ -193,9 +181,7 @@ export default function Calculator() {
 
         {/* Frequency */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">
-            {t('frequency')}
-          </h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('frequency')}</h3>
 
           <div className="space-y-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -208,7 +194,7 @@ export default function Calculator() {
                 <button
                   key={preset.value}
                   type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, visitsPerYear: preset.value }))}
+                  onClick={() => setFormData((prev) => ({ ...prev, visitsPerYear: preset.value }))}
                   className={`px-4 py-2 rounded-lg border transition-colors ${
                     formData.visitsPerYear === preset.value
                       ? 'bg-primary-600 text-white border-primary-600'
@@ -229,13 +215,13 @@ export default function Calculator() {
                 min="1"
                 max="365"
                 value={formData.visitsPerYear}
-                onChange={(e) => setFormData(prev => ({ ...prev, visitsPerYear: parseInt(e.target.value) || 0 }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, visitsPerYear: parseInt(e.target.value) || 0 }))
+                }
                 className="input-field max-w-xs"
                 required
               />
-              <p className="text-xs text-neutral-600 mt-1">
-                {t('frequencyNote')}
-              </p>
+              <p className="text-xs text-neutral-600 mt-1">{t('frequencyNote')}</p>
             </div>
           </div>
         </div>
@@ -250,12 +236,8 @@ export default function Calculator() {
               className="mt-1"
             />
             <div>
-              <span className="font-medium text-neutral-900">
-                {t('directMode')}
-              </span>
-              <p className="text-sm text-neutral-600 mt-1">
-                {t('directModeHelp')}
-              </p>
+              <span className="font-medium text-neutral-900">{t('directMode')}</span>
+              <p className="text-sm text-neutral-600 mt-1">{t('directModeHelp')}</p>
             </div>
           </label>
         </div>
@@ -274,5 +256,5 @@ export default function Calculator() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -7,16 +7,19 @@ Thank you for your interest in contributing! This project aims to provide a thou
 The project follows three core principles:
 
 ### 1. Direct (without euphemisms)
+
 - Use clear, straightforward language
 - Example: "You might have 20-30 more visits" not "many opportunities ahead"
 - Avoid softening reality with unnecessary qualifiers
 
 ### 2. Concise but caring
+
 - Brief and sober when presenting numbers
 - Warm and contextual in explanations
 - No melodrama or gratuitous drama
 
 ### 3. Data-grounded
+
 - Every claim backed by sources
 - Always acknowledge uncertainty and limitations
 - Example: "Based on UN life tables for Chile, not individual health factors"
@@ -24,9 +27,11 @@ The project follows three core principles:
 ### Examples
 
 **Good**:
+
 > "If everything stays the same, you might see your grandmother about 12 to 24 more times in your life."
 
 **Avoid**:
+
 > "You have countless precious moments remaining with your beloved grandmother!"
 
 ### Two Modes
@@ -34,11 +39,13 @@ The project follows three core principles:
 The calculator offers two language modes:
 
 **Normal mode** (default):
+
 - Thoughtful, considerate phrasing
 - Context and explanations included
 - Example: "According to life expectancy data for Chile and both ages, it's reasonable to expect..."
 
 **Direct mode** (user opt-in):
+
 - Blunter language
 - Minimal cushioning
 - Example: "At this rate, you don't have many visits left with your mother."
@@ -48,16 +55,19 @@ Both modes use **identical calculations** - only the language changes.
 ## Code Style
 
 ### TypeScript
+
 - Use strict type checking
 - Prefer explicit types over `any`
 - Document complex calculations with comments
 
 ### React Components
+
 - Functional components with hooks
 - Use `'use client'` directive when needed
 - Keep components focused (single responsibility)
 
 ### File Naming
+
 - Components: PascalCase (`Calculator.tsx`)
 - Utilities: camelCase (`actuarial.ts`)
 - Data files: lowercase with underscores (`countries.json`)

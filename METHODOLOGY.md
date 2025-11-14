@@ -19,7 +19,8 @@ El objetivo no es asustar, sino **hacer explícita la limitación de tiempo** pa
 La **Socioemotional Selectivity Theory** (Carstensen, 1992; Carstensen et al., 1999) demuestra que cuando las personas perciben que su tiempo futuro es limitado, priorizan relaciones cercanas y metas emocionales por encima de metas de exploración o acumulación de información.
 
 **Referencia clave**:
-- Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. *American Psychologist*, 54(3), 165–181. https://doi.org/10.1037/0003-066X.54.3.165
+
+- Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. _American Psychologist_, 54(3), 165–181. https://doi.org/10.1037/0003-066X.54.3.165
 
 ### 1.2. Uso del tiempo a lo largo de la vida
 
@@ -30,6 +31,7 @@ Datos del **American Time Use Survey** y análisis de Our World in Data muestran
 - El patrón es similar para abuelos, con concentración aún más temprana
 
 **Referencia**:
+
 - Our World in Data: Time Use - https://ourworldindata.org/time-use
 
 Esto significa que **la mayoría del tiempo ya se consumió**, incluso cuando ambos siguen vivos.
@@ -43,15 +45,18 @@ Esto significa que **la mayoría del tiempo ya se consumió**, incluso cuando am
 Utilizamos las **tablas de vida oficial de la ONU**:
 
 **UN World Population Prospects 2024 (WPP-2024)**
+
 - Dataset: Life tables by single year of age and sex
 - Cobertura: 237 países y áreas
 - Periodo: 1950-2100 (proyecciones medias)
 - Actualización: Julio 2024
 
 **Enlace oficial**:
+
 - https://population.un.org/wpp/Download/Standard/Mortality/
 
 **Validación secundaria**:
+
 - WHO Global Health Observatory (para validación cruzada)
 - Human Mortality Database (para países con datos de alta calidad)
 
@@ -59,11 +64,11 @@ Utilizamos las **tablas de vida oficial de la ONU**:
 
 Para cada combinación de (país, sexo, edad x), las tablas contienen:
 
-| Variable | Definición |
-|----------|------------|
-| **qₓ** | Probabilidad de morir entre edad x y x+1 |
-| **lₓ** | De 100,000 nacidos vivos, número que sobrevive hasta edad x |
-| **eₓ** | Esperanza de vida residual a edad x (años esperados restantes, condicional a estar vivo a esa edad) |
+| Variable | Definición                                                                                          |
+| -------- | --------------------------------------------------------------------------------------------------- |
+| **qₓ**   | Probabilidad de morir entre edad x y x+1                                                            |
+| **lₓ**   | De 100,000 nacidos vivos, número que sobrevive hasta edad x                                         |
+| **eₓ**   | Esperanza de vida residual a edad x (años esperados restantes, condicional a estar vivo a esa edad) |
 
 ---
 
@@ -88,6 +93,7 @@ $$
 donde lₓ es el número de supervivientes a edad x (de la cohorte inicial de 100,000).
 
 **Ejemplo**:
+
 - Si l₆₀ = 85,000 y l₈₀ = 50,000
 - Entonces P(una persona de 60 años llegue a 80) = 50,000 / 85,000 = 58.8%
 
@@ -110,11 +116,13 @@ $$
 $$
 
 **Supuestos**:
+
 1. Frecuencia constante (f no cambia con el tiempo)
 2. Encuentros independientes de la mortalidad
 3. No se consideran factores individuales (enfermedad específica, accidentes)
 
 **Limitaciones explícitas**:
+
 - No incorpora información médica individual
 - No ajusta por factores de riesgo personales
 - Asume independencia entre las dos vidas (no considera mortalidad correlacionada, ej. accidentes comunes)
@@ -171,6 +179,7 @@ Salida:
 ### 4.2. Código de referencia
 
 Ver implementación completa en:
+
 - `src/lib/models/actuarial.ts` (modelo matemático)
 - `src/lib/data/index.ts` (acceso a datos)
 
@@ -181,18 +190,21 @@ Ver implementación completa en:
 ### 5.1. Comparación con literatura
 
 Este enfoque es estándar en:
+
 - Cálculos actuariales (seguros de vida)
 - Demografía formal (Preston et al., 2001)
 - Economía de la salud (cálculo de QALY, años de vida ajustados por calidad)
 
 **Referencia**:
-- Preston, S. H., Heuveline, P., & Guillot, M. (2001). *Demography: Measuring and Modeling Population Processes*. Blackwell Publishers.
+
+- Preston, S. H., Heuveline, P., & Guillot, M. (2001). _Demography: Measuring and Modeling Population Processes_. Blackwell Publishers.
 
 ### 5.2. Casos de prueba
 
 **Ejemplo 1**: Tú (30, mujer, Chile) → Madre (55, mujer, Chile), 12 visitas/año
 
 Datos (aproximados de WPP-2024):
+
 - e₃₀ (mujer, Chile) ≈ 52 años
 - e₅₅ (mujer, Chile) ≈ 30 años
 
@@ -202,6 +214,7 @@ Encuentros esperados: ~12 × 30 × factor_ajuste ≈ **300-350 visitas**
 **Ejemplo 2**: Tú (25, hombre, USA) → Abuelo (82, hombre, USA), 4 visitas/año
 
 Datos:
+
 - e₂₅ (hombre, USA) ≈ 54 años
 - e₈₂ (hombre, USA) ≈ 6-8 años
 
@@ -217,12 +230,14 @@ Este segundo caso refleja la realidad de abuelos en edad avanzada: el tiempo res
 ### 6.1. Qué NO es esta herramienta
 
 ❌ **No es**:
+
 - Una predicción médica individual
 - Un consejo sobre decisiones de vida
 - Una herramienta diagnóstica
 - Un motivo para decisiones extremas (ej. "ya es muy tarde para reconectar")
 
 ✅ **Es**:
+
 - Una aproximación basada en promedios poblacionales
 - Un espejo estadístico para reflexión
 - Un recordatorio de la naturaleza finita del tiempo
@@ -241,11 +256,13 @@ Este segundo caso refleja la realidad de abuelos en edad avanzada: el tiempo res
 ### 6.3. Uso responsable
 
 Este sitio debe usarse como:
+
 - **Herramienta de reflexión**, no de angustia
 - **Motivador para acción positiva** (más tiempo juntos), no para resignación
 - **Complemento a decisiones conscientes**, no sustituto del juicio personal
 
 Si experimentas ansiedad severa al usar esta herramienta, considera:
+
 - Hablar con personas de confianza
 - Consultar recursos de apoyo emocional
 - Recordar que **los números no son destino**, solo probabilidades
@@ -257,10 +274,12 @@ Si experimentas ansiedad severa al usar esta herramienta, considera:
 ### 7.1. Código fuente
 
 Todo el código está disponible en:
+
 - **GitHub**: [repositorio público]
 - **Licencia**: MIT
 
 Puedes:
+
 - Revisar la implementación completa
 - Proponer mejoras metodológicas
 - Reportar errores o inconsistencias
@@ -269,6 +288,7 @@ Puedes:
 ### 7.2. Actualizaciones
 
 Nos comprometemos a:
+
 - Actualizar las tablas de vida cuando la ONU publique nuevas revisiones
 - Documentar todos los cambios metodológicos
 - Mantener esta página actualizada con las referencias más recientes
@@ -279,17 +299,20 @@ Nos comprometemos a:
 ## 8. Referencias
 
 ### Datos demográficos
-1. United Nations, Department of Economic and Social Affairs, Population Division (2024). *World Population Prospects 2024*. https://population.un.org/wpp/
 
-2. World Health Organization. *Global Health Observatory - Life expectancy and healthy life expectancy*. https://www.who.int/data/gho
+1. United Nations, Department of Economic and Social Affairs, Population Division (2024). _World Population Prospects 2024_. https://population.un.org/wpp/
+
+2. World Health Organization. _Global Health Observatory - Life expectancy and healthy life expectancy_. https://www.who.int/data/gho
 
 ### Teoría y contexto
-3. Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. *American Psychologist*, 54(3), 165–181.
 
-4. Roser, M., Ritchie, H., & Spooner, F. (2023). Time Use. *Our World in Data*. https://ourworldindata.org/time-use
+3. Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. _American Psychologist_, 54(3), 165–181.
+
+4. Roser, M., Ritchie, H., & Spooner, F. (2023). Time Use. _Our World in Data_. https://ourworldindata.org/time-use
 
 ### Métodos demográficos
-5. Preston, S. H., Heuveline, P., & Guillot, M. (2001). *Demography: Measuring and Modeling Population Processes*. Blackwell Publishers.
+
+5. Preston, S. H., Heuveline, P., & Guillot, M. (2001). _Demography: Measuring and Modeling Population Processes_. Blackwell Publishers.
 
 6. Human Mortality Database. University of California, Berkeley (USA), and Max Planck Institute for Demographic Research (Germany). www.mortality.org
 
@@ -298,6 +321,7 @@ Nos comprometemos a:
 ## Contacto
 
 Para preguntas metodológicas, sugerencias o reportar errores:
+
 - **Issues**: [GitHub Issues](https://github.com/imkath/Whats-Left-Together/issues)
 - **Email**: [contacto]
 

@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import type { SurvivalProbability } from '@/types'
+import type { SurvivalProbability } from '@/types';
 
 interface VisualizationChartProps {
-  data: SurvivalProbability[]
+  data: SurvivalProbability[];
 }
 
 export default function VisualizationChart({ data }: VisualizationChartProps) {
@@ -13,12 +13,12 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
       <div className="w-full h-64 bg-neutral-50 rounded-lg p-4 flex items-center justify-center text-neutral-500">
         No hay datos suficientes para mostrar el gráfico
       </div>
-    )
+    );
   }
 
   // Take every Nth point to avoid overcrowding (show ~20-30 points max)
-  const step = Math.max(1, Math.floor(data.length / 25))
-  const displayData = data.filter((_, i) => i % step === 0)
+  const step = Math.max(1, Math.floor(data.length / 25));
+  const displayData = data.filter((_, i) => i % step === 0);
 
   // Ensure we have at least 2 points for the chart
   if (displayData.length < 2) {
@@ -26,33 +26,20 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
       <div className="w-full h-64 bg-neutral-50 rounded-lg p-4 flex items-center justify-center text-neutral-500">
         No hay datos suficientes para mostrar el gráfico
       </div>
-    )
+    );
   }
-
-  const maxValue = 1.0
 
   return (
     <div className="w-full">
       {/* Simple SVG chart - no external dependencies needed */}
       <div className="relative h-64 bg-neutral-50 rounded-lg p-4">
-        <svg
-          viewBox="0 0 800 200"
-          className="w-full h-full"
-          preserveAspectRatio="none"
-        >
+        <svg viewBox="0 0 800 200" className="w-full h-full" preserveAspectRatio="none">
           {/* Grid lines */}
           {[0, 0.25, 0.5, 0.75, 1.0].map((value) => {
-            const y = 200 - (value * 200)
+            const y = 200 - value * 200;
             return (
               <g key={value}>
-                <line
-                  x1="0"
-                  y1={y}
-                  x2="800"
-                  y2={y}
-                  stroke="#e5e7eb"
-                  strokeWidth="1"
-                />
+                <line x1="0" y1={y} x2="800" y2={y} stroke="#e5e7eb" strokeWidth="1" />
                 <text
                   x="-5"
                   y={y}
@@ -64,7 +51,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
                   {Math.round(value * 100)}%
                 </text>
               </g>
-            )
+            );
           })}
 
           {/* Lines */}
@@ -72,9 +59,9 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
           <polyline
             points={displayData
               .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800
-                const y = 200 - ((d.bothAlive || 0) * 200)
-                return `${x},${y}`
+                const x = (i / (displayData.length - 1)) * 800;
+                const y = 200 - (d.bothAlive || 0) * 200;
+                return `${x},${y}`;
               })
               .join(' ')}
             fill="none"
@@ -86,9 +73,9 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
           <polyline
             points={displayData
               .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800
-                const y = 200 - ((d.youAlive || 0) * 200)
-                return `${x},${y}`
+                const x = (i / (displayData.length - 1)) * 800;
+                const y = 200 - (d.youAlive || 0) * 200;
+                return `${x},${y}`;
               })
               .join(' ')}
             fill="none"
@@ -101,9 +88,9 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
           <polyline
             points={displayData
               .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800
-                const y = 200 - ((d.themAlive || 0) * 200)
-                return `${x},${y}`
+                const x = (i / (displayData.length - 1)) * 800;
+                const y = 200 - (d.themAlive || 0) * 200;
+                return `${x},${y}`;
               })
               .join(' ')}
             fill="none"
@@ -137,5 +124,5 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
