@@ -145,13 +145,13 @@ If you use this project in research or publications:
 ```
 What's Left Together (2025). A statistical calculator for expected encounters
 based on UN World Population Prospects 2024.
-https://github.com/[your-username]/whats-left-together
+https://github.com/imkath/Whats-Left-Together
 ```
 
 ## Contact
 
-- **Issues**: [GitHub Issues](https://github.com/[your-username]/whats-left-together/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/[your-username]/whats-left-together/discussions)
+- **Issues**: [GitHub Issues](https://github.com/imkath/Whats-Left-Together/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/imkath/Whats-Left-Together/discussions)
 
 ---
 
