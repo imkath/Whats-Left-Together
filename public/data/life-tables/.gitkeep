@@ -1,0 +1,4 @@
+# Life tables directory
+# This directory will contain processed life tables from UN WPP-2024
+# Format: {COUNTRY_CODE}_{sex}.json
+# Example: CHL_female.json, USA_male.json
