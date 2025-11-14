@@ -298,7 +298,7 @@ Nos comprometemos a:
 ## Contacto
 
 Para preguntas metodológicas, sugerencias o reportar errores:
-- **Issues**: [GitHub Issues]
+- **Issues**: [GitHub Issues](https://github.com/imkath/Whats-Left-Together/issues)
 - **Email**: [contacto]
 
 ---
