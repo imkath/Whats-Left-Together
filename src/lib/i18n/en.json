@@ -30,9 +30,12 @@
     "sex": "Sex",
     "country": "Your country",
     "theirCountry": "Their country",
-    "visitsPerYear": "Visits per year",
+    "visitsPerYear": "visits per year",
     "frequency": "Frequency of encounters",
-    "frequencyCustom": "Or enter a custom value (visits per year):",
+    "frequencyPeriodLabel": "How often do you see each other?",
+    "timesPerPeriodLabel": "How many times?",
+    "timesPerPeriodNote": "Maximum {max} times {period}",
+    "frequencySummary": "Summary",
     "male": "Male",
     "female": "Female",
     "calculate": "Calculate remaining visits",
@@ -50,12 +53,17 @@
       "other_family": "Other family member",
       "other": "Other important person"
     },
-    "frequencyPresets": {
-      "weekly": "Weekly (~52 times/year)",
-      "monthly": "Monthly (~12 times/year)",
-      "quarterly": "Quarterly (~4 times/year)",
-      "yearly": "Yearly (1 time/year)",
-      "custom": "Custom"
+    "frequencyPeriods": {
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly"
+    },
+    "frequencyTimes": {
+      "weekly": "times per week",
+      "monthly": "times per month",
+      "quarterly": "times per quarter",
+      "yearly": "times per year"
     }
   },
   "results": {

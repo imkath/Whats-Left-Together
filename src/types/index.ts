@@ -13,6 +13,8 @@ export type RelationType =
   | 'grandfather_paternal'
   | 'other';
 
+export type FrequencyPeriod = 'weekly' | 'monthly' | 'quarterly' | 'yearly';
+
 export interface PersonInput {
   age: number;
   sex: Sex;
@@ -24,6 +26,8 @@ export interface RelationshipInput {
   them: PersonInput;
   relationType: RelationType;
   visitsPerYear: number;
+  frequencyPeriod?: FrequencyPeriod;
+  timesPerPeriod?: number;
 }
 
 export interface LifeTableEntry {
