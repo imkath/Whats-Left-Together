@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import type { RelationshipInput, Sex, RelationType } from '@/types';
+import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import { getAvailableCountries } from '@/lib/data';
 
@@ -24,10 +24,44 @@ export default function Calculator() {
     },
     relationType: 'mother' as RelationType,
     visitsPerYear: 12,
+    frequencyPeriod: 'monthly' as FrequencyPeriod,
+    timesPerPeriod: 1,
   });
 
   const [showResults, setShowResults] = useState(false);
   const [directMode, setDirectMode] = useState(false);
+
+  // Helper function to get max times per period
+  const getMaxTimesForPeriod = (period: FrequencyPeriod): number => {
+    switch (period) {
+      case 'weekly':
+        return 7;
+      case 'monthly':
+        return 31;
+      case 'quarterly':
+        return 90;
+      case 'yearly':
+        return 365;
+      default:
+        return 365;
+    }
+  };
+
+  // Helper function to convert period + times to visitsPerYear
+  const calculateVisitsPerYear = (period: FrequencyPeriod, times: number): number => {
+    switch (period) {
+      case 'weekly':
+        return times * 52;
+      case 'monthly':
+        return times * 12;
+      case 'quarterly':
+        return times * 4;
+      case 'yearly':
+        return times;
+      default:
+        return times;
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +75,28 @@ export default function Calculator() {
         ...prev[section],
         [field]: value,
       },
+    }));
+  };
+
+  const updateFrequencyPeriod = (period: FrequencyPeriod) => {
+    const times = formData.timesPerPeriod || 1;
+    setFormData((prev) => ({
+      ...prev,
+      frequencyPeriod: period,
+      timesPerPeriod: times,
+      visitsPerYear: calculateVisitsPerYear(period, times),
+    }));
+  };
+
+  const updateTimesPerPeriod = (times: number) => {
+    const period = formData.frequencyPeriod || 'monthly';
+    const maxTimes = getMaxTimesForPeriod(period);
+    const validTimes = Math.min(Math.max(1, times), maxTimes);
+
+    setFormData((prev) => ({
+      ...prev,
+      timesPerPeriod: validTimes,
+      visitsPerYear: calculateVisitsPerYear(period, validTimes),
     }));
   };
 
@@ -63,8 +119,11 @@ export default function Calculator() {
                 type="number"
                 min="0"
                 max="100"
-                value={formData.you.age}
-                onChange={(e) => updateFormData('you', 'age', parseInt(e.target.value) || 0)}
+                value={formData.you.age === 0 ? '' : formData.you.age}
+                onChange={(e) => {
+                  const value = e.target.value === '' ? 0 : parseInt(e.target.value);
+                  updateFormData('you', 'age', value);
+                }}
                 className="input-field"
                 required
               />
@@ -139,8 +198,11 @@ export default function Calculator() {
                 type="number"
                 min="0"
                 max="120"
-                value={formData.them.age}
-                onChange={(e) => updateFormData('them', 'age', parseInt(e.target.value) || 0)}
+                value={formData.them.age === 0 ? '' : formData.them.age}
+                onChange={(e) => {
+                  const value = e.target.value === '' ? 0 : parseInt(e.target.value);
+                  updateFormData('them', 'age', value);
+                }}
                 className="input-field"
                 required
               />
@@ -183,45 +245,74 @@ export default function Calculator() {
         <div className="mb-8">
           <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('frequency')}</h3>
 
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {[
-                { label: t('frequencyPresets.weekly'), value: 52 },
-                { label: t('frequencyPresets.monthly'), value: 12 },
-                { label: t('frequencyPresets.quarterly'), value: 4 },
-                { label: t('frequencyPresets.yearly'), value: 1 },
-              ].map((preset) => (
-                <button
-                  key={preset.value}
-                  type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, visitsPerYear: preset.value }))}
-                  className={`px-4 py-2 rounded-lg border transition-colors ${
-                    formData.visitsPerYear === preset.value
-                      ? 'bg-primary-600 text-white border-primary-600'
-                      : 'bg-white border-neutral-300 hover:border-primary-400'
-                  }`}
-                >
-                  {preset.label}
-                </button>
-              ))}
+          <div className="space-y-6">
+            {/* Period selector */}
+            <div>
+              <label className="block text-sm font-medium text-neutral-700 mb-3">
+                {t('frequencyPeriodLabel')}
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {[
+                  { label: t('frequencyPeriods.weekly'), value: 'weekly' as FrequencyPeriod },
+                  { label: t('frequencyPeriods.monthly'), value: 'monthly' as FrequencyPeriod },
+                  { label: t('frequencyPeriods.quarterly'), value: 'quarterly' as FrequencyPeriod },
+                  { label: t('frequencyPeriods.yearly'), value: 'yearly' as FrequencyPeriod },
+                ].map((period) => (
+                  <button
+                    key={period.value}
+                    type="button"
+                    onClick={() => updateFrequencyPeriod(period.value)}
+                    className={`px-4 py-2 rounded-lg border transition-colors ${
+                      formData.frequencyPeriod === period.value
+                        ? 'bg-primary-600 text-white border-primary-600'
+                        : 'bg-white border-neutral-300 hover:border-primary-400'
+                    }`}
+                  >
+                    {period.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
+            {/* Times per period */}
             <div>
               <label className="block text-sm font-medium text-neutral-700 mb-2">
-                {t('frequencyCustom')}
+                {t('timesPerPeriodLabel')}
               </label>
               <input
                 type="number"
                 min="1"
-                max="365"
-                value={formData.visitsPerYear}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, visitsPerYear: parseInt(e.target.value) || 0 }))
+                max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
+                value={
+                  formData.timesPerPeriod === 0 || !formData.timesPerPeriod
+                    ? ''
+                    : formData.timesPerPeriod
                 }
+                onChange={(e) => {
+                  const value = e.target.value === '' ? 1 : parseInt(e.target.value);
+                  updateTimesPerPeriod(value);
+                }}
                 className="input-field max-w-xs"
                 required
               />
-              <p className="text-xs text-neutral-600 mt-1">{t('frequencyNote')}</p>
+              <p className="text-xs text-neutral-600 mt-1">
+                {t('timesPerPeriodNote', {
+                  max: getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly'),
+                  period: t(
+                    `frequencyPeriods.${formData.frequencyPeriod || 'monthly'}`
+                  ).toLowerCase(),
+                })}
+              </p>
+            </div>
+
+            {/* Visual summary */}
+            <div className="p-4 bg-primary-50 rounded-lg border border-primary-200">
+              <p className="text-sm text-primary-900">
+                <span className="font-semibold">{t('frequencySummary')}:</span>{' '}
+                {formData.timesPerPeriod || 1}{' '}
+                {t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)} ={' '}
+                <span className="font-bold">{formData.visitsPerYear}</span> {t('visitsPerYear')}
+              </p>
             </div>
           </div>
         </div>
