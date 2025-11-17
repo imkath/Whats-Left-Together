@@ -16,22 +16,82 @@ const merriweather = Merriweather({
   variable: '--font-serif',
 });
 
-export const metadata: Metadata = {
-  title: "What's Left Together | Lo que nos queda juntos",
-  description:
-    'A statistical mirror for decisions that matter. Un espejo estadístico para decisiones que importan.',
-  keywords: 'life expectancy, relationships, time, mortality, statistics, actuarial',
-  authors: [{ name: "What's Left Together" }],
-  openGraph: {
-    type: 'website',
-    title: "What's Left Together | Lo que nos queda juntos",
-    description:
-      'A statistical mirror for decisions that matter. Un espejo estadístico para decisiones que importan.',
-  },
-};
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
 
 export function generateStaticParams() {
   return [{ locale: 'es' }, { locale: 'en' }];
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  let messages;
+  try {
+    messages = (await import(`@/lib/i18n/${locale}.json`)).default;
+  } catch {
+    messages = (await import(`@/lib/i18n/en.json`)).default;
+  }
+
+  const seo = messages.seo;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    authors: [{ name: "What's Left Together", url: SITE_URL }],
+    creator: "What's Left Together",
+    publisher: "What's Left Together",
+    formatDetection: {
+      telephone: false,
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}`,
+      languages: {
+        'es-ES': `${SITE_URL}/es`,
+        'en-US': `${SITE_URL}/en`,
+      },
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale === 'es' ? 'es_ES' : 'en_US',
+      url: `${SITE_URL}/${locale}`,
+      siteName: "What's Left Together",
+      title: seo.ogTitle,
+      description: seo.ogDescription,
+      images: [
+        {
+          url: `${SITE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: seo.ogTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo.twitterTitle,
+      description: seo.twitterDescription,
+      images: [`${SITE_URL}/og-image.png`],
+      creator: '@whatslefttogether',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
+  };
 }
 
 export default async function LocaleLayout({
@@ -48,8 +108,44 @@ export default async function LocaleLayout({
     notFound();
   }
 
+  const seo = messages.seo;
+
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: seo.title,
+    description: seo.description,
+    url: `${SITE_URL}/${locale}`,
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Any',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    author: {
+      '@type': 'Organization',
+      name: "What's Left Together",
+      url: SITE_URL,
+    },
+    inLanguage: locale === 'es' ? 'es-ES' : 'en-US',
+    isAccessibleForFree: true,
+    publisher: {
+      '@type': 'Organization',
+      name: "What's Left Together",
+      url: SITE_URL,
+    },
+  };
+
   return (
     <html lang={locale} className={`${inter.variable} ${merriweather.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans bg-neutral-50 text-neutral-900 antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="fixed top-4 right-4 z-50">
