@@ -17,17 +17,16 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "¿Qué nos queda juntos? | What's Left Together?",
+  title: "What's Left Together | Lo que nos queda juntos",
   description:
-    'Un espejo estadístico para decisiones que importan. A statistical mirror for decisions that matter.',
+    'A statistical mirror for decisions that matter. Un espejo estadístico para decisiones que importan.',
   keywords: 'life expectancy, relationships, time, mortality, statistics, actuarial',
   authors: [{ name: "What's Left Together" }],
   openGraph: {
     type: 'website',
-    locale: 'es_ES',
-    alternateLocale: 'en_US',
-    title: '¿Qué nos queda juntos?',
-    description: 'Un espejo estadístico para decisiones que importan',
+    title: "What's Left Together | Lo que nos queda juntos",
+    description:
+      'A statistical mirror for decisions that matter. Un espejo estadístico para decisiones que importan.',
   },
 };
 
