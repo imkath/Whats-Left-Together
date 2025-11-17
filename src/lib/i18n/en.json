@@ -4,6 +4,15 @@
     "subtitle": "What's Left Together",
     "tagline": "A statistical mirror of your time left with the people you love"
   },
+  "seo": {
+    "title": "What's Left Together - Calculate Time with Loved Ones",
+    "description": "Calculate how many times you'll see the people you love. A tool based on official life tables to reflect on our remaining time together.",
+    "keywords": "life expectancy, time calculator, family visits, life tables, mortality statistics, family relationships, actuarial, demography, remaining visits",
+    "ogTitle": "What's Left Together - How Many Times Left?",
+    "ogDescription": "A statistical mirror showing how many visits remain with those you love most, based on real demographic data.",
+    "twitterTitle": "What's Left Together",
+    "twitterDescription": "Calculate how many more times you'll see your loved ones. A necessary reflection on the time we share."
+  },
   "nav": {
     "calculator": "Calculator",
     "methodology": "How It Works",
@@ -102,6 +111,12 @@
   },
   "methodology": {
     "title": "How It Works",
+    "seo": {
+      "title": "Methodology - How the calculator works",
+      "description": "Learn the scientific methodology behind our calculations. Based on UN and WHO life tables, explained clearly and transparently.",
+      "ogTitle": "Scientific methodology - What's Left Together",
+      "ogDescription": "Full transparency: how we calculate remaining visits using official demographic data and actuarial models."
+    },
     "section1": {
       "title": "1. What we calculate",
       "text": "Expected in-person visits remaining between two people."
@@ -173,6 +188,12 @@
     "title": "About this project",
     "subtitle": "Purpose, motivation, and context",
     "backToHome": "Back to home",
+    "seo": {
+      "title": "About - What's Left Together",
+      "description": "Learn the story, purpose, and methodology behind What's Left Together. A tool to reflect on the time we share with our loved ones.",
+      "ogTitle": "About the project - What's Left Together",
+      "ogDescription": "Discover why we created this tool and how it can help you prioritize time with those you love most."
+    },
     "sections": {
       "purpose": {
         "title": "Why this tool exists",

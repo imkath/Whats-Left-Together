@@ -4,6 +4,15 @@
     "subtitle": "What's Left Together",
     "tagline": "Un espejo estadístico del tiempo que te queda con quienes quieres"
   },
+  "seo": {
+    "title": "Lo que nos queda juntos - Calculadora de tiempo con seres queridos",
+    "description": "Calcula cuántas veces más verás a las personas que amas. Una herramienta basada en tablas de vida oficiales para reflexionar sobre el tiempo que nos queda juntos.",
+    "keywords": "esperanza de vida, calculadora tiempo familiar, visitas restantes, tablas de vida, tiempo con familia, estadísticas mortalidad, relaciones familiares, actuarial, demografía",
+    "ogTitle": "Lo que nos queda juntos - ¿Cuántas veces más?",
+    "ogDescription": "Un espejo estadístico que te muestra cuántas visitas te quedan con quienes más quieres, basado en datos demográficos reales.",
+    "twitterTitle": "Lo que nos queda juntos",
+    "twitterDescription": "Calcula cuántas veces más verás a tus seres queridos. Una reflexión necesaria sobre el tiempo que compartimos."
+  },
   "nav": {
     "calculator": "Calculadora",
     "methodology": "Cómo funciona",
@@ -102,6 +111,12 @@
   },
   "methodology": {
     "title": "Cómo funciona",
+    "seo": {
+      "title": "Metodología - Cómo funciona la calculadora",
+      "description": "Conoce la metodología científica detrás de nuestros cálculos. Basado en tablas de vida de la ONU y WHO, explicado de forma clara y transparente.",
+      "ogTitle": "Metodología científica - Lo que nos queda juntos",
+      "ogDescription": "Transparencia total: cómo calculamos las visitas restantes usando datos demográficos oficiales y modelos actuariales."
+    },
     "section1": {
       "title": "1. Qué calculamos",
       "text": "Visitas presenciales esperadas que quedan entre dos personas."
@@ -173,6 +188,12 @@
     "title": "Acerca de este proyecto",
     "subtitle": "Propósito, motivación y contexto",
     "backToHome": "Volver al inicio",
+    "seo": {
+      "title": "Acerca de - Lo que nos queda juntos",
+      "description": "Conoce la historia, propósito y metodología detrás de Lo que nos queda juntos. Una herramienta para reflexionar sobre el tiempo que compartimos con nuestros seres queridos.",
+      "ogTitle": "Acerca del proyecto - Lo que nos queda juntos",
+      "ogDescription": "Descubre por qué creamos esta herramienta y cómo puede ayudarte a priorizar el tiempo con quienes más quieres."
+    },
     "sections": {
       "purpose": {
         "title": "Por qué existe esta herramienta",
