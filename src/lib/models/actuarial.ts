@@ -140,7 +140,17 @@ export function calculateTimeAlreadySpent(yourAge: number, relationType: string)
   // Simplified model: most time with parents/grandparents happens before age 20
   // This is based on American Time Use Survey data
 
-  const typicalPeakAge = relationType.includes('parent') ? 18 : 15;
+  // Parent/grandparent relations typically peak around age 18
+  const parentRelations = [
+    'mother',
+    'father',
+    'grandmother_maternal',
+    'grandmother_paternal',
+    'grandfather_maternal',
+    'grandfather_paternal',
+  ];
+
+  const typicalPeakAge = parentRelations.includes(relationType) ? 18 : 15;
 
   if (yourAge <= typicalPeakAge) {
     return yourAge / typicalPeakAge;

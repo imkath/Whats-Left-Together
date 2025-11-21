@@ -11,6 +11,9 @@ export type RelationType =
   | 'grandmother_paternal'
   | 'grandfather_maternal'
   | 'grandfather_paternal'
+  | 'partner'
+  | 'friend'
+  | 'other_family'
   | 'other';
 
 export type FrequencyPeriod = 'weekly' | 'monthly' | 'quarterly' | 'yearly';

@@ -21,79 +21,69 @@ export function getAvailableCountries(): Country[] {
 }
 
 /**
- * Load life table for a given country and sex
- *
- * In production, this would fetch from a database or API.
- * For now, we'll use sample data or load from static files.
+ * Check if a country has life table data available
  */
-export async function getLifeTable(countryCode: string, sex: Sex): Promise<LifeTable> {
-  // TODO: In production, fetch from actual data files
-  // For now, return sample Chilean data as fallback
+export function hasLifeTableData(countryCode: string): boolean {
+  const country = countries.find((c) => c.code === countryCode);
+  return country?.hasData ?? false;
+}
 
-  try {
-    const response = await fetch(`/data/life-tables/${countryCode}_${sex}.json`);
-    if (!response.ok) {
-      throw new Error(`Life table not found for ${countryCode} ${sex}`);
-    }
-    return await response.json();
-  } catch {
-    console.warn(`Failed to load life table for ${countryCode} ${sex}, using sample data`);
-    return getSampleLifeTable(countryCode, sex);
+/**
+ * Custom error class for network errors
+ */
+export class NetworkError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'NetworkError';
   }
 }
 
 /**
- * Generate sample life table based on typical patterns
- * This is a TEMPORARY fallback until real WPP-2024 data is integrated
- *
- * IMPORTANT: This uses simplified Gompertz-Makeham mortality model.
- * Real implementation MUST use actual UN data.
+ * Custom error class for data not available errors
  */
-function getSampleLifeTable(countryCode: string, sex: Sex): LifeTable {
-  const entries = [];
-
-  // Typical life expectancy at birth (rough estimates)
-  const baseLifeExpectancy = sex === 'female' ? 82 : 77;
-
-  // Generate entries for ages 0-100
-  for (let age = 0; age <= 100; age++) {
-    // Simplified mortality model (not accurate, just for structure)
-    let qx: number;
-
-    if (age < 1) {
-      qx = 0.005; // Infant mortality
-    } else if (age < 10) {
-      qx = 0.0002; // Very low child mortality
-    } else if (age < 20) {
-      qx = 0.0005; // Low young adult mortality
-    } else {
-      // Gompertz law: mortality increases exponentially with age
-      const a = 0.0001;
-      const b = 0.085;
-      qx = Math.min(1, a * Math.exp(b * (age - 20)));
-    }
-
-    // Calculate lx (survivors out of 100,000)
-    let lx: number;
-    if (age === 0) {
-      lx = 100000;
-    } else {
-      const prevEntry = entries[age - 1];
-      lx = prevEntry.lx * (1 - prevEntry.qx);
-    }
-
-    // Rough estimate of remaining life expectancy
-    const ex = Math.max(0, baseLifeExpectancy - age);
-
-    entries.push({ age, qx, lx, ex });
+export class DataNotAvailableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DataNotAvailableError';
   }
+}
 
-  return {
-    country: countryCode,
-    sex,
-    year: 2024,
-    entries,
-  };
+/**
+ * Load life table for a given country and sex
+ *
+ * Fetches life table data from static JSON files generated from UN WPP-2024.
+ * Throws an error if the data is not available - we never use synthetic data
+ * to maintain scientific accuracy and transparency.
+ *
+ * @param countryCode - ISO 3166-1 alpha-3 country code (e.g., 'CHL', 'USA')
+ * @param sex - 'male' or 'female'
+ * @returns Promise<LifeTable> - Life table with mortality data by age
+ * @throws NetworkError if there's a connection issue
+ * @throws DataNotAvailableError if life table data is not available
+ */
+export async function getLifeTable(countryCode: string, sex: Sex): Promise<LifeTable> {
+  try {
+    const response = await fetch(`/data/life-tables/${countryCode}_${sex}.json`);
+
+    if (!response.ok) {
+      throw new DataNotAvailableError('No disponemos de datos demográficos oficiales');
+    }
+
+    return await response.json();
+  } catch (error) {
+    // Re-throw custom errors as-is
+    if (error instanceof DataNotAvailableError || error instanceof NetworkError) {
+      throw error;
+    }
+
+    // Check for specific network error types
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new NetworkError('Error de conexión');
+    }
+
+    // For other errors (timeouts, etc.), treat as network error
+    throw new NetworkError('Error de conexión');
+  }
 }
 
 /**
