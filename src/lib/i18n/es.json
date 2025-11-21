@@ -47,6 +47,7 @@
     "frequencySummary": "Resumen",
     "male": "Hombre",
     "female": "Mujer",
+    "sexTooltip": "Se refiere a factores biológicos que afectan la esperanza de vida. Personas trans pueden elegir según su perfil hormonal actual.",
     "calculate": "Calcular cuántas veces más",
     "directMode": "Quiero ver el resultado en modo directo",
     "directModeHelp": "El modo directo usa el mismo cálculo, pero con lenguaje más crudo.",
@@ -73,7 +74,9 @@
       "monthly": "veces por mes",
       "quarterly": "veces por trimestre",
       "yearly": "veces por año"
-    }
+    },
+    "resultsRegion": "Resultados del cálculo",
+    "resultsHeading": "Resultados del cálculo"
   },
   "results": {
     "normalMode": {
@@ -87,6 +90,12 @@
     },
     "directMode": {
       "title": "A este ritmo, te quedan pocas visitas con {relation}.",
+      "headlineFew": "A este ritmo, te quedan pocas visitas con {relation}.",
+      "headlineSome": "A este ritmo, te quedan unas {min} a {max} visitas con {relation}.",
+      "headlineMany": "Aún tienes bastantes visitas por delante con {relation}.",
+      "headlineLots": "Tienes muchas visitas por delante con {relation}.",
+      "bodyFew": "Si nada cambia, es probable que solo veas a {relation} unas {min} a {max} veces más en toda tu vida.",
+      "bodyMany": "Si nada cambia, verás a {relation} unas {min} a {max} veces más en toda tu vida.",
       "mainStat": "Si nada cambia, es probable que solo veas a {relation} unas {min} a {max} veces más en toda tu vida.",
       "closing": "No es una amenaza ni un pronóstico médico. Es aritmética aplicada a datos de mortalidad reales. Tú decides qué haces con eso hoy."
     },
@@ -98,6 +107,18 @@
     "timeAlreadySpent": "Tiempo ya compartido",
     "timeAlreadySpentPercent": "~{percent}% del tiempo típico juntos ya se vivió",
     "seeMethodology": "Ver cómo funciona",
+    "relationLabels": {
+      "mother": "tu madre",
+      "father": "tu padre",
+      "grandmother_maternal": "tu abuela materna",
+      "grandmother_paternal": "tu abuela paterna",
+      "grandfather_maternal": "tu abuelo materno",
+      "grandfather_paternal": "tu abuelo paterno",
+      "partner": "tu pareja",
+      "friend": "esta persona",
+      "other_family": "esta persona",
+      "other": "esta persona"
+    },
     "assumptions": {
       "title": "Qué calculamos y qué no",
       "source": "Datos: {source} ({year})",
@@ -107,6 +128,21 @@
       "point2": "No debe usarse para decisiones médicas",
       "point3": "No conoce enfermedades concretas ni factores individuales",
       "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)"
+    },
+    "errors": {
+      "loadingTitle": "Error al cargar los datos",
+      "unknown": "Error desconocido",
+      "retrySuggestions": "Puedes intentar:",
+      "retryReload": "Recargar la página",
+      "retryCountry": "Seleccionar otro país de la lista",
+      "retryLater": "Intentar de nuevo más tarde",
+      "noDataForCountry": "No disponemos de datos demográficos oficiales para {country}. Por favor selecciona otro país de la lista.",
+      "noDataGeneric": "No disponemos de datos demográficos oficiales para este país. Por favor selecciona otro país de la lista.",
+      "ageExceedsYou": "Las tablas de vida solo incluyen datos hasta 100 años. Si tienes más de 100 años, lamentablemente no podemos calcular la estadística con precisión.",
+      "ageExceedsThem": "Las tablas de vida solo incluyen datos hasta 100 años para la persona que quieres ver. Los datos más allá de esa edad no están disponibles en nuestra fuente.",
+      "networkError": "Error de conexión. Verifica tu conexión a internet e intenta de nuevo.",
+      "calculationError": "Error al calcular. Por favor verifica los datos ingresados.",
+      "calculating": "Calculando..."
     }
   },
   "methodology": {
@@ -183,6 +219,153 @@
     "useResponsibly": "Úsala con responsabilidad: como herramienta de reflexión, no de angustia. Como motivador para acción positiva (más tiempo juntos), no para resignación.",
     "seekSupport": "Si experimentas ansiedad al usar esta herramienta, busca apoyo emocional de personas de confianza o profesionales.",
     "understood": "Entiendo y acepto continuar"
+  },
+  "methodologyPage": {
+    "backToCalculator": "Volver a la calculadora",
+    "title": "Cómo funciona",
+    "subtitle": "Metodología, fuentes de datos y fundamento científico",
+    "abstract": "Este proyecto no predice el futuro. Utiliza <strong>tablas de vida demográficas oficiales</strong> para aproximar cuántas veces más podrías ver en persona a alguien importante, si las condiciones actuales se mantienen. Es un <strong>espejo estadístico</strong>, no una sentencia.",
+    "section1": {
+      "title": "1. Qué calculamos",
+      "mainText": "<strong>Visitas presenciales esperadas</strong> que quedan entre dos personas.",
+      "description": "Basado en la probabilidad de que ambos estén vivos en cada año futuro, multiplicado por la frecuencia de visitas que mantienes actualmente."
+    },
+    "section2": {
+      "title": "2. De dónde salen los datos",
+      "mainSource": {
+        "title": "UN World Population Prospects 2024 (WPP-2024)",
+        "subtitle": "Fuente principal de datos",
+        "provides": "Qué proporciona:",
+        "item1": "Tablas de vida por edad, país y sexo",
+        "item2": "Esperanza de vida residual (e<sub>x</sub>)",
+        "item3": "Probabilidad de supervivencia año a año",
+        "item4": "Cobertura: 237 países y áreas",
+        "organization": "Organización:",
+        "organizationValue": "Naciones Unidas, División de Población",
+        "update": "Actualización:",
+        "updateValue": "2024 (revisión más reciente)",
+        "viewSource": "→ Ver fuente oficial"
+      },
+      "validationSources": {
+        "title": "Fuentes de validación:",
+        "who": {
+          "name": "WHO Global Health Observatory",
+          "description": "Validación cruzada de datos de mortalidad"
+        },
+        "hmd": {
+          "name": "Human Mortality Database",
+          "description": "Precisión adicional para países con buena estadística"
+        }
+      }
+    },
+    "section3": {
+      "title": "3. Qué supuestos hacemos",
+      "assumption1": {
+        "title": "Frecuencia de visitas se mantiene estable",
+        "description": "Si actualmente ves a la persona 12 veces al año, asumimos que eso continuará. En la realidad puede aumentar o disminuir."
+      },
+      "assumption2": {
+        "title": "Usamos promedios poblacionales",
+        "description": "Las tablas de vida representan la experiencia promedio de una población, no consideran salud individual."
+      },
+      "assumption3": {
+        "title": "No incorporamos factores individuales",
+        "description": "No conocemos enfermedades específicas, hábitos de vida, condiciones particulares."
+      }
+    },
+    "section4": {
+      "title": "4. Qué NO hace esta herramienta",
+      "item1": "No predice cuándo morirá nadie",
+      "item2": "No debe usarse para decisiones médicas",
+      "item3": "No reemplaza el juicio personal o consejo profesional",
+      "item4": "No incorpora eventos imprevistos (accidentes, pandemias, etc.)"
+    },
+    "section5": {
+      "title": "5. Por qué creemos que mostrar este número es útil",
+      "foundationTitle": "Fundamento psicológico",
+      "paragraph1": "La <strong>Teoría de la Selectividad Socioemocional</strong> (Carstensen, 1999, 2021) demuestra que cuando las personas perciben que su tiempo futuro es limitado, priorizan relaciones cercanas y metas emocionales por encima de la exploración o acumulación de información.",
+      "paragraph2": "La gente tiende a <strong>subestimar cuán finito es su tiempo</strong> con los demás. Un número concreto ayuda a tomar decisiones más conscientes sobre prioridades.",
+      "referenceTitle": "Referencia científica:",
+      "referenceText": "Carstensen, L. L. (2021). Socioemotional Selectivity Theory: The Role of Perceived Endings in Human Motivation. <em>The Gerontologist</em>, 61(8), 1188–1196.",
+      "readArticle": "→ Leer artículo (acceso abierto)"
+    },
+    "timeUse": {
+      "title": "Contexto teórico: Uso del tiempo a lo largo de la vida",
+      "intro": "Datos del <strong>American Time Use Survey</strong> (Bureau of Labor Statistics, EE.UU.) y análisis de <strong>Our World in Data</strong> muestran que:",
+      "item1": "La mayor parte del tiempo con padres se concentra antes de los 20 años",
+      "item2": "Después de esa edad, la frecuencia de encuentros disminuye dramáticamente",
+      "item3": "El patrón es similar para abuelos, con concentración aún más temprana",
+      "conclusion": "Esto significa que <strong>la mayoría del tiempo ya se consumió</strong>, incluso cuando ambos siguen vivos.",
+      "whyNotImplemented": "<strong>¿Por qué no mostramos este dato?</strong> Decidimos no incluir el porcentaje de \"tiempo ya pasado\" en la calculadora porque el objetivo de esta herramienta es <strong>motivar acción hacia el futuro</strong>, no generar culpa sobre el pasado. Mostrar que \"ya pasaste el 85% del tiempo con tu madre\" puede provocar desesperanza o resignación, contradiciendo el propósito de la herramienta. Además, estos datos provienen de encuestas estadounidenses que pueden no reflejar la realidad de otras culturas donde la convivencia familiar es diferente.",
+      "viewData": "→ Ver datos de uso del tiempo"
+    },
+    "mathModel": {
+      "title": "Modelo matemático",
+      "stepByStep": "Cálculo paso a paso",
+      "notation": {
+        "title": "Notación (según Preston et al., 2001):",
+        "items": [
+          "<strong>l<sub>x</sub></strong> = número de supervivientes a edad exacta x en una cohorte hipotética de l<sub>0</sub> = 100,000",
+          "<strong>e<sub>x</sub></strong> = esperanza de vida residual a edad x (años esperados de vida restantes)",
+          "<strong>f</strong> = frecuencia de visitas por año (asumida constante)",
+          "<strong>T</strong> = horizonte temporal del cálculo"
+        ]
+      },
+      "step1": {
+        "title": "1. Función de supervivencia",
+        "description": "La probabilidad de que una persona de edad <em>a</em> sobreviva <em>t</em> años adicionales se calcula usando la función de supervivencia de la tabla de vida:",
+        "formula": "<sub>t</sub>p<sub>a</sub> = l<sub>a+t</sub> / l<sub>a</sub>",
+        "note": "Esta es la fórmula estándar de supervivencia condicional (Preston et al., Cap. 3)."
+      },
+      "step2": {
+        "title": "2. Horizonte temporal (T)",
+        "description": "Determinamos el horizonte de cálculo como el mínimo de las esperanzas de vida residuales de ambas personas:",
+        "formula": "T = min(e<sub>a₁</sub>, e<sub>a₂</sub>)",
+        "note": "Donde a₁ es tu edad y a₂ es la edad de la otra persona."
+      },
+      "step3": {
+        "title": "3. Probabilidad conjunta de supervivencia",
+        "description": "Asumiendo independencia entre las muertes de ambas personas, la probabilidad de que ambos estén vivos en el año t es:",
+        "formula": "P(ambos vivos en t) = <sub>t</sub>p<sub>a₁</sub> × <sub>t</sub>p<sub>a₂</sub>",
+        "note": "Este supuesto de independencia es estándar en demografía formal."
+      },
+      "step4": {
+        "title": "4. Visitas esperadas (resultado principal)",
+        "description": "El número esperado de visitas es la suma ponderada de la frecuencia por la probabilidad de supervivencia conjunta:",
+        "formula": "E[visitas] = Σ<sub>t=0</sub><sup>T</sup> f × <sub>t</sub>p<sub>a₁</sub> × <sub>t</sub>p<sub>a₂</sub>",
+        "note": "Cada año contribuye proporcionalmente a la probabilidad de que ambos sigan vivos."
+      },
+      "step5": {
+        "title": "5. Rangos de incertidumbre",
+        "description": "Presentamos un rango aproximado (p25-p75) aplicando factores de ajuste conservador/optimista sobre la media:",
+        "formula": "Rango = [0.7 × E[visitas], 1.3 × E[visitas]]",
+        "note": "Esto captura variabilidad sin requerir simulación Monte Carlo completa."
+      },
+      "reference": "Referencia metodológica:",
+      "referenceText": "Preston, S. H., Heuveline, P., & Guillot, M. (2001). <em>Demography: Measuring and Modeling Population Processes</em>. Blackwell Publishers. Capítulos 2-3."
+    },
+    "transparency": {
+      "title": "Transparencia y código abierto",
+      "intro": "Todo el código de este proyecto es <strong>abierto y auditable</strong>:",
+      "item1": "Código fuente completo disponible en GitHub",
+      "item2": "Modelo matemático implementado en TypeScript",
+      "item3": "Script de procesamiento de datos incluido",
+      "item4": "Todas las fuentes documentadas con enlaces directos",
+      "viewCode": "Ver código en GitHub"
+    },
+    "references": {
+      "title": "Referencias completas",
+      "demographicData": "Datos demográficos",
+      "ref1": "United Nations, Department of Economic and Social Affairs, Population Division (2024). <em>World Population Prospects 2024</em>.",
+      "ref2": "World Health Organization (2024). <em>Global Health Observatory</em>.",
+      "ref3": "Human Mortality Database. University of California, Berkeley (USA), and Max Planck Institute for Demographic Research (Germany).",
+      "timeUse": "Uso del tiempo",
+      "ref4": "Roser, M., Ritchie, H., & Spooner, F. (2023). Time Use. <em>Our World in Data</em>.",
+      "ref5": "U.S. Bureau of Labor Statistics (2024). <em>American Time Use Survey</em>.",
+      "theoreticalFramework": "Marco teórico",
+      "ref6": "Carstensen, L. L. (2021). Socioemotional Selectivity Theory: The Role of Perceived Endings in Human Motivation. <em>The Gerontologist</em>, 61(8), 1188–1196.",
+      "ref7": "Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. <em>American Psychologist</em>, 54(3), 165–181."
+    }
   },
   "about": {
     "title": "Acerca de este proyecto",
