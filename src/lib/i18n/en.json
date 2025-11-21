@@ -227,7 +227,10 @@
     "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
     "networkError": "Connection error. Check your internet connection and try again.",
     "calculationError": "Calculation error. Please verify the entered data.",
-    "calculating": "Calculating..."
+    "calculating": "Calculating...",
+    "boundaryTitle": "Something went wrong",
+    "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
+    "boundaryReload": "Reload page"
   },
   "methodologyPage": {
     "backToCalculator": "Back to calculator",
