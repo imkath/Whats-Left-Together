@@ -151,7 +151,10 @@
       "ageExceedsThem": "Las tablas de vida solo incluyen datos hasta 100 años para la persona que quieres ver. Los datos más allá de esa edad no están disponibles en nuestra fuente.",
       "networkError": "Error de conexión. Verifica tu conexión a internet e intenta de nuevo.",
       "calculationError": "Error al calcular. Por favor verifica los datos ingresados.",
-      "calculating": "Calculando..."
+      "calculating": "Calculando...",
+      "boundaryTitle": "Algo salió mal",
+      "boundaryMessage": "Ocurrió un error inesperado. Por favor, recarga la página e intenta de nuevo.",
+      "boundaryReload": "Recargar página"
     }
   },
   "methodology": {

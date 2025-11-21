@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Info } from 'lucide-react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
+import ErrorBoundary from './ErrorBoundary';
 import { getAvailableCountries } from '@/lib/data';
 import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/frequency';
 import { relationshipInputSchema } from '@/lib/validation/schemas';
@@ -454,7 +455,9 @@ export default function Calculator() {
           <h2 ref={resultsHeadingRef} tabIndex={-1} className="sr-only">
             {t('resultsHeading') || 'Calculation Results'}
           </h2>
-          <Results input={formData} directMode={directMode} />
+          <ErrorBoundary>
+            <Results input={formData} directMode={directMode} />
+          </ErrorBoundary>
         </div>
       )}
     </div>
