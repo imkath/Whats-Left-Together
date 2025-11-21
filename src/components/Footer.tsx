@@ -24,7 +24,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/[repo]" className="hover:text-white transition-colors">
+                <a
+                  href="https://github.com/imkath/Whats-Left-Together"
+                  className="hover:text-white transition-colors"
+                >
                   {t('github')}
                 </a>
               </li>
