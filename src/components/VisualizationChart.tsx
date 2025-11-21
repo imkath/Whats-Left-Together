@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import type { SurvivalProbability } from '@/types';
 
 interface VisualizationChartProps {
@@ -7,11 +8,13 @@ interface VisualizationChartProps {
 }
 
 export default function VisualizationChart({ data }: VisualizationChartProps) {
+  const t = useTranslations('results.chart');
+
   // Validate data
   if (!data || data.length === 0) {
     return (
       <div className="w-full h-64 bg-neutral-50 rounded-lg p-4 flex items-center justify-center text-neutral-500">
-        No hay datos suficientes para mostrar el gráfico
+        {t('noData')}
       </div>
     );
   }
@@ -24,7 +27,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
   if (displayData.length < 2) {
     return (
       <div className="w-full h-64 bg-neutral-50 rounded-lg p-4 flex items-center justify-center text-neutral-500">
-        No hay datos suficientes para mostrar el gráfico
+        {t('noData')}
       </div>
     );
   }
@@ -102,9 +105,9 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
 
         {/* X-axis label */}
         <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-neutral-600 px-4">
-          <span>Ahora</span>
-          <span>Años futuros</span>
-          <span>+{data.length} años</span>
+          <span>{t('now')}</span>
+          <span>{t('futureYears')}</span>
+          <span>{t('plusYears', { years: data.length })}</span>
         </div>
       </div>
 
@@ -112,15 +115,15 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
       <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
         <div className="flex items-center gap-2">
           <div className="w-4 h-1 bg-neutral-900 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">Ambos vivos</span>
+          <span className="text-neutral-700 dark:text-neutral-300">{t('bothAlive')}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-0.5 bg-blue-500 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">Tú vivo/a</span>
+          <span className="text-neutral-700 dark:text-neutral-300">{t('youAlive')}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-0.5 bg-orange-500 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">Ellos vivos</span>
+          <span className="text-neutral-700 dark:text-neutral-300">{t('themAlive')}</span>
         </div>
       </div>
     </div>

@@ -129,6 +129,15 @@
       "point3": "No conoce enfermedades concretas ni factores individuales",
       "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)"
     },
+    "chart": {
+      "noData": "No hay datos suficientes para mostrar el gráfico",
+      "now": "Ahora",
+      "futureYears": "Años futuros",
+      "plusYears": "+{years} años",
+      "bothAlive": "Ambos vivos",
+      "youAlive": "Tú vivo/a",
+      "themAlive": "Ellos vivos"
+    },
     "errors": {
       "loadingTitle": "Error al cargar los datos",
       "unknown": "Error desconocido",

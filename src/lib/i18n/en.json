@@ -128,6 +128,15 @@
       "point2": "It shouldn't be used for medical decisions",
       "point3": "It doesn't know specific illnesses or individual factors",
       "point4": "Visit frequency is assumed stable (in real life it can change)"
+    },
+    "chart": {
+      "noData": "Not enough data to display the chart",
+      "now": "Now",
+      "futureYears": "Future years",
+      "plusYears": "+{years} years",
+      "bothAlive": "Both alive",
+      "youAlive": "You alive",
+      "themAlive": "Them alive"
     }
   },
   "methodology": {

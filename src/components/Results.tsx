@@ -72,7 +72,6 @@ export default function Results({ input, directMode = false }: ResultsProps) {
 
         setResult(calculation);
       } catch (err) {
-        console.error('Calculation error:', err);
         if (err instanceof NetworkError) {
           setErrorCode('networkError');
         } else {
