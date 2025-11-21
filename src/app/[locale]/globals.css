@@ -13,7 +13,7 @@
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900;
+    @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100;
   }
 
   h1,
@@ -42,23 +42,28 @@
   .btn-primary {
     @apply px-6 py-3 bg-neutral-900 text-white rounded-lg
            hover:bg-neutral-800 transition-all
-           font-medium shadow-md hover:shadow-lg;
+           font-medium shadow-md hover:shadow-lg
+           dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200;
   }
 
   .btn-secondary {
     @apply px-6 py-3 bg-white text-neutral-900 rounded-lg
            hover:bg-neutral-50 transition-all
-           font-medium border-2 border-neutral-300 hover:border-neutral-400;
+           font-medium border-2 border-neutral-300 hover:border-neutral-400
+           dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 dark:hover:border-neutral-500;
   }
 
   .input-field {
     @apply w-full px-4 py-2 border-2 border-neutral-300 rounded-lg
            focus:ring-2 focus:ring-neutral-400 focus:border-neutral-900
-           transition-all outline-none;
+           transition-all outline-none
+           dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100
+           dark:focus:border-neutral-400;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-neutral-200 p-6;
+    @apply bg-white rounded-xl shadow-sm border border-neutral-200 p-6
+           dark:bg-neutral-800 dark:border-neutral-700;
   }
 
   .container-custom {

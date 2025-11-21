@@ -7,7 +7,7 @@ export default function Footer() {
   const locale = useLocale();
 
   return (
-    <footer className="bg-neutral-900 text-neutral-300 py-12">
+    <footer className="bg-neutral-900 dark:bg-neutral-950 text-neutral-300 py-12">
       <div className="container-custom">
         <div className="grid md:grid-cols-3 gap-8">
           <div>

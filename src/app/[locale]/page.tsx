@@ -35,40 +35,40 @@ export default function HomePage() {
       <Hero />
 
       {/* Calculator section */}
-      <section id="calculator" className="py-16 bg-white">
+      <section id="calculator" className="py-16 bg-white dark:bg-neutral-800">
         <div className="container-custom">
           <Calculator />
         </div>
       </section>
 
       {/* Why it matters section */}
-      <section className="py-16 bg-neutral-100">
+      <section className="py-16 bg-neutral-100 dark:bg-neutral-900">
         <div className="container-custom">
           <h2 className="text-center mb-8">{t('title')}</h2>
 
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             <div className="card hover:shadow-md transition-shadow">
-              <div className="mb-4 text-neutral-700">
+              <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                 <Clock size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section1.title')}</h3>
-              <p className="text-neutral-700">{t('section1.text')}</p>
+              <p className="text-neutral-700 dark:text-neutral-300">{t('section1.text')}</p>
             </div>
 
             <div className="card hover:shadow-md transition-shadow">
-              <div className="mb-4 text-neutral-700">
+              <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                 <Heart size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section2.title')}</h3>
-              <p className="text-neutral-700">{t('section2.text')}</p>
+              <p className="text-neutral-700 dark:text-neutral-300">{t('section2.text')}</p>
             </div>
 
             <div className="card hover:shadow-md transition-shadow">
-              <div className="mb-4 text-neutral-700">
+              <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                 <Target size={32} />
               </div>
               <h3 className="text-xl mb-4">{t('section3.title')}</h3>
-              <p className="text-neutral-700">{t('section3.text')}</p>
+              <p className="text-neutral-700 dark:text-neutral-300">{t('section3.text')}</p>
             </div>
           </div>
 

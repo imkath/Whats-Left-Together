@@ -3,6 +3,8 @@ import { Inter, Merriweather } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
 
 const inter = Inter({
@@ -139,20 +141,27 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={`${inter.variable} ${merriweather.variable}`}>
+    <html
+      lang={locale}
+      className={`${inter.variable} ${merriweather.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans bg-neutral-50 text-neutral-900 antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="fixed top-4 right-4 z-50">
-            <LanguageSwitcher />
-          </div>
-          {children}
-        </NextIntlClientProvider>
+      <body className="font-sans bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased">
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+              <ThemeToggle />
+              <LanguageSwitcher />
+            </div>
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
