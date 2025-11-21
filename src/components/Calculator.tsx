@@ -1,15 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { Info } from 'lucide-react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import { getAvailableCountries } from '@/lib/data';
+import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/frequency';
+import { relationshipInputSchema } from '@/lib/validation/schemas';
+import type { ZodError } from 'zod';
 
 export default function Calculator() {
   const t = useTranslations('calculator');
   const locale = useLocale();
   const countries = getAvailableCountries();
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const [formData, setFormData] = useState<RelationshipInput>({
     you: {
@@ -18,11 +24,11 @@ export default function Calculator() {
       country: 'CHL',
     },
     them: {
-      age: 55,
+      age: 75,
       sex: 'female' as Sex,
       country: 'CHL',
     },
-    relationType: 'mother' as RelationType,
+    relationType: 'grandmother_maternal' as RelationType,
     visitsPerYear: 12,
     frequencyPeriod: 'monthly' as FrequencyPeriod,
     timesPerPeriod: 1,
@@ -30,42 +36,34 @@ export default function Calculator() {
 
   const [showResults, setShowResults] = useState(false);
   const [directMode, setDirectMode] = useState(false);
-
-  // Helper function to get max times per period
-  const getMaxTimesForPeriod = (period: FrequencyPeriod): number => {
-    switch (period) {
-      case 'weekly':
-        return 7;
-      case 'monthly':
-        return 31;
-      case 'quarterly':
-        return 90;
-      case 'yearly':
-        return 365;
-      default:
-        return 365;
-    }
-  };
-
-  // Helper function to convert period + times to visitsPerYear
-  const calculateVisitsPerYear = (period: FrequencyPeriod, times: number): number => {
-    switch (period) {
-      case 'weekly':
-        return times * 52;
-      case 'monthly':
-        return times * 12;
-      case 'quarterly':
-        return times * 4;
-      case 'yearly':
-        return times;
-      default:
-        return times;
-    }
-  };
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setValidationErrors({});
+
+    // Validate with Zod
+    const result = relationshipInputSchema.safeParse(formData);
+
+    if (!result.success) {
+      // Convert Zod errors to a more usable format
+      const errors: Record<string, string> = {};
+      (result.error as ZodError).errors.forEach((error) => {
+        const path = error.path.join('.');
+        errors[path] = error.message;
+      });
+      setValidationErrors(errors);
+      return;
+    }
+
     setShowResults(true);
+
+    // Scroll to results and focus for accessibility
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Focus on results heading for screen readers
+      resultsHeadingRef.current?.focus();
+    }, 100);
   };
 
   const updateFormData = (section: 'you' | 'them', field: string, value: string | number) => {
@@ -88,8 +86,19 @@ export default function Calculator() {
     }));
   };
 
-  const updateTimesPerPeriod = (times: number) => {
+  const updateTimesPerPeriod = (times: number | null) => {
     const period = formData.frequencyPeriod || 'monthly';
+
+    if (times === null || times === 0) {
+      // Allow empty/zero temporarily for user to type a new number
+      setFormData((prev) => ({
+        ...prev,
+        timesPerPeriod: 0, // Keep as 0 to allow user to type
+        visitsPerYear: 0,
+      }));
+      return;
+    }
+
     const maxTimes = getMaxTimesForPeriod(period);
     const validTimes = Math.min(Math.max(1, times), maxTimes);
 
@@ -104,18 +113,26 @@ export default function Calculator() {
     <div id="calculator" className="space-y-8">
       <div className="text-center mb-8">
         <h2>{t('title')}</h2>
-        <p className="text-neutral-600 mt-2">{t('subtitle')}</p>
+        <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="card max-w-3xl mx-auto">
         {/* Your information */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('yourInfo')}</h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
+            {t('yourInfo')}
+          </h3>
 
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('age')}</label>
+              <label
+                htmlFor="your-age"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
+                {t('age')}
+              </label>
               <input
+                id="your-age"
                 type="number"
                 min="0"
                 max="100"
@@ -130,8 +147,24 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('sex')}</label>
+              <label
+                htmlFor="your-sex"
+                className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
+                {t('sex')}
+                <span className="relative group">
+                  <Info
+                    size={14}
+                    strokeWidth={2.5}
+                    className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 cursor-help"
+                  />
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 text-center pointer-events-none z-10 whitespace-normal">
+                    {t('sexTooltip')}
+                  </span>
+                </span>
+              </label>
               <select
+                id="your-sex"
                 value={formData.you.sex}
                 onChange={(e) => updateFormData('you', 'sex', e.target.value)}
                 className="input-field"
@@ -143,10 +176,14 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label
+                htmlFor="your-country"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
                 {t('country')}
               </label>
               <select
+                id="your-country"
                 value={formData.you.country}
                 onChange={(e) => updateFormData('you', 'country', e.target.value)}
                 className="input-field"
@@ -164,14 +201,20 @@ export default function Calculator() {
 
         {/* Their information */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('theirInfo')}</h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
+            {t('theirInfo')}
+          </h3>
 
           <div className="grid md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label
+                htmlFor="relationship"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
                 {t('relationship')}
               </label>
               <select
+                id="relationship"
                 value={formData.relationType}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, relationType: e.target.value as RelationType }))
@@ -193,11 +236,17 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('age')}</label>
+              <label
+                htmlFor="their-age"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
+                {t('age')}
+              </label>
               <input
+                id="their-age"
                 type="number"
                 min="0"
-                max="120"
+                max="100"
                 value={formData.them.age === 0 ? '' : formData.them.age}
                 onChange={(e) => {
                   const value = e.target.value === '' ? 0 : parseInt(e.target.value);
@@ -209,8 +258,24 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">{t('sex')}</label>
+              <label
+                htmlFor="their-sex"
+                className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
+                {t('sex')}
+                <span className="relative group">
+                  <Info
+                    size={14}
+                    strokeWidth={2.5}
+                    className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 cursor-help"
+                  />
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 text-center pointer-events-none z-10 whitespace-normal">
+                    {t('sexTooltip')}
+                  </span>
+                </span>
+              </label>
               <select
+                id="their-sex"
                 value={formData.them.sex}
                 onChange={(e) => updateFormData('them', 'sex', e.target.value)}
                 className="input-field"
@@ -222,10 +287,14 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label
+                htmlFor="their-country"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
                 {t('country')}
               </label>
               <select
+                id="their-country"
                 value={formData.them.country}
                 onChange={(e) => updateFormData('them', 'country', e.target.value)}
                 className="input-field"
@@ -243,15 +312,21 @@ export default function Calculator() {
 
         {/* Frequency */}
         <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200">{t('frequency')}</h3>
+          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
+            {t('frequency')}
+          </h3>
 
           <div className="space-y-6">
             {/* Period selector */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-3">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-3">
                 {t('frequencyPeriodLabel')}
               </label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div
+                className="grid grid-cols-2 md:grid-cols-4 gap-2"
+                role="group"
+                aria-label={t('frequencyPeriodLabel')}
+              >
                 {[
                   { label: t('frequencyPeriods.weekly'), value: 'weekly' as FrequencyPeriod },
                   { label: t('frequencyPeriods.monthly'), value: 'monthly' as FrequencyPeriod },
@@ -262,10 +337,11 @@ export default function Calculator() {
                     key={period.value}
                     type="button"
                     onClick={() => updateFrequencyPeriod(period.value)}
+                    aria-pressed={formData.frequencyPeriod === period.value}
                     className={`px-4 py-2 rounded-lg border transition-colors ${
                       formData.frequencyPeriod === period.value
-                        ? 'bg-primary-600 text-white border-primary-600'
-                        : 'bg-white border-neutral-300 hover:border-primary-400'
+                        ? 'bg-primary-600 text-white border-primary-600 dark:bg-primary-400 dark:text-neutral-900'
+                        : 'bg-white border-neutral-300 hover:border-primary-400 dark:bg-neutral-700 dark:border-neutral-600 dark:hover:border-neutral-500'
                     }`}
                   >
                     {period.label}
@@ -276,10 +352,14 @@ export default function Calculator() {
 
             {/* Times per period */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label
+                htmlFor="times-per-period"
+                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+              >
                 {t('timesPerPeriodLabel')}
               </label>
               <input
+                id="times-per-period"
                 type="number"
                 min="1"
                 max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
@@ -289,13 +369,16 @@ export default function Calculator() {
                     : formData.timesPerPeriod
                 }
                 onChange={(e) => {
-                  const value = e.target.value === '' ? 1 : parseInt(e.target.value);
+                  const value = e.target.value === '' ? null : parseInt(e.target.value);
                   updateTimesPerPeriod(value);
                 }}
-                className="input-field max-w-xs"
-                required
+                className={`input-field max-w-xs ${validationErrors['timesPerPeriod'] ? 'border-red-500' : ''}`}
+                placeholder="1"
               />
-              <p className="text-xs text-neutral-600 mt-1">
+              {validationErrors['timesPerPeriod'] && (
+                <p className="text-xs text-red-600 mt-1">{validationErrors['timesPerPeriod']}</p>
+              )}
+              <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-1">
                 {t('timesPerPeriodNote', {
                   max: getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly'),
                   period: t(
@@ -306,8 +389,8 @@ export default function Calculator() {
             </div>
 
             {/* Visual summary */}
-            <div className="p-4 bg-primary-50 rounded-lg border border-primary-200">
-              <p className="text-sm text-primary-900">
+            <div className="p-4 bg-primary-50 dark:bg-neutral-700 rounded-lg border border-primary-200 dark:border-neutral-600">
+              <p className="text-sm text-primary-900 dark:text-neutral-100">
                 <span className="font-semibold">{t('frequencySummary')}:</span>{' '}
                 {formData.timesPerPeriod || 1}{' '}
                 {t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)} ={' '}
@@ -317,8 +400,24 @@ export default function Calculator() {
           </div>
         </div>
 
+        {/* Validation Errors Summary */}
+        {Object.keys(validationErrors).length > 0 && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <h4 className="text-sm font-semibold text-red-800 mb-2">
+              {locale === 'es'
+                ? 'Por favor corrige los siguientes errores:'
+                : 'Please fix the following errors:'}
+            </h4>
+            <ul className="text-sm text-red-700 space-y-1">
+              {Object.entries(validationErrors).map(([key, message]) => (
+                <li key={key}>• {message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* Direct mode option */}
-        <div className="mb-8 p-4 bg-neutral-50 rounded-lg">
+        <div className="mb-8 p-4 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -327,8 +426,12 @@ export default function Calculator() {
               className="mt-1"
             />
             <div>
-              <span className="font-medium text-neutral-900">{t('directMode')}</span>
-              <p className="text-sm text-neutral-600 mt-1">{t('directModeHelp')}</p>
+              <span className="font-medium text-neutral-900 dark:text-neutral-100">
+                {t('directMode')}
+              </span>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                {t('directModeHelp')}
+              </p>
             </div>
           </label>
         </div>
@@ -342,7 +445,15 @@ export default function Calculator() {
 
       {/* Results */}
       {showResults && (
-        <div className="mt-12">
+        <div
+          ref={resultsRef}
+          className="mt-12 scroll-mt-20"
+          role="region"
+          aria-label={t('resultsRegion') || 'Results'}
+        >
+          <h2 ref={resultsHeadingRef} tabIndex={-1} className="sr-only">
+            {t('resultsHeading') || 'Calculation Results'}
+          </h2>
           <Results input={formData} directMode={directMode} />
         </div>
       )}
