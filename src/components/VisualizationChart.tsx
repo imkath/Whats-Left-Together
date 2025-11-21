@@ -1,6 +1,16 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 import type { SurvivalProbability } from '@/types';
 
 interface VisualizationChartProps {
@@ -21,7 +31,15 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
 
   // Take every Nth point to avoid overcrowding (show ~20-30 points max)
   const step = Math.max(1, Math.floor(data.length / 25));
-  const displayData = data.filter((_, i) => i % step === 0);
+  const displayData = data
+    .filter((_, i) => i % step === 0)
+    .map((d) => ({
+      ...d,
+      // Convert to percentages for display
+      bothAlivePercent: Math.round((d.bothAlive || 0) * 100),
+      youAlivePercent: Math.round((d.youAlive || 0) * 100),
+      themAlivePercent: Math.round((d.themAlive || 0) * 100),
+    }));
 
   // Ensure we have at least 2 points for the chart
   if (displayData.length < 2) {
@@ -34,103 +52,75 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
 
   return (
     <div className="w-full">
-      {/* Simple SVG chart - no external dependencies needed */}
-      <div className="relative h-64 bg-neutral-50 rounded-lg p-4">
-        <svg
-          viewBox="0 0 800 200"
-          className="w-full h-full"
-          preserveAspectRatio="none"
-          role="img"
-          aria-label={t('bothAlive') + ', ' + t('youAlive') + ', ' + t('themAlive')}
-        >
-          {/* Grid lines */}
-          {[0, 0.25, 0.5, 0.75, 1.0].map((value) => {
-            const y = 200 - value * 200;
-            return (
-              <g key={value}>
-                <line x1="0" y1={y} x2="800" y2={y} stroke="#e5e7eb" strokeWidth="1" />
-                <text
-                  x="-5"
-                  y={y}
-                  fontSize="10"
-                  fill="#6b7280"
-                  textAnchor="end"
-                  dominantBaseline="middle"
-                >
-                  {Math.round(value * 100)}%
-                </text>
-              </g>
-            );
-          })}
-
-          {/* Lines */}
-          {/* Both alive (main line) - dark/black */}
-          <polyline
-            points={displayData
-              .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800;
-                const y = 200 - (d.bothAlive || 0) * 200;
-                return `${x},${y}`;
-              })
-              .join(' ')}
-            fill="none"
-            stroke="#171717"
-            strokeWidth="3"
-          />
-
-          {/* You alive - blue */}
-          <polyline
-            points={displayData
-              .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800;
-                const y = 200 - (d.youAlive || 0) * 200;
-                return `${x},${y}`;
-              })
-              .join(' ')}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth="2"
-            strokeDasharray="6,3"
-          />
-
-          {/* Them alive - orange */}
-          <polyline
-            points={displayData
-              .map((d, i) => {
-                const x = (i / (displayData.length - 1)) * 800;
-                const y = 200 - (d.themAlive || 0) * 200;
-                return `${x},${y}`;
-              })
-              .join(' ')}
-            fill="none"
-            stroke="#f97316"
-            strokeWidth="2"
-            strokeDasharray="6,3"
-          />
-        </svg>
-
-        {/* X-axis label */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-neutral-600 px-4">
-          <span>{t('now')}</span>
-          <span>{t('futureYears')}</span>
-          <span>{t('plusYears', { years: data.length })}</span>
-        </div>
-      </div>
-
-      {/* Legend */}
-      <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-neutral-900 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">{t('bothAlive')}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-0.5 bg-blue-500 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">{t('youAlive')}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-0.5 bg-orange-500 rounded"></div>
-          <span className="text-neutral-700 dark:text-neutral-300">{t('themAlive')}</span>
-        </div>
+      <div className="h-64 bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={displayData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis
+              dataKey="year"
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(value) => (value === 0 ? t('now') : `+${value}`)}
+            />
+            <YAxis
+              domain={[0, 100]}
+              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tickFormatter={(value) => `${value}%`}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '12px',
+              }}
+              formatter={(value: number, name: string) => {
+                const labels: Record<string, string> = {
+                  bothAlivePercent: t('bothAlive'),
+                  youAlivePercent: t('youAlive'),
+                  themAlivePercent: t('themAlive'),
+                };
+                return [`${value}%`, labels[name] || name];
+              }}
+              labelFormatter={(label) => `${t('futureYears')}: +${label}`}
+            />
+            <Legend
+              formatter={(value: string) => {
+                const labels: Record<string, string> = {
+                  bothAlivePercent: t('bothAlive'),
+                  youAlivePercent: t('youAlive'),
+                  themAlivePercent: t('themAlive'),
+                };
+                return labels[value] || value;
+              }}
+            />
+            <Line
+              type="monotone"
+              dataKey="bothAlivePercent"
+              stroke="#171717"
+              strokeWidth={3}
+              dot={false}
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="youAlivePercent"
+              stroke="#3b82f6"
+              strokeWidth={2}
+              strokeDasharray="6 3"
+              dot={false}
+              activeDot={{ r: 5 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="themAlivePercent"
+              stroke="#f97316"
+              strokeWidth={2}
+              strokeDasharray="6 3"
+              dot={false}
+              activeDot={{ r: 5 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
