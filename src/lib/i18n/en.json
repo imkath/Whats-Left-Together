@@ -47,6 +47,7 @@
     "frequencySummary": "Summary",
     "male": "Male",
     "female": "Female",
+    "sexTooltip": "This refers to biological factors affecting life expectancy. Transgender users may choose based on their current hormonal profile.",
     "calculate": "Calculate remaining visits",
     "directMode": "I want to see the result in direct mode",
     "directModeHelp": "Direct mode uses the same calculation, but with blunter language.",
@@ -73,7 +74,9 @@
       "monthly": "times per month",
       "quarterly": "times per quarter",
       "yearly": "times per year"
-    }
+    },
+    "resultsRegion": "Calculation results",
+    "resultsHeading": "Calculation results"
   },
   "results": {
     "normalMode": {
@@ -87,6 +90,12 @@
     },
     "directMode": {
       "title": "At this rate, you don't have many visits left with {relation}.",
+      "headlineFew": "At this rate, you don't have many visits left with {relation}.",
+      "headlineSome": "At this rate, you have about {min} to {max} visits left with {relation}.",
+      "headlineMany": "You still have quite a few visits ahead with {relation}.",
+      "headlineLots": "You have many visits ahead with {relation}.",
+      "bodyFew": "If nothing changes, you will likely only see {relation} about {min} to {max} more times in your entire life.",
+      "bodyMany": "If nothing changes, you will see {relation} about {min} to {max} more times in your life.",
       "mainStat": "If nothing changes, you will likely only see {relation} about {min} to {max} more times in your entire life.",
       "closing": "This is not a threat or a medical prognosis. It is arithmetic applied to real mortality data. You decide what you do with that today."
     },
@@ -98,6 +107,18 @@
     "timeAlreadySpent": "Time already shared",
     "timeAlreadySpentPercent": "~{percent}% of typical time together already lived",
     "seeMethodology": "See how it works",
+    "relationLabels": {
+      "mother": "your mother",
+      "father": "your father",
+      "grandmother_maternal": "your maternal grandmother",
+      "grandmother_paternal": "your paternal grandmother",
+      "grandfather_maternal": "your maternal grandfather",
+      "grandfather_paternal": "your paternal grandfather",
+      "partner": "your partner",
+      "friend": "this person",
+      "other_family": "this person",
+      "other": "this person"
+    },
     "assumptions": {
       "title": "What we calculate and what we don't",
       "source": "Data: {source} ({year})",
@@ -183,6 +204,168 @@
     "useResponsibly": "Use it responsibly: as a tool for reflection, not distress. As a motivator for positive action (more time together), not resignation.",
     "seekSupport": "If you experience anxiety when using this tool, seek emotional support from trusted people or professionals.",
     "understood": "I understand and accept to continue"
+  },
+  "errors": {
+    "loadingTitle": "Error loading data",
+    "unknown": "Unknown error",
+    "retrySuggestions": "You can try:",
+    "retryReload": "Reload the page",
+    "retryCountry": "Select another country from the list",
+    "retryLater": "Try again later",
+    "noDataForCountry": "We don't have official demographic data for {country}. Please select another country from the list.",
+    "noDataGeneric": "We don't have official demographic data for this country. Please select another country from the list.",
+    "ageExceedsYou": "Life tables only include data up to age 100. If you are over 100 years old, unfortunately we cannot calculate the statistic with precision.",
+    "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
+    "networkError": "Connection error. Check your internet connection and try again.",
+    "calculationError": "Calculation error. Please verify the entered data.",
+    "calculating": "Calculating..."
+  },
+  "methodologyPage": {
+    "backToCalculator": "Back to calculator",
+    "title": "How It Works",
+    "subtitle": "Methodology, data sources, and scientific foundation",
+    "abstract": "This project does not predict the future. It uses <strong>official demographic life tables</strong> to approximate how many more times you might see someone important in person, if current conditions persist. It's a <strong>statistical mirror</strong>, not a sentence.",
+    "section1": {
+      "title": "1. What we calculate",
+      "mainText": "<strong>Expected in-person visits</strong> remaining between two people.",
+      "description": "Based on the probability that both are alive in each future year, multiplied by the visit frequency you currently maintain."
+    },
+    "section2": {
+      "title": "2. Where the data comes from",
+      "mainSource": {
+        "title": "UN World Population Prospects 2024 (WPP-2024)",
+        "subtitle": "Primary data source",
+        "provides": "What it provides:",
+        "item1": "Life tables by age, country, and sex",
+        "item2": "Residual life expectancy (e<sub>x</sub>)",
+        "item3": "Year-by-year survival probability",
+        "item4": "Coverage: 237 countries and areas",
+        "organization": "Organization:",
+        "organizationValue": "United Nations, Population Division",
+        "update": "Update:",
+        "updateValue": "2024 (most recent revision)",
+        "viewSource": "View official source"
+      },
+      "validationSources": {
+        "title": "Validation sources:",
+        "who": {
+          "name": "WHO Global Health Observatory",
+          "description": "Cross-validation of mortality data"
+        },
+        "hmd": {
+          "name": "Human Mortality Database",
+          "description": "Additional precision for countries with good statistics"
+        }
+      }
+    },
+    "section3": {
+      "title": "3. What assumptions we make",
+      "assumption1": {
+        "title": "Visit frequency remains stable",
+        "description": "If you currently see the person 12 times a year, we assume that will continue. In reality it may increase or decrease."
+      },
+      "assumption2": {
+        "title": "We use population averages",
+        "description": "Life tables represent the average experience of a population, they don't consider individual health."
+      },
+      "assumption3": {
+        "title": "We don't incorporate individual factors",
+        "description": "We don't know specific illnesses, lifestyle habits, or particular conditions."
+      }
+    },
+    "section4": {
+      "title": "4. What this tool does NOT do",
+      "item1": "It does not predict when anyone will die",
+      "item2": "It should not be used for medical decisions",
+      "item3": "It does not replace personal judgment or professional advice",
+      "item4": "It does not incorporate unforeseen events (accidents, pandemics, etc.)"
+    },
+    "section5": {
+      "title": "5. Why we believe showing this number is useful",
+      "foundationTitle": "Psychological foundation",
+      "paragraph1": "<strong>Socioemotional Selectivity Theory</strong> (Carstensen, 1999, 2021) demonstrates that when people perceive their future time as limited, they prioritize close relationships and emotional goals over exploration or information accumulation.",
+      "paragraph2": "People tend to <strong>underestimate how finite their time</strong> with others is. A concrete number helps make more conscious decisions about priorities.",
+      "referenceTitle": "Scientific reference:",
+      "referenceText": "Carstensen, L. L. (2021). Socioemotional Selectivity Theory: The Role of Perceived Endings in Human Motivation. <em>The Gerontologist</em>, 61(8), 1188–1196.",
+      "readArticle": "Read article (open access)"
+    },
+    "timeUse": {
+      "title": "Theoretical context: Time use throughout life",
+      "intro": "Data from the <strong>American Time Use Survey</strong> (Bureau of Labor Statistics, USA) and analysis from <strong>Our World in Data</strong> show that:",
+      "item1": "Most time with parents is concentrated before age 20",
+      "item2": "After that age, frequency of encounters drops dramatically",
+      "item3": "The pattern is similar for grandparents, with even earlier concentration",
+      "conclusion": "This means that <strong>most of the time has already been spent</strong>, even when both are still alive.",
+      "whyNotImplemented": "<strong>Why don't we show this data?</strong> We decided not to include the \"time already spent\" percentage in the calculator because the goal of this tool is to <strong>motivate action toward the future</strong>, not generate guilt about the past. Showing that \"you've already spent 85% of your time with your mother\" can provoke hopelessness or resignation, contradicting the tool's purpose. Additionally, this data comes from American surveys that may not reflect the reality of other cultures where family coexistence patterns differ.",
+      "viewData": "View time use data"
+    },
+    "mathModel": {
+      "title": "Mathematical model",
+      "stepByStep": "Step-by-step calculation",
+      "notation": {
+        "title": "Notation (per Preston et al., 2001):",
+        "items": [
+          "<strong>l<sub>x</sub></strong> = number of survivors at exact age x in a hypothetical cohort of l<sub>0</sub> = 100,000",
+          "<strong>e<sub>x</sub></strong> = residual life expectancy at age x (expected remaining years of life)",
+          "<strong>f</strong> = visit frequency per year (assumed constant)",
+          "<strong>T</strong> = time horizon of the calculation"
+        ]
+      },
+      "step1": {
+        "title": "1. Survival function",
+        "description": "The probability that a person of age <em>a</em> survives an additional <em>t</em> years is calculated using the life table survival function:",
+        "formula": "<sub>t</sub>p<sub>a</sub> = l<sub>a+t</sub> / l<sub>a</sub>",
+        "note": "This is the standard conditional survival formula (Preston et al., Ch. 3)."
+      },
+      "step2": {
+        "title": "2. Time horizon (T)",
+        "description": "We determine the calculation horizon as the minimum of both persons' residual life expectancies:",
+        "formula": "T = min(e<sub>a₁</sub>, e<sub>a₂</sub>)",
+        "note": "Where a₁ is your age and a₂ is the other person's age."
+      },
+      "step3": {
+        "title": "3. Joint survival probability",
+        "description": "Assuming independence between the deaths of both persons, the probability that both are alive in year t is:",
+        "formula": "P(both alive in t) = <sub>t</sub>p<sub>a₁</sub> × <sub>t</sub>p<sub>a₂</sub>",
+        "note": "This independence assumption is standard in formal demography."
+      },
+      "step4": {
+        "title": "4. Expected visits (main result)",
+        "description": "The expected number of visits is the weighted sum of frequency by joint survival probability:",
+        "formula": "E[visits] = Σ<sub>t=0</sub><sup>T</sup> f × <sub>t</sub>p<sub>a₁</sub> × <sub>t</sub>p<sub>a₂</sub>",
+        "note": "Each year contributes proportionally to the probability that both are still alive."
+      },
+      "step5": {
+        "title": "5. Uncertainty ranges",
+        "description": "We present an approximate range (p25-p75) by applying conservative/optimistic adjustment factors to the mean:",
+        "formula": "Range = [0.7 × E[visits], 1.3 × E[visits]]",
+        "note": "This captures variability without requiring full Monte Carlo simulation."
+      },
+      "reference": "Methodological reference:",
+      "referenceText": "Preston, S. H., Heuveline, P., & Guillot, M. (2001). <em>Demography: Measuring and Modeling Population Processes</em>. Blackwell Publishers. Chapters 2-3."
+    },
+    "transparency": {
+      "title": "Transparency and open source",
+      "intro": "All the code for this project is <strong>open and auditable</strong>:",
+      "item1": "Complete source code available on GitHub",
+      "item2": "Mathematical model implemented in TypeScript",
+      "item3": "Data processing script included",
+      "item4": "All sources documented with direct links",
+      "viewCode": "View code on GitHub"
+    },
+    "references": {
+      "title": "Complete references",
+      "demographicData": "Demographic data",
+      "ref1": "United Nations, Department of Economic and Social Affairs, Population Division (2024). <em>World Population Prospects 2024</em>.",
+      "ref2": "World Health Organization (2024). <em>Global Health Observatory</em>.",
+      "ref3": "Human Mortality Database. University of California, Berkeley (USA), and Max Planck Institute for Demographic Research (Germany).",
+      "timeUse": "Time use",
+      "ref4": "Roser, M., Ritchie, H., & Spooner, F. (2023). Time Use. <em>Our World in Data</em>.",
+      "ref5": "U.S. Bureau of Labor Statistics (2024). <em>American Time Use Survey</em>.",
+      "theoreticalFramework": "Theoretical framework",
+      "ref6": "Carstensen, L. L. (2021). Socioemotional Selectivity Theory: The Role of Perceived Endings in Human Motivation. <em>The Gerontologist</em>, 61(8), 1188–1196.",
+      "ref7": "Carstensen, L. L., Isaacowitz, D. M., & Charles, S. T. (1999). Taking time seriously: A theory of socioemotional selectivity. <em>American Psychologist</em>, 54(3), 165–181."
+    }
   },
   "about": {
     "title": "About this project",
