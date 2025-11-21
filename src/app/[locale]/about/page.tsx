@@ -27,9 +27,12 @@ export default function AboutPage() {
       <div className="container-custom py-12 max-w-4xl">
         {/* Propósito */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
+          <h2 className="text-3xl font-bold mb-4">
+            <Heart
+              size={28}
+              className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+            />
             {t('sections.purpose.title')}
-            <Heart size={28} className="text-neutral-700 dark:text-neutral-300" />
           </h2>
 
           <div className="card">
@@ -51,9 +54,12 @@ export default function AboutPage() {
 
         {/* Inspiración */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
+          <h2 className="text-3xl font-bold mb-4">
+            <Users
+              size={28}
+              className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+            />
             {t('sections.inspiration.title')}
-            <Users size={28} className="text-neutral-700 dark:text-neutral-300" />
           </h2>
 
           <div className="card bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-600">
@@ -154,9 +160,12 @@ export default function AboutPage() {
 
         {/* Código abierto */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
+          <h2 className="text-3xl font-bold mb-4">
+            <Code
+              size={28}
+              className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+            />
             {t('sections.openSource.title')}
-            <Code size={28} className="text-neutral-700 dark:text-neutral-300" />
           </h2>
 
           <div className="card">
@@ -191,9 +200,12 @@ export default function AboutPage() {
 
         {/* Contacto */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
+          <h2 className="text-3xl font-bold mb-4">
+            <Mail
+              size={28}
+              className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+            />
             {t('sections.contact.title')}
-            <Mail size={28} className="text-neutral-700 dark:text-neutral-300" />
           </h2>
 
           <div className="card bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-600">

@@ -179,9 +179,13 @@ export default function MethodologyPage() {
 
         {/* 4. What this tool does NOT do */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-            <AlertTriangle size={28} className="text-red-600 dark:text-red-500" />{' '}
-            {t('section4.title')}
+          <h2 className="text-3xl font-bold mb-4">
+            {t('section4.title').split('.')[0]}.{' '}
+            <AlertTriangle
+              size={28}
+              className="text-red-600 dark:text-red-500 inline-block align-middle"
+            />{' '}
+            {t('section4.title').split('. ').slice(1).join('. ')}
           </h2>
 
           <div className="card bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 border-l-4">
@@ -204,9 +208,13 @@ export default function MethodologyPage() {
 
         {/* 5. Why showing this number is useful */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-            <BookOpen size={28} className="text-primary-700 dark:text-primary-400" />{' '}
-            {t('section5.title')}
+          <h2 className="text-3xl font-bold mb-4">
+            {t('section5.title').split('.')[0]}.{' '}
+            <BookOpen
+              size={28}
+              className="text-primary-700 dark:text-primary-400 inline-block align-middle"
+            />{' '}
+            {t('section5.title').split('. ').slice(1).join('. ')}
           </h2>
 
           <div className="card border-primary-300 dark:border-primary-700">
