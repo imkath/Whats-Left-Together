@@ -103,12 +103,17 @@ export function calculateExpectedEncounters(
     expectedVisits += visitsPerYear * bothAlive;
   }
 
-  // 4. Calculate uncertainty ranges using Monte Carlo simulation
-  // (simplified here - in production, you'd run actual simulations)
+  // 4. Calculate uncertainty ranges
+  // NOTE: These are heuristic approximations, NOT statistical confidence intervals.
+  // The ±30% range reflects typical variation in visit frequency due to:
+  // - Life changes (moves, health issues, schedule conflicts)
+  // - Year-to-year variability in actual meetings
+  // - Uncertainty in life expectancy predictions
+  // Future improvement: implement Monte Carlo simulation for proper intervals.
   const expectedVisitsRange = {
-    p25: Math.round(expectedVisits * 0.7), // Conservative estimate
+    p25: Math.round(expectedVisits * 0.7), // Conservative: accounts for reduced frequency
     p50: Math.round(expectedVisits),
-    p75: Math.round(expectedVisits * 1.3), // Optimistic estimate
+    p75: Math.round(expectedVisits * 1.3), // Optimistic: assumes maintained frequency
   };
 
   // 5. Years with both alive (weighted by survival probability)
