@@ -36,7 +36,13 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
     <div className="w-full">
       {/* Simple SVG chart - no external dependencies needed */}
       <div className="relative h-64 bg-neutral-50 rounded-lg p-4">
-        <svg viewBox="0 0 800 200" className="w-full h-full" preserveAspectRatio="none">
+        <svg
+          viewBox="0 0 800 200"
+          className="w-full h-full"
+          preserveAspectRatio="none"
+          role="img"
+          aria-label={t('bothAlive') + ', ' + t('youAlive') + ', ' + t('themAlive')}
+        >
           {/* Grid lines */}
           {[0, 0.25, 0.5, 0.75, 1.0].map((value) => {
             const y = 200 - value * 200;
