@@ -55,7 +55,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
           })}
 
           {/* Lines */}
-          {/* Both alive (main line) */}
+          {/* Both alive (main line) - dark/black */}
           <polyline
             points={displayData
               .map((d, i) => {
@@ -69,7 +69,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
             strokeWidth="3"
           />
 
-          {/* You alive (faint) */}
+          {/* You alive - blue */}
           <polyline
             points={displayData
               .map((d, i) => {
@@ -79,12 +79,12 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
               })
               .join(' ')}
             fill="none"
-            stroke="#a3a3a3"
-            strokeWidth="1"
-            strokeDasharray="4,4"
+            stroke="#3b82f6"
+            strokeWidth="2"
+            strokeDasharray="6,3"
           />
 
-          {/* Them alive (faint) */}
+          {/* Them alive - orange */}
           <polyline
             points={displayData
               .map((d, i) => {
@@ -94,9 +94,9 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
               })
               .join(' ')}
             fill="none"
-            stroke="#8b7355"
-            strokeWidth="1"
-            strokeDasharray="4,4"
+            stroke="#f97316"
+            strokeWidth="2"
+            strokeDasharray="6,3"
           />
         </svg>
 
@@ -109,18 +109,18 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex justify-center gap-6 mt-4 text-sm">
+      <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
         <div className="flex items-center gap-2">
           <div className="w-4 h-1 bg-neutral-900 rounded"></div>
-          <span>Ambos vivos</span>
+          <span className="text-neutral-700 dark:text-neutral-300">Ambos vivos</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-neutral-400 rounded border-dashed border border-neutral-500"></div>
-          <span>Tú vivo/a</span>
+          <div className="w-4 h-0.5 bg-blue-500 rounded"></div>
+          <span className="text-neutral-700 dark:text-neutral-300">Tú vivo/a</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-1 bg-accent-500 rounded border-dashed border border-accent-600"></div>
-          <span>Ellos vivos</span>
+          <div className="w-4 h-0.5 bg-orange-500 rounded"></div>
+          <span className="text-neutral-700 dark:text-neutral-300">Ellos vivos</span>
         </div>
       </div>
     </div>
