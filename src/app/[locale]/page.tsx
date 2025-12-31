@@ -9,27 +9,37 @@ import EthicalWarning from '@/components/EthicalWarning';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
-  const [hasAcceptedWarning, setHasAcceptedWarning] = useState(true); // Start as true to avoid flash
+  // null = loading, true = accepted, false = not accepted
+  const [hasAcceptedWarning, setHasAcceptedWarning] = useState<boolean | null>(null);
   const t = useTranslations('why');
   const locale = useLocale();
 
   useEffect(() => {
-    // Check if user has already accepted the warning
-    const accepted = localStorage.getItem('ethicalWarningAccepted');
-    if (!accepted) {
-      setHasAcceptedWarning(false);
+    // SSR safety check - only access localStorage on client
+    if (typeof window === 'undefined') return;
+
+    try {
+      const accepted = localStorage.getItem('ethicalWarningAccepted');
+      setHasAcceptedWarning(accepted === 'true');
+    } catch {
+      // localStorage might be disabled (private browsing, etc.)
+      setHasAcceptedWarning(true); // Skip warning if storage unavailable
     }
   }, []);
 
   const handleAcceptWarning = () => {
-    localStorage.setItem('ethicalWarningAccepted', 'true');
+    try {
+      localStorage.setItem('ethicalWarningAccepted', 'true');
+    } catch {
+      // Silently fail if localStorage is unavailable
+    }
     setHasAcceptedWarning(true);
   };
 
   return (
     <main className="min-h-screen">
-      {/* Ethical warning modal */}
-      {!hasAcceptedWarning && <EthicalWarning onAccept={handleAcceptWarning} />}
+      {/* Ethical warning modal - only show after hydration check */}
+      {hasAcceptedWarning === false && <EthicalWarning onAccept={handleAcceptWarning} />}
 
       {/* Hero section */}
       <Hero />
