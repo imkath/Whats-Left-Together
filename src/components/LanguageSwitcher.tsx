@@ -21,16 +21,16 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-300 dark:border-neutral-600 overflow-hidden flex items-center gap-1 p-1">
-      <div className="px-2 text-neutral-500 dark:text-neutral-400">
+    <div className="bg-white dark:bg-neutral-700 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-500 overflow-hidden flex items-center gap-1 p-1">
+      <div className="px-2 text-neutral-500 dark:text-neutral-300">
         <Languages size={16} />
       </div>
       <button
         onClick={() => switchLocale('es')}
         className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
           locale === 'es'
-            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-100 dark:text-neutral-900'
-            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-700'
+            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
+            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'
         }`}
       >
         ES
@@ -39,8 +39,8 @@ export default function LanguageSwitcher() {
         onClick={() => switchLocale('en')}
         className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
           locale === 'en'
-            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-100 dark:text-neutral-900'
-            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-700'
+            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
+            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'
         }`}
       >
         EN
