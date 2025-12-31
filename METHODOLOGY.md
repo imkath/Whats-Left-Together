@@ -127,15 +127,31 @@ $$
 - No ajusta por factores de riesgo personales
 - Asume independencia entre las dos vidas (no considera mortalidad correlacionada, ej. accidentes comunes)
 
-### 3.5. Rangos de incertidumbre
+### 3.5. Simulación Monte Carlo
 
-Para comunicar la incertidumbre inherente, calculamos:
+Para obtener intervalos de confianza estadísticamente válidos, utilizamos **simulación Monte Carlo** con 10,000 iteraciones:
 
-- **Percentil 25 (p25)**: Estimación conservadora
-- **Mediana (p50)**: Valor esperado central
-- **Percentil 75 (p75)**: Estimación optimista
+**Algoritmo**:
 
-En la implementación actual, usamos aproximaciones basadas en varianza típica (~30% del valor esperado). En una versión completa, esto se haría con simulación Monte Carlo.
+1. Para cada simulación:
+   - Muestrear el año de muerte de cada persona usando las probabilidades qₓ (inverse transform sampling)
+   - Calcular los años en que ambos estarían vivos
+   - Multiplicar por la frecuencia de visitas
+2. Ordenar los 10,000 resultados
+3. Extraer percentiles de la distribución empírica
+
+**Resultados**:
+
+- **Percentil 25 (p25)**: Límite inferior del intervalo de confianza
+- **Mediana (p50)**: Valor central (resultado principal mostrado)
+- **Percentil 75 (p75)**: Límite superior del intervalo de confianza
+
+**Ventajas de Monte Carlo**:
+
+- Intervalos de confianza reales basados en la distribución empírica de resultados
+- Captura la variabilidad real de la mortalidad
+- Reproducible (usa generador de números pseudoaleatorios con semilla determinística)
+- Rápido (~40ms para 10,000 simulaciones)
 
 ---
 
@@ -153,27 +169,41 @@ Paso 1: Cargar tablas de vida
   tabla_tú = cargar_tabla(tu_país, tu_sexo)
   tabla_otra = cargar_tabla(otro_país, otro_sexo)
 
-Paso 2: Obtener esperanzas de vida residuales
-  e_tú = tabla_tú[tu_edad].ex
-  e_otra = tabla_otra[otra_edad].ex
+Paso 2: Calcular horizonte temporal
+  # Usamos el máximo de la tabla (100 años) para no subestimar
+  max_años = min(100 - tu_edad, 100 - otra_edad)
 
-Paso 3: Calcular horizonte temporal
-  max_años = min(e_tú, e_otra) + margen_seguridad
-
-Paso 4: Calcular probabilidades año a año
-  total_encuentros = 0
+Paso 3: Calcular probabilidades año a año (para visualización)
   para cada t desde 0 hasta max_años:
     p_tú_vivo = tabla_tú[tu_edad + t].lx / tabla_tú[tu_edad].lx
     p_otra_vivo = tabla_otra[otra_edad + t].lx / tabla_otra[otra_edad].lx
     p_ambos_vivos = p_tú_vivo × p_otra_vivo
+    guardar(t, p_tú_vivo, p_otra_vivo, p_ambos_vivos)
 
-    encuentros_en_año_t = frecuencia_visitas_por_año × p_ambos_vivos
-    total_encuentros += encuentros_en_año_t
+Paso 4: Simulación Monte Carlo (10,000 iteraciones)
+  resultados = []
+  para cada simulación:
+    # Muestrear año de muerte usando qx
+    año_muerte_tú = muestrear_muerte(tabla_tú, tu_edad)
+    año_muerte_otra = muestrear_muerte(tabla_otra, otra_edad)
+
+    # Años en que ambos vivos
+    años_juntos = min(año_muerte_tú, año_muerte_otra)
+
+    # Total de visitas en esta simulación
+    visitas = años_juntos × frecuencia_visitas_por_año
+    resultados.append(visitas)
+
+Paso 5: Calcular percentiles
+  ordenar(resultados)
+  p25 = percentil(resultados, 0.25)
+  p50 = percentil(resultados, 0.50)  # Mediana = resultado principal
+  p75 = percentil(resultados, 0.75)
 
 Salida:
-  - total_encuentros (redondeado)
-  - rango [p25, p50, p75]
-  - desglose año por año
+  - encuentros_esperados = p50 (mediana)
+  - rango [p25, p75]
+  - desglose año por año (probabilidades)
 ```
 
 ### 4.2. Código de referencia
@@ -327,6 +357,7 @@ Para preguntas metodológicas, sugerencias o reportar errores:
 
 ---
 
-**Última actualización**: 2025-11-14
-**Versión del modelo**: 1.0
+**Última actualización**: 2025-12-30
+**Versión del modelo**: 2.0 (Monte Carlo)
 **Datos**: WPP-2024 (datos reales integrados - 81 países, año 2023)
+**Simulaciones**: 10,000 iteraciones Monte Carlo para intervalos de confianza
