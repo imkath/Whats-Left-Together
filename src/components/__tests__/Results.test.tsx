@@ -78,6 +78,14 @@ jest.mock('next-intl', () => ({
       'relationLabels.friend': 'esta persona',
       'relationLabels.other_family': 'esta persona',
       'relationLabels.other': 'esta persona',
+      // Direct mode translations
+      'directMode.headlineFew': `A este ritmo, solo te quedan unas pocas veces más para ver a ${params?.relation || 'esta persona'}.`,
+      'directMode.headlineSome': `A este ritmo, te quedan entre ${params?.min || 0} y ${params?.max || 0} veces más para ver a ${params?.relation || 'esta persona'}.`,
+      'directMode.headlineMany': `A este ritmo, aún tienes muchas oportunidades de ver a ${params?.relation || 'esta persona'}.`,
+      'directMode.headlineLots': `A este ritmo, tienes muchas oportunidades por delante con ${params?.relation || 'esta persona'}.`,
+      'directMode.bodyFew': `Según la estadística, podrías ver a ${params?.relation || 'esta persona'} entre ${params?.min || 0} y ${params?.max || 0} veces más.`,
+      'directMode.bodyMany': `Según la estadística, podrías ver a ${params?.relation || 'esta persona'} entre ${params?.min || 0} y ${params?.max || 0} veces más.`,
+      'directMode.closing': 'Cada encuentro cuenta.',
     };
     return translations[key] || key;
   },

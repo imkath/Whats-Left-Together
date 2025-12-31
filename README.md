@@ -49,21 +49,26 @@ See [SOURCES.md](SOURCES.md) for complete references.
 
 ### Core Calculation
 
-For each person, we obtain:
+For each person, we calculate survival probabilities using life tables:
 
-- Current age: `a`
-- Residual life expectancy: `eₐ` (expected remaining years, conditional on being alive at age a)
+- `lx`: Survivors to age x (out of 100,000 births)
+- `qx`: Probability of death between age x and x+1
+- `P(survive t years) = l(a+t) / l(a)`
 
-**Expected encounters**:
+**Monte Carlo Simulation** (10,000 iterations):
 
 ```
-E[visits] = Σ(t=0 to T) f × P(both alive in year t)
+For each simulation:
+  1. Sample death year for each person using qx probabilities
+  2. Calculate years both alive = min(death_year_you, death_year_them)
+  3. Total visits = years_both_alive × visits_per_year
 
-where:
-- f = visits per year (assumed constant)
-- P(both alive in t) = P(you alive in t) × P(them alive in t)
-- P(alive in t) = l(a+t) / l(a)  [from UN life tables]
+Results:
+  - Median (p50): Primary result shown
+  - Range [p25, p75]: Confidence interval
 ```
+
+This provides statistically valid confidence intervals based on the empirical distribution of possible outcomes.
 
 See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scientific references.
 
