@@ -38,7 +38,7 @@ export default function AboutPage() {
           <div className="card">
             <div className="prose prose-neutral dark:prose-invert max-w-none">
               <p className="text-neutral-700 dark:text-neutral-300 text-lg leading-relaxed mb-4">
-                <strong>What's Left Together</strong> {t('sections.purpose.p1')}
+                {t('sections.purpose.p1')}
               </p>
 
               <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
