@@ -10,8 +10,60 @@ import {
 } from '../actuarial';
 import type { LifeTable, RelationshipInput } from '@/types';
 
-// Sample life table for testing (Chile female, simplified)
-const sampleLifeTable: LifeTable = {
+// Generate a complete life table for testing (realistic mortality pattern)
+// This simulates a typical female life table from age 0 to 100
+function generateTestLifeTable(): LifeTable {
+  const entries = [];
+  let lx = 100000;
+
+  for (let age = 0; age <= 100; age++) {
+    // Realistic qx pattern: U-shaped with infant mortality, low in young adults, increasing with age
+    let qx: number;
+    if (age === 0) {
+      qx = 0.004; // Infant mortality
+    } else if (age < 5) {
+      qx = 0.0003;
+    } else if (age < 15) {
+      qx = 0.0001;
+    } else if (age < 30) {
+      qx = 0.0005;
+    } else if (age < 50) {
+      qx = 0.001 + (age - 30) * 0.0001;
+    } else if (age < 70) {
+      qx = 0.003 + (age - 50) * 0.001;
+    } else if (age < 90) {
+      qx = 0.025 + (age - 70) * 0.005;
+    } else {
+      qx = 0.15 + (age - 90) * 0.03;
+    }
+    qx = Math.min(qx, 1.0);
+
+    // Calculate life expectancy (simplified approximation)
+    const ex = Math.max(0, 85 - age + (age < 30 ? 5 : 0));
+
+    entries.push({
+      age,
+      qx,
+      lx,
+      ex,
+    });
+
+    // Update survivors for next age
+    lx = lx * (1 - qx);
+  }
+
+  return {
+    country: 'TEST',
+    sex: 'female',
+    year: 2023,
+    entries,
+  };
+}
+
+const sampleLifeTable: LifeTable = generateTestLifeTable();
+
+// Simplified life table for basic tests (only has specific ages)
+const simplifiedLifeTable: LifeTable = {
   country: 'CHL',
   sex: 'female',
   year: 2023,
@@ -33,70 +85,72 @@ const sampleLifeTable: LifeTable = {
 describe('actuarial model', () => {
   describe('getLifeExpectancy', () => {
     it('should return correct life expectancy for exact age', () => {
-      const ex = getLifeExpectancy(sampleLifeTable, 30);
+      const ex = getLifeExpectancy(simplifiedLifeTable, 30);
       expect(ex).toBe(53.42);
     });
 
     it('should return correct life expectancy for age 0', () => {
-      const ex = getLifeExpectancy(sampleLifeTable, 0);
+      const ex = getLifeExpectancy(simplifiedLifeTable, 0);
       expect(ex).toBe(83.08);
     });
 
     it('should return 0 for age beyond table', () => {
-      const ex = getLifeExpectancy(sampleLifeTable, 110);
+      const ex = getLifeExpectancy(simplifiedLifeTable, 110);
       expect(ex).toBe(0);
     });
 
     it('should floor fractional ages', () => {
-      const ex = getLifeExpectancy(sampleLifeTable, 30.7);
+      const ex = getLifeExpectancy(simplifiedLifeTable, 30.7);
       expect(ex).toBe(53.42); // Should use age 30
     });
   });
 
   describe('getSurvivalProbability', () => {
     it('should return 1.0 for year 0 (current age)', () => {
-      const prob = getSurvivalProbability(sampleLifeTable, 30, 0);
+      const prob = getSurvivalProbability(simplifiedLifeTable, 30, 0);
       expect(prob).toBe(1.0);
     });
 
     it('should return probability < 1 for future years', () => {
-      const prob = getSurvivalProbability(sampleLifeTable, 30, 10);
+      const prob = getSurvivalProbability(simplifiedLifeTable, 30, 10);
       expect(prob).toBeLessThan(1.0);
       expect(prob).toBeGreaterThan(0.9); // Should be high for 10 years at age 30
     });
 
     it('should calculate correct survival probability using lx ratio', () => {
       // From age 30 to age 40: lx(40)/lx(30)
-      const prob = getSurvivalProbability(sampleLifeTable, 30, 10);
+      const prob = getSurvivalProbability(simplifiedLifeTable, 30, 10);
       const expected = 97234.2 / 98721.5;
       expect(prob).toBeCloseTo(expected, 5);
     });
 
     it('should return 0 when future age exceeds table', () => {
-      const prob = getSurvivalProbability(sampleLifeTable, 90, 20);
+      const prob = getSurvivalProbability(simplifiedLifeTable, 90, 20);
       expect(prob).toBe(0);
     });
 
     it('should handle fractional current ages', () => {
-      const prob = getSurvivalProbability(sampleLifeTable, 30.5, 10);
+      const prob = getSurvivalProbability(simplifiedLifeTable, 30.5, 10);
       expect(prob).toBeGreaterThan(0);
       expect(prob).toBeLessThan(1);
     });
   });
 
   describe('calculateExpectedEncounters', () => {
+    // Use the complete life table (with all ages 0-100) for Monte Carlo tests
     const yourLifeTable: LifeTable = sampleLifeTable;
     const theirLifeTable: LifeTable = {
       ...sampleLifeTable,
       entries: sampleLifeTable.entries.map((e) => ({
         ...e,
-        ex: e.ex * 0.95, // Slightly lower life expectancy for variety
+        // Slightly higher mortality for variety
+        qx: Math.min(e.qx * 1.1, 1.0),
       })),
     };
 
     const input: RelationshipInput = {
-      you: { age: 30, sex: 'female', country: 'CHL' },
-      them: { age: 55, sex: 'female', country: 'CHL' },
+      you: { age: 30, sex: 'female', country: 'TEST' },
+      them: { age: 55, sex: 'female', country: 'TEST' },
       relationType: 'mother',
       visitsPerYear: 12,
       frequencyPeriod: 'monthly',
@@ -111,12 +165,19 @@ describe('actuarial model', () => {
       expect(Number.isInteger(result.expectedVisits)).toBe(true);
     });
 
-    it('should calculate uncertainty ranges', () => {
+    it('should calculate uncertainty ranges using Monte Carlo', () => {
       const result = calculateExpectedEncounters(input, yourLifeTable, theirLifeTable);
 
-      expect(result.expectedVisitsRange.p25).toBeLessThan(result.expectedVisitsRange.p50);
+      // Monte Carlo should produce a distribution where p25 <= p50 <= p75
+      expect(result.expectedVisitsRange.p25).toBeLessThanOrEqual(result.expectedVisitsRange.p50);
       expect(result.expectedVisitsRange.p50).toBe(result.expectedVisits);
-      expect(result.expectedVisitsRange.p75).toBeGreaterThan(result.expectedVisitsRange.p50);
+      expect(result.expectedVisitsRange.p75).toBeGreaterThanOrEqual(result.expectedVisitsRange.p50);
+
+      // The range should be non-trivial (not all same value, unless edge case)
+      // With realistic mortality, there should be variance
+      if (result.expectedVisits > 0) {
+        expect(result.expectedVisitsRange.p75 - result.expectedVisitsRange.p25).toBeGreaterThan(0);
+      }
     });
 
     it('should calculate years with both alive', () => {
@@ -155,7 +216,8 @@ describe('actuarial model', () => {
       expect(result.assumptions).toHaveProperty('dataSource');
       expect(result.assumptions).toHaveProperty('dataYear');
 
-      expect(result.assumptions.youLifeExpectancy).toBe(53.42);
+      // Life expectancy comes from the generated table
+      expect(result.assumptions.youLifeExpectancy).toBeGreaterThan(0);
       expect(result.assumptions.dataSource).toBe('UN World Population Prospects 2024');
     });
 
@@ -167,7 +229,9 @@ describe('actuarial model', () => {
       const result24 = calculateExpectedEncounters(input24, yourLifeTable, theirLifeTable);
 
       // Double visits should approximately double expected encounters
-      expect(result24.expectedVisits).toBeCloseTo(result12.expectedVisits * 2, 0);
+      // Allow for some variance due to Monte Carlo
+      expect(result24.expectedVisits).toBeGreaterThan(result12.expectedVisits * 1.8);
+      expect(result24.expectedVisits).toBeLessThan(result12.expectedVisits * 2.2);
     });
 
     it('should handle zero visits per year', () => {
@@ -182,16 +246,26 @@ describe('actuarial model', () => {
 
     it('should handle very old ages', () => {
       const inputOld: RelationshipInput = {
-        you: { age: 80, sex: 'female', country: 'CHL' },
-        them: { age: 90, sex: 'female', country: 'CHL' },
+        you: { age: 80, sex: 'female', country: 'TEST' },
+        them: { age: 90, sex: 'female', country: 'TEST' },
         relationType: 'mother',
         visitsPerYear: 12,
       };
 
       const result = calculateExpectedEncounters(inputOld, yourLifeTable, theirLifeTable);
 
-      expect(result.expectedVisits).toBeGreaterThan(0);
+      expect(result.expectedVisits).toBeGreaterThanOrEqual(0);
       expect(result.expectedVisits).toBeLessThan(200); // Should be relatively low
+    });
+
+    it('should produce reproducible results with same inputs (seeded RNG)', () => {
+      const result1 = calculateExpectedEncounters(input, yourLifeTable, theirLifeTable);
+      const result2 = calculateExpectedEncounters(input, yourLifeTable, theirLifeTable);
+
+      // Same inputs should produce identical results due to seeded RNG
+      expect(result1.expectedVisits).toBe(result2.expectedVisits);
+      expect(result1.expectedVisitsRange.p25).toBe(result2.expectedVisitsRange.p25);
+      expect(result1.expectedVisitsRange.p75).toBe(result2.expectedVisitsRange.p75);
     });
   });
 

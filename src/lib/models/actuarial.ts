@@ -4,18 +4,26 @@
  *
  * METHODOLOGY:
  *
- * 1. For each person, we obtain:
- *    - Current age: a
- *    - Residual life expectancy: eₐ (expected remaining years, conditional on being alive at age a)
+ * 1. For each person, we obtain survival probabilities from life tables:
+ *    - lx: Number of survivors to age x (out of 100,000 births)
+ *    - qx: Probability of death between age x and x+1
+ *    - ex: Life expectancy at age x
  *
- * 2. Time horizon where both are alive:
- *    T ≈ min(e_you + a_you, e_them + a_them) - current_year
+ * 2. Survival probability calculation:
+ *    P(survive from age a to age a+t) = l(a+t) / l(a)
  *
- * 3. Expected number of visits:
- *    E[visits] = Σ(t=0 to T) f_t × P(both alive in year t)
- *    where:
- *    - f_t = visits per year in year t (assumed constant)
- *    - P(both alive in t) = P(you alive in t) × P(them alive in t)
+ * 3. Expected number of visits using Monte Carlo simulation:
+ *    - Run N simulations (default: 10,000)
+ *    - In each simulation:
+ *      a) Sample death year for each person using survival probabilities
+ *      b) Calculate years both are alive
+ *      c) Multiply by visits per year
+ *    - Return median and percentile-based confidence intervals
+ *
+ * 4. Why Monte Carlo?
+ *    - Provides statistically valid confidence intervals (not heuristic ±30%)
+ *    - Captures the full distribution of outcomes
+ *    - Accounts for correlation between survival years and visits
  *
  * References:
  * - UN World Population Prospects 2024 (life tables by age, sex, country)
@@ -23,6 +31,15 @@
  */
 
 import type { LifeTable, RelationshipInput, CalculationResult, SurvivalProbability } from '@/types';
+
+// Maximum age in life tables (UN WPP goes to 100)
+const MAX_TABLE_AGE = 100;
+
+// Number of Monte Carlo simulations for confidence intervals
+const MONTE_CARLO_SIMULATIONS = 10000;
+
+// Minimum probability threshold to continue calculations
+const MIN_PROBABILITY_THRESHOLD = 0.0001;
 
 /**
  * Get life expectancy at a given age from life table
@@ -63,7 +80,46 @@ export function getSurvivalProbability(
 }
 
 /**
+ * Seeded random number generator for reproducible Monte Carlo simulations
+ * Uses mulberry32 algorithm - fast and good statistical properties
+ */
+function createSeededRandom(seed: number): () => number {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Sample a death year for a person using their survival probabilities
+ * Returns the number of years from now until death
+ */
+function sampleDeathYear(lifeTable: LifeTable, currentAge: number, random: () => number): number {
+  const maxYears = MAX_TABLE_AGE - currentAge;
+
+  // Use inverse transform sampling with qx (probability of death in each year)
+  for (let t = 0; t < maxYears; t++) {
+    const futureAge = Math.floor(currentAge) + t;
+    const entry = lifeTable.entries.find((e) => e.age === futureAge);
+
+    if (!entry) {
+      return t; // No data, assume death
+    }
+
+    // qx is probability of dying between age x and x+1
+    if (random() < entry.qx) {
+      return t; // Dies in year t
+    }
+  }
+
+  return maxYears; // Survives to max age
+}
+
+/**
  * Calculate expected encounters between two people
+ * Uses Monte Carlo simulation for statistically valid confidence intervals
  *
  * This is the CORE calculation of the entire project.
  */
@@ -74,23 +130,27 @@ export function calculateExpectedEncounters(
 ): CalculationResult {
   const { you, them, visitsPerYear } = input;
 
-  // 1. Get life expectancies
+  // 1. Get life expectancies (for display purposes)
   const youLifeExpectancy = getLifeExpectancy(yourLifeTable, you.age);
   const themLifeExpectancy = getLifeExpectancy(theirLifeTable, them.age);
 
-  // 2. Maximum years to consider (when the first person is expected to die)
-  const yourExpectedDeathAge = you.age + youLifeExpectancy;
-  const theirExpectedDeathAge = them.age + themLifeExpectancy;
-  const maxYears = Math.min(yourExpectedDeathAge - you.age, theirExpectedDeathAge - them.age);
+  // 2. Calculate maximum years until either reaches max table age
+  const maxYearsYou = MAX_TABLE_AGE - you.age;
+  const maxYearsThem = MAX_TABLE_AGE - them.age;
+  const maxYears = Math.min(maxYearsYou, maxYearsThem);
 
-  // 3. Year-by-year survival probabilities
+  // 3. Year-by-year survival probabilities (deterministic, for visualization)
   const yearByYearSurvival: SurvivalProbability[] = [];
-  let expectedVisits = 0;
 
-  for (let t = 0; t <= Math.ceil(maxYears); t++) {
+  for (let t = 0; t <= maxYears; t++) {
     const youAlive = getSurvivalProbability(yourLifeTable, you.age, t);
     const themAlive = getSurvivalProbability(theirLifeTable, them.age, t);
     const bothAlive = youAlive * themAlive;
+
+    // Stop if probability is essentially zero
+    if (bothAlive < MIN_PROBABILITY_THRESHOLD && t > 0) {
+      break;
+    }
 
     yearByYearSurvival.push({
       year: t,
@@ -98,33 +158,58 @@ export function calculateExpectedEncounters(
       themAlive,
       bothAlive,
     });
-
-    // Expected visits in year t = frequency × P(both alive)
-    expectedVisits += visitsPerYear * bothAlive;
   }
 
-  // 4. Calculate uncertainty ranges
-  // NOTE: These are heuristic approximations, NOT statistical confidence intervals.
-  // The ±30% range reflects typical variation in visit frequency due to:
-  // - Life changes (moves, health issues, schedule conflicts)
-  // - Year-to-year variability in actual meetings
-  // - Uncertainty in life expectancy predictions
-  // Future improvement: implement Monte Carlo simulation for proper intervals.
-  const expectedVisitsRange = {
-    p25: Math.round(expectedVisits * 0.7), // Conservative: accounts for reduced frequency
-    p50: Math.round(expectedVisits),
-    p75: Math.round(expectedVisits * 1.3), // Optimistic: assumes maintained frequency
+  // 4. Monte Carlo simulation for confidence intervals
+  const simulatedVisits: number[] = [];
+  const simulatedYears: number[] = [];
+
+  // Use a fixed seed based on input parameters for reproducibility
+  const seed = you.age * 1000 + them.age * 100 + visitsPerYear;
+  const random = createSeededRandom(seed);
+
+  for (let sim = 0; sim < MONTE_CARLO_SIMULATIONS; sim++) {
+    // Sample death year for each person
+    const yourDeathYear = sampleDeathYear(yourLifeTable, you.age, random);
+    const theirDeathYear = sampleDeathYear(theirLifeTable, them.age, random);
+
+    // Years both alive = minimum of the two death years
+    const yearsBothAlive = Math.min(yourDeathYear, theirDeathYear);
+
+    // Total visits = years × visits per year
+    const totalVisits = yearsBothAlive * visitsPerYear;
+
+    simulatedVisits.push(totalVisits);
+    simulatedYears.push(yearsBothAlive);
+  }
+
+  // 5. Calculate percentiles from Monte Carlo results
+  simulatedVisits.sort((a, b) => a - b);
+  simulatedYears.sort((a, b) => a - b);
+
+  const getPercentile = (arr: number[], p: number): number => {
+    const idx = Math.floor(arr.length * p);
+    return arr[Math.min(idx, arr.length - 1)];
   };
 
-  // 5. Years with both alive (weighted by survival probability)
-  const yearsWithBothAlive = {
-    expected: yearByYearSurvival.reduce((sum, y) => sum + y.bothAlive, 0),
-    min: Math.floor(maxYears * 0.5),
-    max: Math.ceil(maxYears),
+  const expectedVisitsRange = {
+    p25: getPercentile(simulatedVisits, 0.25),
+    p50: getPercentile(simulatedVisits, 0.5),
+    p75: getPercentile(simulatedVisits, 0.75),
   };
+
+  // 6. Years with both alive from Monte Carlo
+  const yearsWithBothAlive = {
+    expected: simulatedYears.reduce((a, b) => a + b, 0) / simulatedYears.length,
+    min: getPercentile(simulatedYears, 0.1), // 10th percentile
+    max: getPercentile(simulatedYears, 0.9), // 90th percentile
+  };
+
+  // Use the Monte Carlo median as the primary result
+  const expectedVisits = expectedVisitsRange.p50;
 
   return {
-    expectedVisits: Math.round(expectedVisits),
+    expectedVisits,
     expectedVisitsRange,
     yearsWithBothAlive,
     yearByYearSurvival,
