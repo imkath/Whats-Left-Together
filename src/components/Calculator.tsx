@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Info } from 'lucide-react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
@@ -11,12 +11,52 @@ import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/freque
 import { relationshipInputSchema } from '@/lib/validation/schemas';
 import type { ZodError } from 'zod';
 
+/**
+ * Accessible tooltip component with keyboard support
+ */
+function AccessibleTooltip({ content, id }: { content: string; id: string }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  return (
+    <span className="relative inline-flex">
+      <button
+        type="button"
+        aria-describedby={isVisible ? id : undefined}
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => setIsVisible(false)}
+        onFocus={() => setIsVisible(true)}
+        onBlur={() => setIsVisible(false)}
+        className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1"
+        aria-label="More information"
+      >
+        <Info
+          size={14}
+          strokeWidth={2.5}
+          className="text-neutral-500 dark:text-neutral-400"
+          aria-hidden="true"
+        />
+      </button>
+      <span
+        id={id}
+        role="tooltip"
+        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg w-64 text-center z-10 whitespace-normal transition-opacity ${
+          isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {content}
+      </span>
+    </span>
+  );
+}
+
 export default function Calculator() {
   const t = useTranslations('calculator');
   const locale = useLocale();
   const countries = getAvailableCountries();
   const resultsRef = useRef<HTMLDivElement>(null);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
+  const yourSexTooltipId = useId();
+  const theirSexTooltipId = useId();
 
   const [formData, setFormData] = useState<RelationshipInput>({
     you: {
@@ -153,16 +193,7 @@ export default function Calculator() {
                 className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
               >
                 {t('sex')}
-                <span className="relative group">
-                  <Info
-                    size={14}
-                    strokeWidth={2.5}
-                    className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 cursor-help"
-                  />
-                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 text-center pointer-events-none z-10 whitespace-normal">
-                    {t('sexTooltip')}
-                  </span>
-                </span>
+                <AccessibleTooltip content={t('sexTooltip')} id={yourSexTooltipId} />
               </label>
               <select
                 id="your-sex"
@@ -264,16 +295,7 @@ export default function Calculator() {
                 className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
               >
                 {t('sex')}
-                <span className="relative group">
-                  <Info
-                    size={14}
-                    strokeWidth={2.5}
-                    className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 cursor-help"
-                  />
-                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity w-64 text-center pointer-events-none z-10 whitespace-normal">
-                    {t('sexTooltip')}
-                  </span>
-                </span>
+                <AccessibleTooltip content={t('sexTooltip')} id={theirSexTooltipId} />
               </label>
               <select
                 id="their-sex"
