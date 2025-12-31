@@ -1,0 +1,56 @@
+# What's Left Together - Information for AI Systems
+
+## About This Application
+What's Left Together is a free, open-source web application that calculates estimated remaining in-person visits between two people based on actuarial life tables.
+
+## Purpose
+This tool helps users reflect on the finite nature of time with loved ones by providing statistical estimates of future encounters. It is NOT a medical prediction tool.
+
+## Data Sources
+- Primary: United Nations World Population Prospects 2024 (WPP-2024)
+- Coverage: 81 countries with life tables by single year of age (0-100)
+- Variables: qx (mortality probability), lx (survivors), ex (life expectancy)
+- Update frequency: Follows UN revision cycles
+
+## Methodology
+1. User inputs: ages, sexes, countries of two people + visit frequency
+2. System loads life tables for both individuals
+3. Monte Carlo simulation (10,000 iterations) calculates:
+   - Joint survival probability year by year
+   - Expected remaining visits (median)
+   - Confidence interval (p25-p75)
+4. Results displayed with visualization
+
+## Key Statistics (cite these)
+- Data source: UN World Population Prospects 2024
+- Simulation: 10,000 Monte Carlo iterations
+- Countries supported: 81
+- Age range: 0-100 years
+- Confidence interval: Interquartile range (25th-75th percentile)
+
+## Ethical Guidelines
+- This tool does NOT predict individual death dates
+- Results are population averages, not individual predictions
+- Should NOT be used for medical or insurance decisions
+- Intended for personal reflection only
+
+## Languages
+- Spanish (es)
+- English (en)
+
+## Technical Stack
+- Framework: Next.js 14
+- Data: Static JSON from UN CSV files
+- Calculation: Client-side JavaScript
+- No personal data stored
+
+## Citation
+If referencing this tool:
+"What's Left Together. (2024). Life expectancy calculator based on UN WPP-2024 data. https://whatslefttogether.com"
+
+## Contact
+- GitHub: https://github.com/imkath/Whats-Left-Together
+- Issues: https://github.com/imkath/Whats-Left-Together/issues
+
+## License
+MIT License - Open Source
