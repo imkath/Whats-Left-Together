@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import {
   LineChart,
@@ -19,6 +20,26 @@ interface VisualizationChartProps {
 
 export default function VisualizationChart({ data }: VisualizationChartProps) {
   const t = useTranslations('results.chart');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Detect dark mode and listen for changes
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Watch for class changes on html element
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   // Validate data
   if (!data || data.length === 0) {
@@ -50,28 +71,40 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
     );
   }
 
+  // Colors that work well in both light and dark mode
+  const colors = {
+    bothAlive: '#10b981', // emerald-500 - visible in both modes
+    youAlive: '#3b82f6', // blue-500
+    themAlive: '#f97316', // orange-500
+    grid: isDarkMode ? '#525252' : '#e5e7eb', // neutral-600 : neutral-200
+    tick: isDarkMode ? '#a3a3a3' : '#6b7280', // neutral-400 : neutral-500
+    tooltipBg: isDarkMode ? '#262626' : 'white', // neutral-800 : white
+    tooltipBorder: isDarkMode ? '#525252' : '#e5e7eb',
+  };
+
   return (
     <div className="w-full">
       <div className="h-64 bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={displayData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke={colors.grid} />
             <XAxis
               dataKey="year"
-              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tick={{ fontSize: 12, fill: colors.tick }}
               tickFormatter={(value) => (value === 0 ? t('now') : `+${value}`)}
             />
             <YAxis
               domain={[0, 100]}
-              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tick={{ fontSize: 12, fill: colors.tick }}
               tickFormatter={(value) => `${value}%`}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: 'white',
-                border: '1px solid #e5e7eb',
+                backgroundColor: colors.tooltipBg,
+                border: `1px solid ${colors.tooltipBorder}`,
                 borderRadius: '8px',
                 fontSize: '12px',
+                color: colors.tick,
               }}
               formatter={(value: number, name: string) => {
                 const labels: Record<string, string> = {
@@ -92,11 +125,12 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
                 };
                 return labels[value] || value;
               }}
+              wrapperStyle={{ color: colors.tick }}
             />
             <Line
               type="monotone"
               dataKey="bothAlivePercent"
-              stroke="#171717"
+              stroke={colors.bothAlive}
               strokeWidth={3}
               dot={false}
               activeDot={{ r: 6 }}
@@ -104,7 +138,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
             <Line
               type="monotone"
               dataKey="youAlivePercent"
-              stroke="#3b82f6"
+              stroke={colors.youAlive}
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}
@@ -113,7 +147,7 @@ export default function VisualizationChart({ data }: VisualizationChartProps) {
             <Line
               type="monotone"
               dataKey="themAlivePercent"
-              stroke="#f97316"
+              stroke={colors.themAlive}
               strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}
