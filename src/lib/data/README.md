@@ -6,7 +6,7 @@ Este directorio contiene las tablas de vida procesadas de la ONU (WPP-2024).
 
 **UN World Population Prospects 2024**
 
-- URL: https://population.un.org/wpp/Download/Standard/Mortality/
+- URL: https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=Mortality
 - Dataset: Life tables by age (single year) and sex
 - Fecha de descarga: [TO BE FILLED]
 - Versión: WPP-2024 Revision

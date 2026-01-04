@@ -115,7 +115,7 @@ python3 scripts/process_life_tables.py
 - `WPP2024_MORT_F06_2_SINGLE_AGE_LIFE_TABLE_ESTIMATES_MALE.xlsx`
 - `WPP2024_MORT_F06_3_SINGLE_AGE_LIFE_TABLE_ESTIMATES_FEMALE.xlsx`
 
-Download from: https://population.un.org/wpp/Download/Standard/Mortality/
+Download from: https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=Mortality
 
 ## Contributing
 
