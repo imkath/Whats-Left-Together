@@ -18,7 +18,7 @@ const merriweather = Merriweather({
   variable: '--font-serif',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whats-left-together-cl.vercel.app';
 
 export function generateStaticParams() {
   return [{ locale: 'es' }, { locale: 'en' }];

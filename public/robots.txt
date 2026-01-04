@@ -36,7 +36,7 @@ User-agent: cohere-ai
 Allow: /
 
 # Sitemaps
-Sitemap: https://whatslefttogether.com/sitemap.xml
+Sitemap: https://whats-left-together-cl.vercel.app/sitemap.xml
 
 # LLM-specific information file
-# See: https://whatslefttogether.com/llms.txt
+# See: https://whats-left-together-cl.vercel.app/llms.txt

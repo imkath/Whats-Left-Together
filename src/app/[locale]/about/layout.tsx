@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whats-left-together-cl.vercel.app';
 
 type Props = {
   params: Promise<{ locale: string }>;
