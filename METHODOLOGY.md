@@ -53,7 +53,7 @@ Utilizamos las **tablas de vida oficial de la ONU**:
 
 **Enlace oficial**:
 
-- https://population.un.org/wpp/Download/Standard/Mortality/
+- https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=Mortality
 
 **Validación secundaria**:
 
