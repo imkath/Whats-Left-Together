@@ -11,7 +11,7 @@ This project uses official demographic life tables to estimate how many more in-
 ## Features
 
 - **Real UN Data**: Life tables from UN World Population Prospects 2024 (81 countries)
-- **Age-specific calculations**: Uses residual life expectancy (eₓ) by age, sex, and country
+- **Age-specific calculations**: Uses residual life expectancy (ex) by age, sex, and country
 - **Uncertainty ranges**: Shows probabilistic ranges (p25-p75), not single predictions
 - **Two modes**: Normal (thoughtful) and Direct (blunt) language options
 - **Multiple relationships**: Parents, grandparents, partners, friends, and others
@@ -117,15 +117,6 @@ python3 scripts/process_life_tables.py
 
 Download from: https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=Mortality
 
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
-
-- Voice and tone guidelines
-- Code style
-- How to add countries
-- How to update data sources
-
 ## Ethical Guidelines
 
 ### This tool is NOT:
@@ -142,13 +133,15 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 **Important**: If you experience persistent anxiety using this tool, please seek support from trusted people or mental health professionals.
 
+## Feedback
+
+If you have suggestions, find bugs, or want to share your thoughts, use the feedback form available in the footer of the website.
+
 ## License
 
-MIT License - See [LICENSE](LICENSE)
+This project is intended for ethical and educational use. Users are expected to:
 
-**Expectation**: This project is intended for ethical and educational use. While open source, we expect users to:
-
-- Not use for commercial exploitation without attribution
+- Not use for commercial exploitation
 - Not use to manipulate or pressure others
 - Not present as medical or insurance advice
 
@@ -159,16 +152,11 @@ If you use this project in research or publications:
 ```
 What's Left Together (2025). A statistical calculator for expected encounters
 based on UN World Population Prospects 2024.
-https://github.com/imkath/Whats-Left-Together
+https://whats-left-together-cl.vercel.app
 ```
-
-## Contact
-
-- **Issues**: [GitHub Issues](https://github.com/imkath/Whats-Left-Together/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/imkath/Whats-Left-Together/discussions)
 
 ---
 
-**Last updated**: 2025-11-14
+**Last updated**: 2025-01-21
 **Data version**: UN WPP-2024 (year 2023)
 **Countries**: 81 (expandable to 237)

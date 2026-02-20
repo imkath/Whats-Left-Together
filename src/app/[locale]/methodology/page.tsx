@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Database, AlertTriangle, BookOpen, Code, FileText } from 'lucide-react';
+import { ArrowLeft, Database, AlertTriangle, BookOpen, FileText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Footer from '@/components/Footer';
 
@@ -399,39 +399,6 @@ export default function MethodologyPage() {
                 <strong>{t('mathModel.reference')}</strong>{' '}
                 <span dangerouslySetInnerHTML={{ __html: t.raw('mathModel.referenceText') }} />
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Transparency */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-            <Code size={28} className="text-primary-700 dark:text-primary-400" />{' '}
-            {t('transparency.title')}
-          </h2>
-
-          <div className="card bg-primary-50 dark:bg-neutral-800 border-primary-200 dark:border-primary-800">
-            <p
-              className="text-neutral-700 dark:text-neutral-300 mb-4"
-              dangerouslySetInnerHTML={{ __html: t.raw('transparency.intro') }}
-            />
-
-            <ul className="space-y-2 text-sm list-disc list-inside text-neutral-700 dark:text-neutral-300">
-              <li>{t('transparency.item1')}</li>
-              <li>{t('transparency.item2')}</li>
-              <li>{t('transparency.item3')}</li>
-              <li>{t('transparency.item4')}</li>
-            </ul>
-
-            <div className="mt-4">
-              <a
-                href="https://github.com/kcastillo-co/whats-left-together"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-block"
-              >
-                {t('transparency.viewCode')}
-              </a>
             </div>
           </div>
         </section>

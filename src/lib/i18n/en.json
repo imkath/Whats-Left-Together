@@ -190,13 +190,13 @@
     "tagline": "A statistical mirror of your time left with the people you love",
     "links": "Links",
     "methodology": "How it works",
-    "github": "Open source (GitHub)",
     "about": "About",
+    "feedback": "Send feedback",
     "dataSources": "Data sources",
     "unData": "UN World Population Prospects 2024",
     "moreSources": "More sources",
     "notMedical": "Not a medical tool. For reflection only.",
-    "copyright": "MIT License • Open source • Ethical and educational use"
+    "copyright": "Ethical and educational use"
   },
   "ethical": {
     "warning": "Important notice",
@@ -356,15 +356,6 @@
       "reference": "Methodological reference:",
       "referenceText": "Preston, S. H., Heuveline, P., & Guillot, M. (2001). <em>Demography: Measuring and Modeling Population Processes</em>. Blackwell Publishers. Chapters 2-3."
     },
-    "transparency": {
-      "title": "Transparency and open source",
-      "intro": "All the code for this project is <strong>open and auditable</strong>:",
-      "item1": "Complete source code available on GitHub",
-      "item2": "Mathematical model implemented in TypeScript",
-      "item3": "Data processing script included",
-      "item4": "All sources documented with direct links",
-      "viewCode": "View code on GitHub"
-    },
     "references": {
       "title": "Complete references",
       "demographicData": "Demographic data",
@@ -441,23 +432,11 @@
           "text": "Sometimes, showing this number to the other person can open important conversations about what you both value."
         }
       },
-      "openSource": {
-        "title": "Open source and transparency",
-        "intro": "All the code for this project is public and auditable. You can review:",
-        "item1": "How survival probabilities are calculated",
-        "item2": "What demographic data is used (and where it comes from)",
-        "item3": "How UN life tables are processed",
-        "item4": "All interface and visualization logic",
-        "contribute": "If you find an error, have a suggestion, or want to contribute, you're welcome.",
-        "viewCode": "View code on GitHub"
-      },
       "contact": {
-        "title": "Contact and collaboration",
-        "intro": "If you have questions, comments, or want to report a technical issue:",
-        "github": "GitHub Issues:",
-        "githubLink": "Report an issue or suggestion",
-        "email": "Email:",
-        "note": "This project is non-profit and maintained out of personal interest. I'll respond when I can."
+        "title": "Contact and feedback",
+        "intro": "If you have questions, comments, suggestions, or want to report a technical issue, you can send us a message:",
+        "sendFeedback": "Send feedback",
+        "note": "This project is non-profit and maintained out of personal interest. We'll respond when possible."
       },
       "ethics": {
         "title": "Important ethical limits",
@@ -471,5 +450,61 @@
       }
     },
     "backToCalculator": "Back to calculator"
+  },
+  "sources": {
+    "title": "Official data sources",
+    "additionalSources": "{count} additional sources",
+    "viewSource": "View source",
+    "viewMethodology": "View full methodology",
+    "transparency": {
+      "title": "Full transparency",
+      "description": "You can verify the complete methodology and validate the calculations on our methodology page."
+    },
+    "un": {
+      "name": "UN World Population Prospects 2024",
+      "organization": "United Nations, Population Division",
+      "description": "Life tables by age, sex, and country for 237 countries. Primary data source."
+    },
+    "who": {
+      "name": "WHO Global Health Observatory",
+      "organization": "World Health Organization",
+      "description": "Cross-validation of mortality and life expectancy data."
+    },
+    "hmd": {
+      "name": "Human Mortality Database",
+      "organization": "UC Berkeley & Max Planck Institute",
+      "description": "Refined life tables for countries with high-quality statistics."
+    },
+    "owid": {
+      "name": "Our World in Data - Time Use",
+      "organization": "University of Oxford",
+      "description": "Data on time use and how it changes throughout life."
+    },
+    "sst": {
+      "name": "Socioemotional Selectivity Theory",
+      "organization": "Carstensen et al. (2021)",
+      "description": "Theoretical basis: perceiving limited time → prioritizing close relationships."
+    }
+  },
+  "feedback": {
+    "title": "Send feedback",
+    "close": "Close",
+    "intro": "Your feedback helps us improve. Tell us what you think or if you found any issues.",
+    "typeLabel": "Feedback type",
+    "types": {
+      "suggestion": "Suggestion",
+      "bug": "Bug",
+      "other": "Other"
+    },
+    "messageLabel": "Your message",
+    "messagePlaceholder": "Describe your suggestion, issue, or feedback...",
+    "emailLabel": "Email",
+    "optional": "optional",
+    "emailPlaceholder": "your@email.com",
+    "emailNote": "Only if you want us to contact you about your feedback.",
+    "send": "Send",
+    "sending": "Sending...",
+    "successTitle": "Thank you!",
+    "successMessage": "Your feedback has been received. We'll review it soon."
   }
 }
