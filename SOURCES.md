@@ -55,7 +55,7 @@ https://population.un.org/wpp/
 
 - **Portal general**: https://www.who.int/data/gho
 - **Life expectancy y life tables**: https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/healthy-life-expectancy-(hale)
-- **Life tables by country**: https://who-dev5.prgsdev.com/m/data/gho/data/indicators/indicator-details/GHO/gho-ghe-life-tables-by-country
+- **Life tables by country**: https://www.who.int/data/gho/data/indicators/indicator-details/GHO/gho-ghe-life-tables-by-country
 
 **Qué proporciona**:
 
@@ -139,7 +139,7 @@ https://www.lifetable.de
 **Citación**:
 
 ```
-Roser, M., Ritchie, H., & Spooner, F. (2023).
+Ortiz-Ospina, E., Herre, B., Acisu, T., Giattino, C., & Roser, M. (2020).
 Time Use. Our World in Data.
 https://ourworldindata.org/time-use
 ```
