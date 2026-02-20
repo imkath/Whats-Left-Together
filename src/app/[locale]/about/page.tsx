@@ -1,11 +1,14 @@
 'use client';
 
-import { ArrowLeft, Users, Heart, Code, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, Users, Heart, Mail, MessageSquare } from 'lucide-react';
 import Footer from '@/components/Footer';
+import FeedbackModal from '@/components/FeedbackModal';
 import { useTranslations } from 'next-intl';
 
 export default function AboutPage() {
   const t = useTranslations('about');
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
@@ -158,47 +161,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Código abierto */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4">
-            <Code
-              size={28}
-              className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
-            />
-            {t('sections.openSource.title')}
-          </h2>
-
-          <div className="card">
-            <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
-              {t('sections.openSource.intro')}
-            </p>
-
-            <ul className="list-disc list-inside space-y-2 text-neutral-700 dark:text-neutral-300 mb-4">
-              <li>{t('sections.openSource.item1')}</li>
-              <li>{t('sections.openSource.item2')}</li>
-              <li>{t('sections.openSource.item3')}</li>
-              <li>{t('sections.openSource.item4')}</li>
-            </ul>
-
-            <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
-              {t('sections.openSource.contribute')}
-            </p>
-
-            <div className="mt-4">
-              <a
-                href="https://github.com/[tu-repo]/whats-left-together"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                <Code size={18} />
-                {t('sections.openSource.viewCode')}
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Contacto */}
+        {/* Contacto y Feedback */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-4">
             <Mail
@@ -213,22 +176,13 @@ export default function AboutPage() {
               {t('sections.contact.intro')}
             </p>
 
-            <ul className="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-              <li>
-                <strong>{t('sections.contact.github')}</strong>{' '}
-                <a
-                  href="https://github.com/[tu-repo]/whats-left-together/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary-700 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 underline"
-                >
-                  {t('sections.contact.githubLink')}
-                </a>
-              </li>
-              <li>
-                <strong>{t('sections.contact.email')}</strong> [tu-email]
-              </li>
-            </ul>
+            <button
+              onClick={() => setIsFeedbackOpen(true)}
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              <MessageSquare size={18} />
+              {t('sections.contact.sendFeedback')}
+            </button>
 
             <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-4">
               {t('sections.contact.note')}
@@ -269,6 +223,7 @@ export default function AboutPage() {
       </div>
 
       <Footer />
+      <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
     </div>
   );
 }

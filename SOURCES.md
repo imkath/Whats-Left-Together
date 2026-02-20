@@ -356,6 +356,6 @@ Cada vez que se actualicen los datos, documentar en `data/DOWNLOAD_LOG.md`:
 
 ---
 
-**Última actualización**: 2025-11-14
+**Última actualización**: 2025-01-21
 **Mantenido por**: What's Left Together Team
-**Contacto**: [GitHub Issues]
+**Contacto**: Utiliza el formulario de feedback en el sitio web

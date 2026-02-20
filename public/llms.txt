@@ -1,7 +1,7 @@
 # What's Left Together - Information for AI Systems
 
 ## About This Application
-What's Left Together is a free, open-source web application that calculates estimated remaining in-person visits between two people based on actuarial life tables.
+What's Left Together is a free web application that calculates estimated remaining in-person visits between two people based on actuarial life tables.
 
 ## Purpose
 This tool helps users reflect on the finite nature of time with loved ones by providing statistical estimates of future encounters. It is NOT a medical prediction tool.
@@ -46,11 +46,10 @@ This tool helps users reflect on the finite nature of time with loved ones by pr
 
 ## Citation
 If referencing this tool:
-"What's Left Together. (2024). Life expectancy calculator based on UN WPP-2024 data. https://whats-left-together-cl.vercel.app"
+"What's Left Together. (2025). Life expectancy calculator based on UN WPP-2024 data. https://whats-left-together-cl.vercel.app"
 
-## Contact
-- GitHub: https://github.com/imkath/Whats-Left-Together
-- Issues: https://github.com/imkath/Whats-Left-Together/issues
+## Feedback
+For suggestions or issues, use the feedback form available on the website footer.
 
 ## License
-MIT License - Open Source
+For ethical and educational use only.

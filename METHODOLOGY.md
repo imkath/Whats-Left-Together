@@ -299,30 +299,13 @@ Si experimentas ansiedad severa al usar esta herramienta, considera:
 
 ---
 
-## 7. Transparencia y código abierto
-
-### 7.1. Código fuente
-
-Todo el código está disponible en:
-
-- **GitHub**: [repositorio público]
-- **Licencia**: MIT
-
-Puedes:
-
-- Revisar la implementación completa
-- Proponer mejoras metodológicas
-- Reportar errores o inconsistencias
-- Usar los datos y código para investigación
-
-### 7.2. Actualizaciones
+## 7. Actualizaciones
 
 Nos comprometemos a:
 
 - Actualizar las tablas de vida cuando la ONU publique nuevas revisiones
 - Documentar todos los cambios metodológicos
 - Mantener esta página actualizada con las referencias más recientes
-- Responder a críticas metodológicas fundamentadas
 
 ---
 
@@ -350,14 +333,11 @@ Nos comprometemos a:
 
 ## Contacto
 
-Para preguntas metodológicas, sugerencias o reportar errores:
-
-- **Issues**: [GitHub Issues](https://github.com/imkath/Whats-Left-Together/issues)
-- **Email**: [contacto]
+Para preguntas metodológicas, sugerencias o reportar errores, utiliza el formulario de feedback disponible en el pie de página del sitio web.
 
 ---
 
-**Última actualización**: 2025-12-30
+**Última actualización**: 2025-01-21
 **Versión del modelo**: 2.0 (Monte Carlo)
 **Datos**: WPP-2024 (datos reales integrados - 81 países, año 2023)
 **Simulaciones**: 10,000 iteraciones Monte Carlo para intervalos de confianza
