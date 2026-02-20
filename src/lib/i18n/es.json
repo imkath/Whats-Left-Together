@@ -208,13 +208,13 @@
     "tagline": "Un espejo estadístico del tiempo que te queda con quienes quieres",
     "links": "Enlaces",
     "methodology": "Cómo funciona",
-    "github": "Código abierto (GitHub)",
     "about": "Acerca de",
+    "feedback": "Enviar comentarios",
     "dataSources": "Fuentes de datos",
     "unData": "UN World Population Prospects 2024",
     "moreSources": "Fuentes adicionales",
     "notMedical": "Esta herramienta no es médica. Solo para reflexión.",
-    "copyright": "Licencia MIT • Código abierto • Uso ético y educativo"
+    "copyright": "Uso ético y educativo"
   },
   "ethical": {
     "warning": "Aviso importante",
@@ -356,15 +356,6 @@
       "reference": "Referencia metodológica:",
       "referenceText": "Preston, S. H., Heuveline, P., & Guillot, M. (2001). <em>Demography: Measuring and Modeling Population Processes</em>. Blackwell Publishers. Capítulos 2-3."
     },
-    "transparency": {
-      "title": "Transparencia y código abierto",
-      "intro": "Todo el código de este proyecto es <strong>abierto y auditable</strong>:",
-      "item1": "Código fuente completo disponible en GitHub",
-      "item2": "Modelo matemático implementado en TypeScript",
-      "item3": "Script de procesamiento de datos incluido",
-      "item4": "Todas las fuentes documentadas con enlaces directos",
-      "viewCode": "Ver código en GitHub"
-    },
     "references": {
       "title": "Referencias completas",
       "demographicData": "Datos demográficos",
@@ -441,23 +432,11 @@
           "text": "A veces, mostrar este número a la otra persona puede abrir conversaciones importantes sobre lo que ambos valoran."
         }
       },
-      "openSource": {
-        "title": "Código abierto y transparencia",
-        "intro": "Todo el código de este proyecto es público y auditable. Puedes revisar:",
-        "item1": "Cómo se calculan las probabilidades de supervivencia",
-        "item2": "Qué datos demográficos se usan (y de dónde vienen)",
-        "item3": "Cómo se procesan las tablas de vida de la ONU",
-        "item4": "Toda la lógica de la interfaz y visualización",
-        "contribute": "Si encuentras un error, tienes una sugerencia, o quieres contribuir, eres bienvenido.",
-        "viewCode": "Ver código en GitHub"
-      },
       "contact": {
-        "title": "Contacto y colaboración",
-        "intro": "Si tienes preguntas, comentarios, o quieres reportar un problema técnico:",
-        "github": "GitHub Issues:",
-        "githubLink": "Reportar un problema o sugerencia",
-        "email": "Email:",
-        "note": "Este proyecto es sin fines de lucro y se mantiene por interés personal. Responderé cuando pueda."
+        "title": "Contacto y comentarios",
+        "intro": "Si tienes preguntas, comentarios, sugerencias o quieres reportar un problema técnico, puedes enviarnos un mensaje:",
+        "sendFeedback": "Enviar comentarios",
+        "note": "Este proyecto es sin fines de lucro y se mantiene por interés personal. Responderemos cuando sea posible."
       },
       "ethics": {
         "title": "Límites éticos importantes",
@@ -471,5 +450,61 @@
       }
     },
     "backToCalculator": "Volver a la calculadora"
+  },
+  "sources": {
+    "title": "Fuentes de datos oficiales",
+    "additionalSources": "{count} fuentes adicionales",
+    "viewSource": "Ver fuente",
+    "viewMethodology": "Ver metodología completa",
+    "transparency": {
+      "title": "Transparencia total",
+      "description": "Puedes verificar la metodología completa y validar los cálculos en nuestra página de metodología."
+    },
+    "un": {
+      "name": "UN World Population Prospects 2024",
+      "organization": "Naciones Unidas, División de Población",
+      "description": "Tablas de vida por edad, sexo y país para 237 países. Fuente principal de datos."
+    },
+    "who": {
+      "name": "WHO Global Health Observatory",
+      "organization": "Organización Mundial de la Salud",
+      "description": "Validación cruzada de datos de mortalidad y esperanza de vida."
+    },
+    "hmd": {
+      "name": "Human Mortality Database",
+      "organization": "UC Berkeley & Max Planck Institute",
+      "description": "Tablas de vida refinadas para países con estadísticas de alta calidad."
+    },
+    "owid": {
+      "name": "Our World in Data - Time Use",
+      "organization": "Universidad de Oxford",
+      "description": "Datos sobre uso del tiempo y cómo cambia a lo largo de la vida."
+    },
+    "sst": {
+      "name": "Socioemotional Selectivity Theory",
+      "organization": "Carstensen et al. (2021)",
+      "description": "Base teórica: percibir tiempo limitado → priorizar relaciones cercanas."
+    }
+  },
+  "feedback": {
+    "title": "Enviar comentarios",
+    "close": "Cerrar",
+    "intro": "Tu opinión nos ayuda a mejorar. Cuéntanos qué piensas o si encontraste algún problema.",
+    "typeLabel": "Tipo de comentario",
+    "types": {
+      "suggestion": "Sugerencia",
+      "bug": "Problema",
+      "other": "Otro"
+    },
+    "messageLabel": "Tu mensaje",
+    "messagePlaceholder": "Describe tu sugerencia, problema o comentario...",
+    "emailLabel": "Correo electrónico",
+    "optional": "opcional",
+    "emailPlaceholder": "tu@email.com",
+    "emailNote": "Solo si quieres que te contactemos sobre tu comentario.",
+    "send": "Enviar",
+    "sending": "Enviando...",
+    "successTitle": "¡Gracias!",
+    "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto."
   }
 }

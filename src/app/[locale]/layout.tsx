@@ -204,7 +204,7 @@ export default async function LocaleLayout({
       name: "What's Left Together",
       url: SITE_URL,
       logo: `${SITE_URL}/icon-512.png`,
-      sameAs: ['https://github.com/imkath/Whats-Left-Together'],
+      sameAs: [],
     },
     // FAQ schema (great for rich snippets)
     {
@@ -243,7 +243,7 @@ export default async function LocaleLayout({
                 name: '¿Es gratis usar esta calculadora?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Sí, la herramienta es completamente gratuita, de código abierto, y no requiere registro. No almacenamos datos personales.',
+                  text: 'Sí, la herramienta es completamente gratuita y no requiere registro. No almacenamos datos personales.',
                 },
               },
             ]
@@ -277,7 +277,7 @@ export default async function LocaleLayout({
                 name: 'Is this calculator free to use?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Yes, the tool is completely free, open source, and requires no registration. We do not store personal data.',
+                  text: 'Yes, the tool is completely free and requires no registration. We do not store personal data.',
                 },
               },
             ],
@@ -291,7 +291,7 @@ export default async function LocaleLayout({
       description:
         'Processed life tables from UN World Population Prospects 2024 for calculating joint survival probabilities',
       url: `${SITE_URL}/${locale}/methodology`,
-      license: 'https://opensource.org/licenses/MIT',
+      license: 'https://creativecommons.org/licenses/by-nc/4.0/',
       isAccessibleForFree: true,
       creator: {
         '@type': 'Organization',
