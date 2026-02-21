@@ -17,144 +17,227 @@
 
 const fs = require('fs');
 const path = require('path');
-const XLSX = require('xlsx');
 const crypto = require('crypto');
 
 // Configuración
 const CONFIG = {
+  // CSV files pre-converted from XLSX using scripts/xlsx-to-csv.py
   inputFiles: {
-    male: 'src/lib/data/raw/WPP2024_MORT_F06_2_SINGLE_AGE_LIFE_TABLE_ESTIMATES_MALE.xlsx',
-    female: 'src/lib/data/raw/WPP2024_MORT_F06_3_SINGLE_AGE_LIFE_TABLE_ESTIMATES_FEMALE.xlsx',
+    male: 'src/lib/data/raw/estimates_2016_2023_male.csv',
+    female: 'src/lib/data/raw/estimates_2016_2023_female.csv',
   },
 
   outputDir: 'public/data/life-tables',
   logFile: 'data/DOWNLOAD_LOG.md',
 
-  // Usar datos de "Estimates" (históricos) del año más reciente
-  sheetName: 'Estimates',
   targetYear: 2023, // Los Estimates suelen llegar hasta 2023
 
-  // Países a exportar (códigos ISO3)
-  // OPTIMIZADO: Solo países principales para procesamiento rápido
-  // Puedes agregar más después
-  countries: [
-    // América Latina (principales)
-    'CHL',
-    'ARG',
-    'BRA',
-    'MEX',
-    'COL',
-    'PER',
-    'URY',
-    // Norte América
-    'USA',
-    'CAN',
-    // Europa (principales)
-    'ESP',
-    'GBR',
-    'DEU',
-    'FRA',
-    'ITA',
-    'PRT',
-    // Asia (principales)
-    'JPN',
-    'CHN',
-    'IND',
-    'KOR',
-    // Oceanía
-    'AUS',
-    'NZL',
-  ],
-
-  countryNames: {
-    // América Latina
-    CHL: 'Chile',
-    ARG: 'Argentina',
-    BRA: 'Brazil',
-    MEX: 'Mexico',
-    COL: 'Colombia',
-    PER: 'Peru',
-    VEN: 'Venezuela',
-    ECU: 'Ecuador',
-    BOL: 'Bolivia',
-    URY: 'Uruguay',
-    PRY: 'Paraguay',
-    CRI: 'Costa Rica',
-    PAN: 'Panama',
-    GTM: 'Guatemala',
-    CUB: 'Cuba',
-    DOM: 'Dominican Republic',
-    HND: 'Honduras',
-    SLV: 'El Salvador',
-    NIC: 'Nicaragua',
-    // Norte América
-    USA: 'United States',
-    CAN: 'Canada',
-    // Europa
-    ESP: 'Spain',
-    GBR: 'United Kingdom',
-    DEU: 'Germany',
-    FRA: 'France',
-    ITA: 'Italy',
-    PRT: 'Portugal',
-    NLD: 'Netherlands',
-    BEL: 'Belgium',
-    AUT: 'Austria',
-    CHE: 'Switzerland',
-    GRC: 'Greece',
-    SWE: 'Sweden',
-    NOR: 'Norway',
-    DNK: 'Denmark',
-    POL: 'Poland',
-    CZE: 'Czech Republic',
-    HUN: 'Hungary',
-    ROU: 'Romania',
-    UKR: 'Ukraine',
-    IRL: 'Ireland',
-    FIN: 'Finland',
-    SVK: 'Slovakia',
-    BGR: 'Bulgaria',
-    HRV: 'Croatia',
-    LTU: 'Lithuania',
-    SVN: 'Slovenia',
-    LVA: 'Latvia',
-    EST: 'Estonia',
-    // Asia
-    JPN: 'Japan',
-    CHN: 'China',
-    IND: 'India',
-    KOR: 'South Korea',
-    IDN: 'Indonesia',
-    THA: 'Thailand',
-    VNM: 'Vietnam',
-    PHL: 'Philippines',
-    MYS: 'Malaysia',
-    SGP: 'Singapore',
-    PAK: 'Pakistan',
-    BGD: 'Bangladesh',
-    IRN: 'Iran',
-    TUR: 'Turkey',
-    IRQ: 'Iraq',
-    SAU: 'Saudi Arabia',
-    ISR: 'Israel',
-    KAZ: 'Kazakhstan',
-    UZB: 'Uzbekistan',
-    // Oceanía
-    AUS: 'Australia',
-    NZL: 'New Zealand',
-    // África
-    ZAF: 'South Africa',
-    EGY: 'Egypt',
-    NGA: 'Nigeria',
-    KEN: 'Kenya',
-    ETH: 'Ethiopia',
-    TZA: 'Tanzania',
-    UGA: 'Uganda',
-    DZA: 'Algeria',
-    MAR: 'Morocco',
-    GHA: 'Ghana',
-    // Otros
-    RUS: 'Russia',
+  // Mapa completo de países: nombres en/es y región
+  // Solo se procesan los países que están en este mapa Y en los datos XLSX
+  countryMap: {
+    // ── África ──
+    DZA: { en: 'Algeria', es: 'Argelia', region: 'Africa' },
+    AGO: { en: 'Angola', es: 'Angola', region: 'Africa' },
+    BEN: { en: 'Benin', es: 'Benín', region: 'Africa' },
+    BWA: { en: 'Botswana', es: 'Botsuana', region: 'Africa' },
+    BFA: { en: 'Burkina Faso', es: 'Burkina Faso', region: 'Africa' },
+    BDI: { en: 'Burundi', es: 'Burundi', region: 'Africa' },
+    CPV: { en: 'Cabo Verde', es: 'Cabo Verde', region: 'Africa' },
+    CMR: { en: 'Cameroon', es: 'Camerún', region: 'Africa' },
+    CAF: { en: 'Central African Republic', es: 'República Centroafricana', region: 'Africa' },
+    TCD: { en: 'Chad', es: 'Chad', region: 'Africa' },
+    COM: { en: 'Comoros', es: 'Comoras', region: 'Africa' },
+    COG: { en: 'Congo', es: 'Congo', region: 'Africa' },
+    COD: { en: 'DR Congo', es: 'RD del Congo', region: 'Africa' },
+    CIV: { en: "Côte d'Ivoire", es: 'Costa de Marfil', region: 'Africa' },
+    DJI: { en: 'Djibouti', es: 'Yibuti', region: 'Africa' },
+    EGY: { en: 'Egypt', es: 'Egipto', region: 'Africa' },
+    GNQ: { en: 'Equatorial Guinea', es: 'Guinea Ecuatorial', region: 'Africa' },
+    ERI: { en: 'Eritrea', es: 'Eritrea', region: 'Africa' },
+    SWZ: { en: 'Eswatini', es: 'Esuatini', region: 'Africa' },
+    ETH: { en: 'Ethiopia', es: 'Etiopía', region: 'Africa' },
+    GAB: { en: 'Gabon', es: 'Gabón', region: 'Africa' },
+    GMB: { en: 'Gambia', es: 'Gambia', region: 'Africa' },
+    GHA: { en: 'Ghana', es: 'Ghana', region: 'Africa' },
+    GIN: { en: 'Guinea', es: 'Guinea', region: 'Africa' },
+    GNB: { en: 'Guinea-Bissau', es: 'Guinea-Bisáu', region: 'Africa' },
+    KEN: { en: 'Kenya', es: 'Kenia', region: 'Africa' },
+    LSO: { en: 'Lesotho', es: 'Lesoto', region: 'Africa' },
+    LBR: { en: 'Liberia', es: 'Liberia', region: 'Africa' },
+    LBY: { en: 'Libya', es: 'Libia', region: 'Africa' },
+    MDG: { en: 'Madagascar', es: 'Madagascar', region: 'Africa' },
+    MWI: { en: 'Malawi', es: 'Malaui', region: 'Africa' },
+    MLI: { en: 'Mali', es: 'Malí', region: 'Africa' },
+    MRT: { en: 'Mauritania', es: 'Mauritania', region: 'Africa' },
+    MUS: { en: 'Mauritius', es: 'Mauricio', region: 'Africa' },
+    MAR: { en: 'Morocco', es: 'Marruecos', region: 'Africa' },
+    MOZ: { en: 'Mozambique', es: 'Mozambique', region: 'Africa' },
+    NAM: { en: 'Namibia', es: 'Namibia', region: 'Africa' },
+    NER: { en: 'Niger', es: 'Níger', region: 'Africa' },
+    NGA: { en: 'Nigeria', es: 'Nigeria', region: 'Africa' },
+    RWA: { en: 'Rwanda', es: 'Ruanda', region: 'Africa' },
+    STP: { en: 'São Tomé and Príncipe', es: 'Santo Tomé y Príncipe', region: 'Africa' },
+    SEN: { en: 'Senegal', es: 'Senegal', region: 'Africa' },
+    SYC: { en: 'Seychelles', es: 'Seychelles', region: 'Africa' },
+    SLE: { en: 'Sierra Leone', es: 'Sierra Leona', region: 'Africa' },
+    SOM: { en: 'Somalia', es: 'Somalia', region: 'Africa' },
+    ZAF: { en: 'South Africa', es: 'Sudáfrica', region: 'Africa' },
+    SSD: { en: 'South Sudan', es: 'Sudán del Sur', region: 'Africa' },
+    SDN: { en: 'Sudan', es: 'Sudán', region: 'Africa' },
+    TZA: { en: 'Tanzania', es: 'Tanzania', region: 'Africa' },
+    TGO: { en: 'Togo', es: 'Togo', region: 'Africa' },
+    TUN: { en: 'Tunisia', es: 'Túnez', region: 'Africa' },
+    UGA: { en: 'Uganda', es: 'Uganda', region: 'Africa' },
+    ZMB: { en: 'Zambia', es: 'Zambia', region: 'Africa' },
+    ZWE: { en: 'Zimbabwe', es: 'Zimbabue', region: 'Africa' },
+    MYT: { en: 'Mayotte', es: 'Mayotte', region: 'Africa' },
+    REU: { en: 'Réunion', es: 'Reunión', region: 'Africa' },
+    // ── Asia ──
+    AFG: { en: 'Afghanistan', es: 'Afganistán', region: 'Asia' },
+    ARM: { en: 'Armenia', es: 'Armenia', region: 'Asia' },
+    AZE: { en: 'Azerbaijan', es: 'Azerbaiyán', region: 'Asia' },
+    BHR: { en: 'Bahrain', es: 'Baréin', region: 'Asia' },
+    BGD: { en: 'Bangladesh', es: 'Bangladés', region: 'Asia' },
+    BTN: { en: 'Bhutan', es: 'Bután', region: 'Asia' },
+    BRN: { en: 'Brunei', es: 'Brunéi', region: 'Asia' },
+    KHM: { en: 'Cambodia', es: 'Camboya', region: 'Asia' },
+    CHN: { en: 'China', es: 'China', region: 'Asia' },
+    PRK: { en: 'North Korea', es: 'Corea del Norte', region: 'Asia' },
+    KOR: { en: 'South Korea', es: 'Corea del Sur', region: 'Asia' },
+    CYP: { en: 'Cyprus', es: 'Chipre', region: 'Asia' },
+    GEO: { en: 'Georgia', es: 'Georgia', region: 'Asia' },
+    HKG: { en: 'Hong Kong', es: 'Hong Kong', region: 'Asia' },
+    IND: { en: 'India', es: 'India', region: 'Asia' },
+    IDN: { en: 'Indonesia', es: 'Indonesia', region: 'Asia' },
+    IRN: { en: 'Iran', es: 'Irán', region: 'Asia' },
+    IRQ: { en: 'Iraq', es: 'Irak', region: 'Asia' },
+    ISR: { en: 'Israel', es: 'Israel', region: 'Asia' },
+    JPN: { en: 'Japan', es: 'Japón', region: 'Asia' },
+    JOR: { en: 'Jordan', es: 'Jordania', region: 'Asia' },
+    KAZ: { en: 'Kazakhstan', es: 'Kazajistán', region: 'Asia' },
+    KWT: { en: 'Kuwait', es: 'Kuwait', region: 'Asia' },
+    KGZ: { en: 'Kyrgyzstan', es: 'Kirguistán', region: 'Asia' },
+    LAO: { en: 'Laos', es: 'Laos', region: 'Asia' },
+    LBN: { en: 'Lebanon', es: 'Líbano', region: 'Asia' },
+    MAC: { en: 'Macao', es: 'Macao', region: 'Asia' },
+    MYS: { en: 'Malaysia', es: 'Malasia', region: 'Asia' },
+    MDV: { en: 'Maldives', es: 'Maldivas', region: 'Asia' },
+    MNG: { en: 'Mongolia', es: 'Mongolia', region: 'Asia' },
+    MMR: { en: 'Myanmar', es: 'Myanmar', region: 'Asia' },
+    NPL: { en: 'Nepal', es: 'Nepal', region: 'Asia' },
+    OMN: { en: 'Oman', es: 'Omán', region: 'Asia' },
+    PAK: { en: 'Pakistan', es: 'Pakistán', region: 'Asia' },
+    PSE: { en: 'Palestine', es: 'Palestina', region: 'Asia' },
+    PHL: { en: 'Philippines', es: 'Filipinas', region: 'Asia' },
+    QAT: { en: 'Qatar', es: 'Catar', region: 'Asia' },
+    SAU: { en: 'Saudi Arabia', es: 'Arabia Saudita', region: 'Asia' },
+    SGP: { en: 'Singapore', es: 'Singapur', region: 'Asia' },
+    LKA: { en: 'Sri Lanka', es: 'Sri Lanka', region: 'Asia' },
+    SYR: { en: 'Syria', es: 'Siria', region: 'Asia' },
+    TJK: { en: 'Tajikistan', es: 'Tayikistán', region: 'Asia' },
+    THA: { en: 'Thailand', es: 'Tailandia', region: 'Asia' },
+    TLS: { en: 'Timor-Leste', es: 'Timor Oriental', region: 'Asia' },
+    TUR: { en: 'Turkey', es: 'Turquía', region: 'Asia' },
+    TKM: { en: 'Turkmenistan', es: 'Turkmenistán', region: 'Asia' },
+    ARE: { en: 'United Arab Emirates', es: 'Emiratos Árabes Unidos', region: 'Asia' },
+    UZB: { en: 'Uzbekistan', es: 'Uzbekistán', region: 'Asia' },
+    VNM: { en: 'Vietnam', es: 'Vietnam', region: 'Asia' },
+    YEM: { en: 'Yemen', es: 'Yemen', region: 'Asia' },
+    // ── Europa ──
+    ALB: { en: 'Albania', es: 'Albania', region: 'Europe' },
+    AUT: { en: 'Austria', es: 'Austria', region: 'Europe' },
+    BLR: { en: 'Belarus', es: 'Bielorrusia', region: 'Europe' },
+    BEL: { en: 'Belgium', es: 'Bélgica', region: 'Europe' },
+    BIH: { en: 'Bosnia and Herzegovina', es: 'Bosnia y Herzegovina', region: 'Europe' },
+    BGR: { en: 'Bulgaria', es: 'Bulgaria', region: 'Europe' },
+    HRV: { en: 'Croatia', es: 'Croacia', region: 'Europe' },
+    CZE: { en: 'Czechia', es: 'Chequia', region: 'Europe' },
+    DNK: { en: 'Denmark', es: 'Dinamarca', region: 'Europe' },
+    EST: { en: 'Estonia', es: 'Estonia', region: 'Europe' },
+    FIN: { en: 'Finland', es: 'Finlandia', region: 'Europe' },
+    FRA: { en: 'France', es: 'Francia', region: 'Europe' },
+    DEU: { en: 'Germany', es: 'Alemania', region: 'Europe' },
+    GRC: { en: 'Greece', es: 'Grecia', region: 'Europe' },
+    HUN: { en: 'Hungary', es: 'Hungría', region: 'Europe' },
+    ISL: { en: 'Iceland', es: 'Islandia', region: 'Europe' },
+    IRL: { en: 'Ireland', es: 'Irlanda', region: 'Europe' },
+    ITA: { en: 'Italy', es: 'Italia', region: 'Europe' },
+    LVA: { en: 'Latvia', es: 'Letonia', region: 'Europe' },
+    LTU: { en: 'Lithuania', es: 'Lituania', region: 'Europe' },
+    LUX: { en: 'Luxembourg', es: 'Luxemburgo', region: 'Europe' },
+    MLT: { en: 'Malta', es: 'Malta', region: 'Europe' },
+    MDA: { en: 'Moldova', es: 'Moldavia', region: 'Europe' },
+    MNE: { en: 'Montenegro', es: 'Montenegro', region: 'Europe' },
+    NLD: { en: 'Netherlands', es: 'Países Bajos', region: 'Europe' },
+    MKD: { en: 'North Macedonia', es: 'Macedonia del Norte', region: 'Europe' },
+    NOR: { en: 'Norway', es: 'Noruega', region: 'Europe' },
+    POL: { en: 'Poland', es: 'Polonia', region: 'Europe' },
+    PRT: { en: 'Portugal', es: 'Portugal', region: 'Europe' },
+    ROU: { en: 'Romania', es: 'Rumanía', region: 'Europe' },
+    RUS: { en: 'Russia', es: 'Rusia', region: 'Europe' },
+    SRB: { en: 'Serbia', es: 'Serbia', region: 'Europe' },
+    SVK: { en: 'Slovakia', es: 'Eslovaquia', region: 'Europe' },
+    SVN: { en: 'Slovenia', es: 'Eslovenia', region: 'Europe' },
+    ESP: { en: 'Spain', es: 'España', region: 'Europe' },
+    SWE: { en: 'Sweden', es: 'Suecia', region: 'Europe' },
+    CHE: { en: 'Switzerland', es: 'Suiza', region: 'Europe' },
+    UKR: { en: 'Ukraine', es: 'Ucrania', region: 'Europe' },
+    GBR: { en: 'United Kingdom', es: 'Reino Unido', region: 'Europe' },
+    // ── América Latina y el Caribe ──
+    ATG: { en: 'Antigua and Barbuda', es: 'Antigua y Barbuda', region: 'Latin America' },
+    ARG: { en: 'Argentina', es: 'Argentina', region: 'Latin America' },
+    ABW: { en: 'Aruba', es: 'Aruba', region: 'Latin America' },
+    BHS: { en: 'Bahamas', es: 'Bahamas', region: 'Latin America' },
+    BRB: { en: 'Barbados', es: 'Barbados', region: 'Latin America' },
+    BLZ: { en: 'Belize', es: 'Belice', region: 'Latin America' },
+    BOL: { en: 'Bolivia', es: 'Bolivia', region: 'Latin America' },
+    BRA: { en: 'Brazil', es: 'Brasil', region: 'Latin America' },
+    CHL: { en: 'Chile', es: 'Chile', region: 'Latin America' },
+    COL: { en: 'Colombia', es: 'Colombia', region: 'Latin America' },
+    CRI: { en: 'Costa Rica', es: 'Costa Rica', region: 'Latin America' },
+    CUB: { en: 'Cuba', es: 'Cuba', region: 'Latin America' },
+    CUW: { en: 'Curaçao', es: 'Curazao', region: 'Latin America' },
+    DOM: { en: 'Dominican Republic', es: 'República Dominicana', region: 'Latin America' },
+    ECU: { en: 'Ecuador', es: 'Ecuador', region: 'Latin America' },
+    SLV: { en: 'El Salvador', es: 'El Salvador', region: 'Latin America' },
+    GRD: { en: 'Grenada', es: 'Granada', region: 'Latin America' },
+    GLP: { en: 'Guadeloupe', es: 'Guadalupe', region: 'Latin America' },
+    GTM: { en: 'Guatemala', es: 'Guatemala', region: 'Latin America' },
+    GUF: { en: 'French Guiana', es: 'Guayana Francesa', region: 'Latin America' },
+    GUY: { en: 'Guyana', es: 'Guyana', region: 'Latin America' },
+    HTI: { en: 'Haiti', es: 'Haití', region: 'Latin America' },
+    HND: { en: 'Honduras', es: 'Honduras', region: 'Latin America' },
+    JAM: { en: 'Jamaica', es: 'Jamaica', region: 'Latin America' },
+    MTQ: { en: 'Martinique', es: 'Martinica', region: 'Latin America' },
+    MEX: { en: 'Mexico', es: 'México', region: 'Latin America' },
+    NIC: { en: 'Nicaragua', es: 'Nicaragua', region: 'Latin America' },
+    PAN: { en: 'Panama', es: 'Panamá', region: 'Latin America' },
+    PRY: { en: 'Paraguay', es: 'Paraguay', region: 'Latin America' },
+    PER: { en: 'Peru', es: 'Perú', region: 'Latin America' },
+    PRI: { en: 'Puerto Rico', es: 'Puerto Rico', region: 'Latin America' },
+    KNA: { en: 'Saint Kitts and Nevis', es: 'San Cristóbal y Nieves', region: 'Latin America' },
+    LCA: { en: 'Saint Lucia', es: 'Santa Lucía', region: 'Latin America' },
+    VCT: { en: 'Saint Vincent', es: 'San Vicente y las Granadinas', region: 'Latin America' },
+    SUR: { en: 'Suriname', es: 'Surinam', region: 'Latin America' },
+    TTO: { en: 'Trinidad and Tobago', es: 'Trinidad y Tobago', region: 'Latin America' },
+    URY: { en: 'Uruguay', es: 'Uruguay', region: 'Latin America' },
+    VEN: { en: 'Venezuela', es: 'Venezuela', region: 'Latin America' },
+    VIR: { en: 'US Virgin Islands', es: 'Islas Vírgenes de EE.UU.', region: 'Latin America' },
+    // ── América del Norte ──
+    CAN: { en: 'Canada', es: 'Canadá', region: 'North America' },
+    USA: { en: 'United States', es: 'Estados Unidos', region: 'North America' },
+    // ── Oceanía ──
+    AUS: { en: 'Australia', es: 'Australia', region: 'Oceania' },
+    FJI: { en: 'Fiji', es: 'Fiyi', region: 'Oceania' },
+    NCL: { en: 'New Caledonia', es: 'Nueva Caledonia', region: 'Oceania' },
+    NZL: { en: 'New Zealand', es: 'Nueva Zelanda', region: 'Oceania' },
+    PNG: { en: 'Papua New Guinea', es: 'Papúa Nueva Guinea', region: 'Oceania' },
+    PYF: { en: 'French Polynesia', es: 'Polinesia Francesa', region: 'Oceania' },
+    WSM: { en: 'Samoa', es: 'Samoa', region: 'Oceania' },
+    SLB: { en: 'Solomon Islands', es: 'Islas Salomón', region: 'Oceania' },
+    TON: { en: 'Tonga', es: 'Tonga', region: 'Oceania' },
+    VUT: { en: 'Vanuatu', es: 'Vanuatu', region: 'Oceania' },
+    GUM: { en: 'Guam', es: 'Guam', region: 'Oceania' },
   },
 };
 
@@ -191,20 +274,37 @@ function detectColumnNames(header) {
   for (let i = 0; i < header.length; i++) {
     const colName = (header[i] || '').toString().toLowerCase().trim();
 
-    // Buscar columnas específicas
-    if (colName.includes('iso3') && !mapping.iso3) {
+    // Buscar columnas específicas (soporta nombres cortos y largos del XLSX/CSV)
+    if ((colName.includes('iso3') || colName.includes('alpha-code')) && !mapping.iso3) {
       mapping.iso3 = i;
     } else if ((colName.includes('year') || colName === 'time') && !mapping.year) {
       mapping.year = i;
-    } else if ((colName === 'age' || colName.includes('agegrp')) && !mapping.age) {
+    } else if (
+      (colName === 'age' || colName.includes('agegrp') || colName.includes('age (x)')) &&
+      !mapping.age
+    ) {
       mapping.age = i;
-    } else if (colName === 'mx' && !mapping.mx) {
+    } else if (
+      (colName === 'mx' || colName.includes('central death rate') || colName.includes('m(x,n)')) &&
+      !mapping.mx
+    ) {
       mapping.mx = i;
-    } else if (colName === 'qx' && !mapping.qx) {
+    } else if (
+      (colName === 'qx' ||
+        colName.includes('probability of dying') ||
+        colName.includes('q(x,n)')) &&
+      !mapping.qx
+    ) {
       mapping.qx = i;
-    } else if (colName === 'lx' && !mapping.lx) {
+    } else if (
+      (colName === 'lx' || colName.includes('number of survivors') || colName.includes('l(x)')) &&
+      !mapping.lx
+    ) {
       mapping.lx = i;
-    } else if (colName === 'ex' && !mapping.ex) {
+    } else if (
+      (colName === 'ex' || colName.includes('expectation of life') || colName.includes('e(x)')) &&
+      !mapping.ex
+    ) {
       mapping.ex = i;
     }
   }
@@ -213,59 +313,39 @@ function detectColumnNames(header) {
 }
 
 /**
- * Procesar archivo XLSX para un sexo específico
+ * Procesar archivo CSV para un sexo específico
+ * (CSV pre-convertido desde XLSX usando scripts/xlsx-to-csv.py)
  */
-function processXLSX(filePath, sex) {
+function processCSV(filePath, sex) {
   console.log(`\n${'='.repeat(70)}`);
   console.log(`📖 Procesando: ${path.basename(filePath)}`);
   console.log(`   Sexo: ${sex}`);
   console.log(`${'='.repeat(70)}`);
 
-  // Leer archivo Excel con opciones optimizadas para archivos grandes
-  console.log('   📂 Cargando archivo Excel (puede tomar 1-3 minutos)...');
-  const workbook = XLSX.readFile(filePath, {
-    cellDates: false,
-    cellNF: false,
-    cellStyles: false,
-    sheetStubs: false,
-    dense: true, // Usar formato denso para reducir uso de memoria
-  });
+  console.log('   📂 Cargando CSV...');
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const lines = fileContent.split('\n');
+  console.log(`   ✅ ${lines.length.toLocaleString()} líneas cargadas`);
 
-  console.log(`   ✅ Archivo cargado`);
-  console.log(`   📋 Hojas disponibles: ${workbook.SheetNames.join(', ')}`);
-
-  const worksheet = workbook.Sheets[CONFIG.sheetName];
-  if (!worksheet) {
-    throw new Error(`Hoja "${CONFIG.sheetName}" no encontrada`);
-  }
-
-  // Convertir a JSON (esto también puede tomar tiempo)
-  console.log('   🔄 Convirtiendo a JSON...');
-  const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  console.log(`   ✅ ${rawData.length.toLocaleString()} filas cargadas`);
-
-  // Buscar fila de encabezados
+  // Buscar fila de encabezados (buscar ISO3 o similar)
   let headerRowIndex = -1;
-  for (let i = 0; i < Math.min(30, rawData.length); i++) {
-    const row = rawData[i];
-    if (row && row.length > 5) {
-      const firstCols = row.slice(0, 15).map((c) => (c || '').toString().toLowerCase());
-      if (firstCols.some((c) => c.includes('iso3') || (c.includes('age') && c.includes('qx')))) {
-        headerRowIndex = i;
-        break;
-      }
+  for (let i = 0; i < Math.min(30, lines.length); i++) {
+    const line = lines[i].toLowerCase();
+    if (line.includes('iso3') || line.includes('alpha-code')) {
+      headerRowIndex = i;
+      break;
     }
   }
 
   if (headerRowIndex === -1) {
-    throw new Error('No se encontró la fila de encabezados');
+    throw new Error('No se encontró la fila de encabezados en el CSV');
   }
 
-  console.log(`   📍 Encabezados en fila: ${headerRowIndex}`);
-
-  const header = rawData[headerRowIndex];
+  // Parsear header
+  const header = parseCSVLine(lines[headerRowIndex]);
   const columnMapping = detectColumnNames(header);
 
+  console.log(`   📍 Encabezados en fila: ${headerRowIndex}`);
   console.log('   🔍 Columnas detectadas:');
   for (const [key, index] of Object.entries(columnMapping)) {
     if (index !== null) {
@@ -286,15 +366,17 @@ function processXLSX(filePath, sex) {
   // Procesar filas
   const dataStartRow = headerRowIndex + 1;
   console.log(
-    `   ⚙️  Procesando ${(rawData.length - dataStartRow).toLocaleString()} filas de datos...`
+    `   ⚙️  Procesando ${(lines.length - dataStartRow).toLocaleString()} filas de datos...`
   );
 
   let localProcessed = 0;
   let savedForThisSex = 0;
 
-  for (let i = dataStartRow; i < rawData.length; i++) {
-    const row = rawData[i];
+  for (let i = dataStartRow; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
 
+    const row = parseCSVLine(line);
     if (!row || row.length === 0) continue;
 
     rowsProcessed++;
@@ -302,7 +384,7 @@ function processXLSX(filePath, sex) {
 
     try {
       // Extraer datos
-      const iso3 = row[columnMapping.iso3]?.toString().trim().toUpperCase();
+      const iso3 = (row[columnMapping.iso3] || '').toString().trim().toUpperCase();
       const year = columnMapping.year ? parseInt(row[columnMapping.year]) : CONFIG.targetYear;
       const age = parseInt(row[columnMapping.age]);
       const mx = columnMapping.mx ? parseFloat(row[columnMapping.mx]) : 0;
@@ -315,8 +397,8 @@ function processXLSX(filePath, sex) {
       if (isNaN(age) || isNaN(qx) || isNaN(lx) || isNaN(ex)) continue;
       if (age < 0 || age > 100) continue;
 
-      // Filtrar por países configurados
-      if (!CONFIG.countries.includes(iso3)) continue;
+      // Filtrar: solo países en el mapa
+      if (!CONFIG.countryMap[iso3]) continue;
 
       // Filtrar por año objetivo
       if (year !== CONFIG.targetYear) continue;
@@ -329,7 +411,7 @@ function processXLSX(filePath, sex) {
       if (!results[key]) {
         results[key] = {
           country: iso3,
-          countryName: CONFIG.countryNames[iso3] || iso3,
+          countryName: CONFIG.countryMap[iso3]?.en || iso3,
           sex,
           year: CONFIG.targetYear,
           source: 'UN World Population Prospects 2024',
@@ -349,13 +431,12 @@ function processXLSX(filePath, sex) {
       });
     } catch (err) {
       if (errors.length < 10) {
-        // Limitar errores guardados
         errors.push(`${sex} - Fila ${i + 1}: ${err.message}`);
       }
     }
 
-    // Progreso cada 10000 filas
-    if (localProcessed % 10000 === 0) {
+    // Progreso cada 100000 filas
+    if (localProcessed % 100000 === 0) {
       process.stdout.write(
         `\r      Procesadas: ${localProcessed.toLocaleString()} filas | Países: ${savedForThisSex}`
       );
@@ -365,6 +446,34 @@ function processXLSX(filePath, sex) {
   console.log(
     `\r      ✅ Procesadas: ${localProcessed.toLocaleString()} filas | Países: ${savedForThisSex}`
   );
+}
+
+/**
+ * Parsear una línea CSV respetando comillas
+ */
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
 }
 
 /**
@@ -412,106 +521,12 @@ function updateCountriesJson() {
   const countriesWithData = Array.from(countriesFound)
     .sort()
     .map((code) => {
-      const name = CONFIG.countryNames[code] || code;
-
-      // Determinar región (simplificado)
-      let region = 'Other';
-      if (
-        [
-          'CHL',
-          'ARG',
-          'BRA',
-          'MEX',
-          'COL',
-          'PER',
-          'VEN',
-          'ECU',
-          'BOL',
-          'URY',
-          'PRY',
-          'CRI',
-          'PAN',
-          'GTM',
-          'CUB',
-          'DOM',
-          'HND',
-          'SLV',
-          'NIC',
-        ].includes(code)
-      ) {
-        region = 'Latin America';
-      } else if (['USA', 'CAN'].includes(code)) {
-        region = 'North America';
-      } else if (
-        [
-          'ESP',
-          'GBR',
-          'DEU',
-          'FRA',
-          'ITA',
-          'PRT',
-          'NLD',
-          'BEL',
-          'AUT',
-          'CHE',
-          'GRC',
-          'SWE',
-          'NOR',
-          'DNK',
-          'POL',
-          'CZE',
-          'HUN',
-          'ROU',
-          'UKR',
-          'IRL',
-          'FIN',
-          'SVK',
-          'BGR',
-          'HRV',
-          'LTU',
-          'SVN',
-          'LVA',
-          'EST',
-        ].includes(code)
-      ) {
-        region = 'Europe';
-      } else if (
-        [
-          'JPN',
-          'CHN',
-          'IND',
-          'KOR',
-          'IDN',
-          'THA',
-          'VNM',
-          'PHL',
-          'MYS',
-          'SGP',
-          'PAK',
-          'BGD',
-          'IRN',
-          'TUR',
-          'IRQ',
-          'SAU',
-          'ISR',
-          'KAZ',
-          'UZB',
-        ].includes(code)
-      ) {
-        region = 'Asia';
-      } else if (['AUS', 'NZL'].includes(code)) {
-        region = 'Oceania';
-      } else if (
-        ['ZAF', 'EGY', 'NGA', 'KEN', 'ETH', 'TZA', 'UGA', 'DZA', 'MAR', 'GHA'].includes(code)
-      ) {
-        region = 'Africa';
-      }
-
+      const meta = CONFIG.countryMap[code] || {};
       return {
         code,
-        name,
-        nameEs: name, // TODO: Agregar traducciones
-        region,
+        name: meta.en || code,
+        nameEs: meta.es || meta.en || code,
+        region: meta.region || 'Other',
         hasData: true,
       };
     });
@@ -544,7 +559,7 @@ function updateDownloadLog(savedFiles) {
 
 ${Array.from(countriesFound)
   .sort()
-  .map((code) => `- **${code}**: ${CONFIG.countryNames[code] || code}`)
+  .map((code) => `- **${code}**: ${CONFIG.countryMap[code]?.en || code}`)
   .join('\n')}
 
 ### Archivos generados
@@ -615,7 +630,7 @@ async function main() {
   console.log('🚀 PROCESADOR DE LIFE TABLES UN WPP-2024 (F06)');
   console.log('='.repeat(70));
   console.log(`📅 Año objetivo: ${CONFIG.targetYear}`);
-  console.log(`🌍 Países a procesar: ${CONFIG.countries.length}`);
+  console.log(`🌍 Países en mapa: ${Object.keys(CONFIG.countryMap).length}`);
   console.log('='.repeat(70));
 
   // Verificar archivos
@@ -630,8 +645,8 @@ async function main() {
 
   // Procesar cada archivo
   try {
-    processXLSX(CONFIG.inputFiles.male, 'male');
-    processXLSX(CONFIG.inputFiles.female, 'female');
+    processCSV(CONFIG.inputFiles.male, 'male');
+    processCSV(CONFIG.inputFiles.female, 'female');
   } catch (error) {
     console.error('\n❌ Error procesando archivos:', error.message);
     console.error(error.stack);

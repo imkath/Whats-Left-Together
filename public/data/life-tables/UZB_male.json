@@ -5,12 +5,12 @@
   "year": 2023,
   "source": "UN World Population Prospects 2024",
   "sourceUrl": "https://population.un.org/wpp/",
-  "downloadDate": "2025-11-14",
+  "downloadDate": "2026-02-20",
   "entries": [
     {
       "age": 0,
       "qx": 0.012131,
-      "lx": 100000.0,
+      "lx": 100000,
       "ex": 69.45
     },
     {
@@ -454,7 +454,7 @@
     {
       "age": 74,
       "qx": 0.065142,
-      "lx": 45892.0,
+      "lx": 45892,
       "ex": 8.12
     },
     {
@@ -556,7 +556,7 @@
     {
       "age": 91,
       "qx": 0.295862,
-      "lx": 2730.0,
+      "lx": 2730,
       "ex": 2.48
     },
     {
@@ -609,7 +609,7 @@
     },
     {
       "age": 100,
-      "qx": 1.0,
+      "qx": 1,
       "lx": 20.11,
       "ex": 0.79
     }
