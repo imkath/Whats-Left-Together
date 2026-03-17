@@ -27,6 +27,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
   const [loading, setLoading] = useState(true);
   const [errorCode, setErrorCode] = useState<ErrorCode | null>(null);
   const [errorCountry, setErrorCountry] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     async function calculate() {
@@ -83,7 +84,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
     }
 
     calculate();
-  }, [input, locale]);
+  }, [input, locale, retryCount]);
 
   if (loading) {
     return (
@@ -134,6 +135,12 @@ export default function Results({ input, directMode = false }: ResultsProps) {
                   <li>• {t('errors.retryCountry')}</li>
                   <li>• {t('errors.retryLater')}</li>
                 </ul>
+                <button
+                  onClick={() => setRetryCount((c) => c + 1)}
+                  className="mt-3 px-4 py-2 text-sm font-medium text-red-700 border border-red-300 rounded-lg hover:bg-red-100 transition-colors"
+                >
+                  {t('errors.retry')}
+                </button>
               </div>
             </div>
           </div>
@@ -157,34 +164,27 @@ export default function Results({ input, directMode = false }: ResultsProps) {
         {/* Main result - Normal mode */}
         <div className="card bg-gradient-to-br from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900 border-primary-200 dark:border-neutral-700">
           <h3 className="text-2xl mb-6 text-center">
-            Si todo sigue igual, podrías ver a {relationLabel} unas {min} a {max} veces más en tu
-            vida.
+            {t('normalMode.title', { relation: relationLabel, min, max })}
           </h3>
 
           <div className="prose prose-neutral dark:prose-invert max-w-none">
             <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-              Según los datos de esperanza de vida para {countryName} y las edades de ambos, es
-              razonable esperar que sigan con vida, al mismo tiempo, alrededor de{' '}
-              <strong>
-                {yearsMin} a {yearsMax} años más
-              </strong>
-              .
+              {t('normalMode.para1', { country: countryName, yearsMin, yearsMax })}
             </p>
 
             <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-              Si ves a {relationLabel} <strong>{input.visitsPerYear} veces al año</strong>, eso se
-              traduce en un rango aproximado de{' '}
-              <strong>
-                {min} a {max} visitas presenciales futuras
-              </strong>
-              .
+              {t('normalMode.para2', {
+                relation: relationLabel,
+                frequency: input.visitsPerYear,
+                min,
+                max,
+              })}
             </p>
 
             <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-              Es solo una estimación estadística, no conoce la salud real de ninguno, ni accidentes,
-              ni cambios de vida. Pero sí te muestra algo cierto:{' '}
+              {t('normalMode.para3_main')}{' '}
               <strong className="text-primary-700 dark:text-primary-400">
-                el número no es infinito
+                {t('normalMode.para3_emphasis')}
               </strong>
               .
             </p>
@@ -193,75 +193,73 @@ export default function Results({ input, directMode = false }: ResultsProps) {
 
         {/* Action suggestions */}
         <div className="card border-primary-300 dark:border-neutral-600 bg-primary-50 dark:bg-neutral-800">
-          <h4 className="text-lg font-semibold mb-4">
-            Puedes decidir qué hacer con esta información.
-          </h4>
+          <h4 className="text-lg font-semibold mb-4">{t('normalMode.actionTitle')}</h4>
 
-          <p className="text-neutral-700 dark:text-neutral-300 mb-3">Algunas personas eligen:</p>
+          <p className="text-neutral-700 dark:text-neutral-300 mb-3">
+            {t('normalMode.actionIntro')}
+          </p>
 
           <ul className="space-y-2 text-neutral-700 dark:text-neutral-300">
             <li className="flex gap-3">
               <span className="text-primary-600 dark:text-primary-400">→</span>
-              <span>Aumentar la frecuencia de visitas</span>
+              <span>{t('normalMode.action1')}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-primary-600 dark:text-primary-400">→</span>
-              <span>Alargar el tiempo que pasan juntas en cada encuentro</span>
+              <span>{t('normalMode.action2')}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-primary-600 dark:text-primary-400">→</span>
-              <span>O simplemente dejar de postergar una conversación importante</span>
+              <span>{t('normalMode.action3')}</span>
             </li>
           </ul>
         </div>
 
         {/* Visualization */}
         <div className="card">
-          <h4 className="text-lg font-semibold mb-4">Probabilidad de supervivencia año a año</h4>
+          <h4 className="text-lg font-semibold mb-4">{t('chart.title')}</h4>
           <VisualizationChart data={result.yearByYearSurvival} />
           <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-4">
-            Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro, basado
-            en las tablas de vida de {result.assumptions.dataSource}.
+            {t('chart.description', { source: result.assumptions.dataSource })}
           </p>
         </div>
 
         {/* Assumptions and disclaimers */}
         <div className="card bg-neutral-50 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700">
           <h4 className="text-sm font-semibold mb-3 text-neutral-800 dark:text-neutral-200">
-            Qué calculamos y qué no
+            {t('assumptions.title')}
           </h4>
 
           <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-3">
-            <strong>Qué calculamos:</strong> Visitas presenciales esperadas entre dos personas,
-            basadas en tablas de vida por edad, sexo y país.
+            <strong>{t('assumptions.whatLabel')}</strong> {t('assumptions.what')}
           </p>
 
           <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-2">
-            Qué no hace esta herramienta:
+            {t('assumptions.whatNot')}:
           </p>
 
           <ul className="text-sm text-neutral-700 dark:text-neutral-300 space-y-2">
             <li className="flex gap-2">
               <span>•</span>
-              <span>No predice cuándo morirá nadie</span>
+              <span>{t('assumptions.point1')}</span>
             </li>
             <li className="flex gap-2">
               <span>•</span>
-              <span>No debe usarse para decisiones médicas</span>
+              <span>{t('assumptions.point2')}</span>
             </li>
             <li className="flex gap-2">
               <span>•</span>
-              <span>No conoce enfermedades concretas ni factores individuales</span>
+              <span>{t('assumptions.point3')}</span>
             </li>
             <li className="flex gap-2">
               <span>•</span>
-              <span>La frecuencia de visitas se asume estable (en la vida real puede cambiar)</span>
+              <span>{t('assumptions.point4')}</span>
             </li>
           </ul>
 
           <div className="mt-4 pt-4 border-t border-neutral-300 dark:border-neutral-600">
             <p className="text-xs text-neutral-700 dark:text-neutral-300 font-medium mb-2">
-              Fuente de datos:
+              {t('assumptions.sourceLabel')}
             </p>
             <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-1">
               {result.assumptions.dataSource} ({result.assumptions.dataYear})
@@ -272,7 +270,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
               rel="noopener noreferrer"
               className="text-xs text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
             >
-              → Ver fuente oficial (ONU)
+              {t('assumptions.viewSource')}
             </a>
           </div>
 
@@ -281,7 +279,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
               href="/methodology"
               className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
             >
-              → Ver cómo funciona (metodología completa)
+              {t('seeMethodology')}
             </a>
           </div>
         </div>
@@ -334,31 +332,34 @@ export default function Results({ input, directMode = false }: ResultsProps) {
 
       {/* Visualization */}
       <div className="card">
-        <h4 className="text-lg font-semibold mb-4">Probabilidad de supervivencia año a año</h4>
+        <h4 className="text-lg font-semibold mb-4">{t('chart.title')}</h4>
         <VisualizationChart data={result.yearByYearSurvival} />
         <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-4">
-          Datos: {result.assumptions.dataSource} ({result.assumptions.dataYear})
+          {t('assumptions.source', {
+            source: result.assumptions.dataSource,
+            year: result.assumptions.dataYear,
+          })}
         </p>
       </div>
 
       {/* Disclaimers - more concise in direct mode */}
       <div className="card bg-neutral-50 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700">
         <h4 className="text-sm font-semibold mb-3 text-neutral-800 dark:text-neutral-200">
-          Qué no hace esta herramienta
+          {t('assumptions.whatNot')}
         </h4>
 
         <ul className="text-sm text-neutral-700 dark:text-neutral-300 space-y-2">
           <li className="flex gap-2">
             <span>•</span>
-            <span>No predice cuándo morirá nadie</span>
+            <span>{t('assumptions.point1')}</span>
           </li>
           <li className="flex gap-2">
             <span>•</span>
-            <span>No debe usarse para decisiones médicas</span>
+            <span>{t('assumptions.point2')}</span>
           </li>
           <li className="flex gap-2">
             <span>•</span>
-            <span>No conoce enfermedades concretas ni factores individuales</span>
+            <span>{t('assumptions.point3')}</span>
           </li>
         </ul>
 
@@ -367,7 +368,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
             href="/methodology"
             className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
           >
-            → Ver cómo funciona
+            {t('seeMethodology')}
           </a>
         </div>
       </div>

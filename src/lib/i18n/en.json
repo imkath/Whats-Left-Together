@@ -86,7 +86,11 @@
       "actionIntro": "Some people choose to:",
       "action1": "Increase the frequency of visits",
       "action2": "Extend the time spent together on each visit",
-      "action3": "Or simply stop postponing an important conversation"
+      "action3": "Or simply stop postponing an important conversation",
+      "para1": "According to life expectancy data for {country} and both of your ages, it is reasonable to expect that you will both be alive, at the same time, for about {yearsMin} to {yearsMax} more years.",
+      "para2": "If you see {relation} {frequency} times per year, that translates to an approximate range of {min} to {max} future in-person visits.",
+      "para3_main": "This is only a statistical estimate. It doesn't know either person's actual health, accidents, or life changes. But it does show you something true:",
+      "para3_emphasis": "the number is not infinite"
     },
     "directMode": {
       "title": "At this rate, you don't have many visits left with {relation}.",
@@ -127,7 +131,29 @@
       "point1": "It doesn't predict when anyone will die",
       "point2": "It shouldn't be used for medical decisions",
       "point3": "It doesn't know specific illnesses or individual factors",
-      "point4": "Visit frequency is assumed stable (in real life it can change)"
+      "point4": "Visit frequency is assumed stable (in real life it can change)",
+      "whatLabel": "What we calculate:",
+      "sourceLabel": "Data source:",
+      "viewSource": "→ View official source (UN)"
+    },
+    "errors": {
+      "loadingTitle": "Error loading data",
+      "unknown": "Unknown error",
+      "retrySuggestions": "You can try:",
+      "retryReload": "Reload the page",
+      "retryCountry": "Select another country from the list",
+      "retryLater": "Try again later",
+      "retry": "Try again",
+      "noDataForCountry": "We don't have official demographic data for {country}. Please select another country from the list.",
+      "noDataGeneric": "We don't have official demographic data for this country. Please select another country from the list.",
+      "ageExceedsYou": "Life tables only include data up to age 100. If you are over 100 years old, unfortunately we cannot calculate the statistic with precision.",
+      "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
+      "networkError": "Connection error. Check your internet connection and try again.",
+      "calculationError": "Calculation error. Please verify the entered data.",
+      "calculating": "Calculating...",
+      "boundaryTitle": "Something went wrong",
+      "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
+      "boundaryReload": "Reload page"
     },
     "chart": {
       "noData": "Not enough data to display the chart",
@@ -136,7 +162,9 @@
       "plusYears": "+{years} years",
       "bothAlive": "Both alive",
       "youAlive": "You alive",
-      "themAlive": "Them alive"
+      "themAlive": "Them alive",
+      "title": "Survival probability year by year",
+      "description": "This chart shows the probability of both being alive each future year, based on life tables from {source}."
     }
   },
   "methodology": {
@@ -505,6 +533,12 @@
     "send": "Send",
     "sending": "Sending...",
     "successTitle": "Thank you!",
-    "successMessage": "Your feedback has been received. We'll review it soon."
+    "successMessage": "Your feedback has been received. We'll review it soon.",
+    "required": "required",
+    "messagePlaceholders": {
+      "suggestion": "Tell us your idea or what could be improved in the tool...",
+      "bug": "Describe the problem you encountered. When does it happen? What were you doing?",
+      "other": "Share your thoughts, questions, or any other feedback..."
+    }
   }
 }

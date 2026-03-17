@@ -43,19 +43,36 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
+  const isEmailRequired = feedbackType === 'suggestion';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
+    if (isEmailRequired && !email.trim()) return;
 
     setIsSubmitting(true);
 
-    // Simulate form submission - in production, this would send to an API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const endpoint = process.env.NEXT_PUBLIC_FEEDBACK_ENDPOINT;
+    if (endpoint) {
+      try {
+        await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: feedbackType,
+            message,
+            email,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch {
+        // Fail silently — the user already submitted, we don't want to alarm them
+      }
+    }
 
     setIsSubmitting(false);
     setIsSubmitted(true);
 
-    // Reset after showing success
     setTimeout(() => {
       setMessage('');
       setEmail('');
@@ -146,21 +163,26 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   rows={4}
                   required
                   className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-                  placeholder={t('messagePlaceholder')}
+                  placeholder={t(`messagePlaceholders.${feedbackType}`)}
                 />
               </div>
 
-              {/* Email (optional) */}
+              {/* Email */}
               <div>
                 <label htmlFor="feedback-email" className="block text-sm font-medium mb-2">
                   {t('emailLabel')}{' '}
-                  <span className="text-neutral-500 font-normal">({t('optional')})</span>
+                  {isEmailRequired ? (
+                    <span className="text-red-500">*</span>
+                  ) : (
+                    <span className="text-neutral-500 font-normal">({t('optional')})</span>
+                  )}
                 </label>
                 <input
                   id="feedback-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required={isEmailRequired}
                   className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder={t('emailPlaceholder')}
                 />
@@ -170,7 +192,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               {/* Submit */}
               <button
                 type="submit"
-                disabled={isSubmitting || !message.trim()}
+                disabled={isSubmitting || !message.trim() || (isEmailRequired && !email.trim())}
                 className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (

@@ -86,7 +86,11 @@
       "actionIntro": "Algunas personas eligen:",
       "action1": "Aumentar la frecuencia de visitas",
       "action2": "Alargar el tiempo que pasan juntas en cada encuentro",
-      "action3": "O simplemente dejar de postergar una conversación importante"
+      "action3": "O simplemente dejar de postergar una conversación importante",
+      "para1": "Según los datos de esperanza de vida para {country} y las edades de ambos, es razonable esperar que sigan con vida, al mismo tiempo, alrededor de {yearsMin} a {yearsMax} años más.",
+      "para2": "Si ves a {relation} {frequency} veces al año, eso se traduce en un rango aproximado de {min} a {max} visitas presenciales futuras.",
+      "para3_main": "Es solo una estimación estadística, no conoce la salud real de ninguno, ni accidentes, ni cambios de vida. Pero sí te muestra algo cierto:",
+      "para3_emphasis": "el número no es infinito"
     },
     "directMode": {
       "title": "A este ritmo, te quedan pocas visitas con {relation}.",
@@ -127,7 +131,10 @@
       "point1": "No predice cuándo morirá nadie",
       "point2": "No debe usarse para decisiones médicas",
       "point3": "No conoce enfermedades concretas ni factores individuales",
-      "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)"
+      "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)",
+      "whatLabel": "Qué calculamos:",
+      "sourceLabel": "Fuente de datos:",
+      "viewSource": "→ Ver fuente oficial (ONU)"
     },
     "chart": {
       "noData": "No hay datos suficientes para mostrar el gráfico",
@@ -136,7 +143,9 @@
       "plusYears": "+{years} años",
       "bothAlive": "Ambos vivos",
       "youAlive": "Tú vivo/a",
-      "themAlive": "Ellos vivos"
+      "themAlive": "Ellos vivos",
+      "title": "Probabilidad de supervivencia año a año",
+      "description": "Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro, basado en las tablas de vida de {source}."
     },
     "errors": {
       "loadingTitle": "Error al cargar los datos",
@@ -144,6 +153,7 @@
       "retrySuggestions": "Puedes intentar:",
       "retryReload": "Recargar la página",
       "retryCountry": "Seleccionar otro país de la lista",
+      "retry": "Reintentar",
       "retryLater": "Intentar de nuevo más tarde",
       "noDataForCountry": "No disponemos de datos demográficos oficiales para {country}. Por favor selecciona otro país de la lista.",
       "noDataGeneric": "No disponemos de datos demográficos oficiales para este país. Por favor selecciona otro país de la lista.",
@@ -505,6 +515,12 @@
     "send": "Enviar",
     "sending": "Enviando...",
     "successTitle": "¡Gracias!",
-    "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto."
+    "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto.",
+    "required": "requerido",
+    "messagePlaceholders": {
+      "suggestion": "Cuéntanos tu idea o qué mejorarías de la herramienta...",
+      "bug": "Describe el problema que encontraste. ¿Cuándo ocurre? ¿Qué estabas haciendo?",
+      "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario..."
+    }
   }
 }
