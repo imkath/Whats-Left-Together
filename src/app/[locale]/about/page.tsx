@@ -15,15 +15,15 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-      <Breadcrumb
-        items={[{ label: tNav('about'), href: `/${locale}/about` }]}
-        siteUrl="https://whatslefttogether.com"
-      />
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">
+          <Breadcrumb
+            items={[{ label: tNav('about'), href: `/${locale}/about` }]}
+            siteUrl="https://whatslefttogether.com"
+          />
           <a
-            href="/"
+            href={`/${locale}`}
             className="text-primary-700 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 text-sm mb-2 inline-flex items-center gap-2 font-medium transition-colors"
           >
             <ArrowLeft size={16} />
