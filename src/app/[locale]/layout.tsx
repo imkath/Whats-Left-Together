@@ -434,6 +434,13 @@ export default async function LocaleLayout({
               <ThemeToggle />
               <LanguageSwitcher />
             </div>
+            <nav aria-label="Site navigation" className="sr-only">
+              <a href={`/${locale}`}>{locale === 'es' ? 'Inicio' : 'Home'}</a>
+              <a href={`/${locale}/methodology`}>
+                {locale === 'es' ? 'Cómo funciona' : 'How It Works'}
+              </a>
+              <a href={`/${locale}/about`}>{locale === 'es' ? 'Acerca de' : 'About'}</a>
+            </nav>
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>

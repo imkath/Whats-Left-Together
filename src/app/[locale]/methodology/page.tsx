@@ -1,14 +1,21 @@
 'use client';
 
 import { ArrowLeft, Database, AlertTriangle, BookOpen, FileText } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Footer from '@/components/Footer';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function MethodologyPage() {
   const t = useTranslations('methodologyPage');
+  const tNav = useTranslations('nav');
+  const locale = useLocale();
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+      <Breadcrumb
+        items={[{ label: tNav('methodology'), href: `/${locale}/methodology` }]}
+        siteUrl="https://whatslefttogether.com"
+      />
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">

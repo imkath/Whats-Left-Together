@@ -4,14 +4,21 @@ import { useState } from 'react';
 import { ArrowLeft, Users, Heart, Mail, MessageSquare } from 'lucide-react';
 import Footer from '@/components/Footer';
 import FeedbackModal from '@/components/FeedbackModal';
-import { useTranslations } from 'next-intl';
+import Breadcrumb from '@/components/Breadcrumb';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function AboutPage() {
   const t = useTranslations('about');
+  const tNav = useTranslations('nav');
+  const locale = useLocale();
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+      <Breadcrumb
+        items={[{ label: tNav('about'), href: `/${locale}/about` }]}
+        siteUrl="https://whatslefttogether.com"
+      />
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">

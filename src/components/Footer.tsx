@@ -22,27 +22,32 @@ export default function Footer() {
 
             <div>
               <h4 className="text-white text-sm font-semibold mb-3">{t('links')}</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href={`/${locale}/methodology`} className="hover:text-white transition-colors">
-                    {t('methodology')}
-                  </a>
-                </li>
-                <li>
-                  <a href={`/${locale}/about`} className="hover:text-white transition-colors">
-                    {t('about')}
-                  </a>
-                </li>
-                <li>
-                  <button
-                    onClick={() => setIsFeedbackOpen(true)}
-                    className="hover:text-white transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <MessageSquare size={14} />
-                    {t('feedback')}
-                  </button>
-                </li>
-              </ul>
+              <nav aria-label="Footer navigation">
+                <ul className="space-y-2 text-sm">
+                  <li>
+                    <a
+                      href={`/${locale}/methodology`}
+                      className="hover:text-white transition-colors"
+                    >
+                      {t('methodology')}
+                    </a>
+                  </li>
+                  <li>
+                    <a href={`/${locale}/about`} className="hover:text-white transition-colors">
+                      {t('about')}
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setIsFeedbackOpen(true)}
+                      className="hover:text-white transition-colors inline-flex items-center gap-1.5"
+                    >
+                      <MessageSquare size={14} />
+                      {t('feedback')}
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
 
             <div>

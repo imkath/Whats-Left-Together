@@ -2,7 +2,6 @@
 
 import { Calculator } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 
 export default function Hero() {
   const t = useTranslations('hero');
@@ -11,14 +10,17 @@ export default function Hero() {
     <section className="bg-gradient-to-b from-neutral-50 via-white to-neutral-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 py-20">
       <div className="container-custom text-center">
         <h1 className="mb-6 sr-only">{t('title')}</h1>
-        <Image
-          src="/logo-wslt.png"
-          alt="What's Left Together"
-          width={800}
-          height={80}
-          className="w-full max-w-3xl mx-auto h-auto mb-6 dark:invert"
-          priority
-        />
+        <picture>
+          <source srcSet="/logo-wslt.webp" type="image/webp" />
+          <img
+            src="/logo-wslt.png"
+            alt="What's Left Together"
+            width={800}
+            height={80}
+            className="w-full max-w-3xl mx-auto h-auto mb-6 dark:invert"
+            fetchPriority="high"
+          />
+        </picture>
 
         <p className="text-xl text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto mb-6">
           {t('subtitle')}
