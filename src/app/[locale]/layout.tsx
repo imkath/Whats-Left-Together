@@ -20,15 +20,14 @@ const merriweather = Merriweather({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whats-left-together-cl.vercel.app';
 
-export function generateStaticParams() {
-  return [{ locale: 'es' }, { locale: 'en' }];
-}
+export const runtime = 'edge';
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   let messages;
   try {
     messages = (await import(`@/lib/i18n/${locale}.json`)).default;
@@ -122,11 +121,12 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   let messages;
   try {
     messages = (await import(`@/lib/i18n/${locale}.json`)).default;
