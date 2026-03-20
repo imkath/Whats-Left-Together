@@ -170,7 +170,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
       <div className="space-y-6 animate-slide-up" ref={resultsContainerRef} tabIndex={-1}>
         {/* Main result - Normal mode */}
         <div className="card bg-gradient-to-br from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900 border-primary-200 dark:border-neutral-700">
-          <h3 className="text-2xl mb-6 text-center">
+          <h3 className="text-2xl mb-6 text-center text-accent-600 dark:text-accent-400">
             {t('normalMode.title', { relation: relationLabel, min, max })}
           </h3>
 
@@ -322,7 +322,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
     <div className="space-y-6 animate-slide-up" ref={resultsContainerRef} tabIndex={-1}>
       {/* Main result - Direct mode */}
       <div className="card bg-gradient-to-br from-neutral-100 to-white dark:from-neutral-800 dark:to-neutral-900 border-neutral-400 dark:border-neutral-600">
-        <h3 className="text-2xl mb-6 font-bold text-neutral-900 dark:text-neutral-100">
+        <h3 className="text-2xl mb-6 font-bold text-accent-600 dark:text-accent-400">
           {getDirectModeHeadline()}
         </h3>
 
