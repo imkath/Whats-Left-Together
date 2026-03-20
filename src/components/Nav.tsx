@@ -36,7 +36,7 @@ export default function Nav() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative text-sm font-medium transition-colors pb-1 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-sm outline-none ${
+                  className={`relative text-sm font-medium transition-colors duration-200 pb-1 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-sm outline-none ${
                     active
                       ? 'text-neutral-900 dark:text-white'
                       : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
