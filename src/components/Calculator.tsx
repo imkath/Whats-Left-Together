@@ -416,8 +416,10 @@ export default function Calculator() {
               <p className="text-sm text-primary-900 dark:text-neutral-100">
                 <span className="font-semibold">{t('frequencySummary')}:</span>{' '}
                 {formData.timesPerPeriod || 1}{' '}
-                {t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)} ={' '}
-                <span className="font-bold">{formData.visitsPerYear}</span> {t('visitsPerYear')}
+                {(formData.timesPerPeriod || 1) === 1
+                  ? t(`frequencyTimeSingular.${formData.frequencyPeriod || 'monthly'}`)
+                  : t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)}{' '}
+                = <span className="font-bold">{formData.visitsPerYear}</span> {t('visitsPerYear')}
               </p>
             </div>
           </div>

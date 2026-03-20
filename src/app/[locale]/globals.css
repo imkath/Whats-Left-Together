@@ -14,6 +14,7 @@
 
   body {
     @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100;
+    font-variant-numeric: tabular-nums;
   }
 
   h1,
@@ -33,14 +34,25 @@
 
   h1 {
     @apply text-4xl md:text-5xl;
+    text-wrap: balance;
   }
 
   h2 {
     @apply text-3xl md:text-4xl;
+    text-wrap: balance;
   }
 
   h3 {
     @apply text-2xl md:text-3xl font-bold;
+    text-wrap: balance;
+  }
+
+  [id] {
+    scroll-margin-top: 4rem;
+  }
+
+  select {
+    @apply dark:bg-neutral-800 dark:text-neutral-100;
   }
 }
 
