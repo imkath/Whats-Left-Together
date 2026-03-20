@@ -76,6 +76,12 @@
       "quarterly": "times per quarter",
       "yearly": "times per year"
     },
+    "frequencyTimeSingular": {
+      "weekly": "time per week",
+      "monthly": "time per month",
+      "quarterly": "time per quarter",
+      "yearly": "time per year"
+    },
     "resultsRegion": "Calculation results",
     "resultsHeading": "Calculation results"
   },
@@ -151,7 +157,7 @@
       "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
       "networkError": "Connection error. Check your internet connection and try again.",
       "calculationError": "Calculation error. Please verify the entered data.",
-      "calculating": "Calculating...",
+      "calculating": "Calculating\u2026",
       "boundaryTitle": "Something went wrong",
       "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
       "boundaryReload": "Reload page"
@@ -256,7 +262,7 @@
     "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
     "networkError": "Connection error. Check your internet connection and try again.",
     "calculationError": "Calculation error. Please verify the entered data.",
-    "calculating": "Calculating...",
+    "calculating": "Calculating\u2026",
     "boundaryTitle": "Something went wrong",
     "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
     "boundaryReload": "Reload page"
@@ -337,7 +343,7 @@
       "item2": "After that age, frequency of encounters drops dramatically",
       "item3": "The pattern is similar for grandparents, with even earlier concentration",
       "conclusion": "This means that <strong>most of the time has already been spent</strong>, even when both are still alive.",
-      "whyNotImplemented": "<strong>Why don't we show this data?</strong> We decided not to include the \"time already spent\" percentage in the calculator because the goal of this tool is to <strong>motivate action toward the future</strong>, not generate guilt about the past. Showing that \"you've already spent 85% of your time with your mother\" can provoke hopelessness or resignation, contradicting the tool's purpose. Additionally, this data comes from American surveys that may not reflect the reality of other cultures where family coexistence patterns differ.",
+      "whyNotImplemented": "<strong>Why don't we show this data?</strong> We decided not to include the \u201ctime already spent\u201d percentage in the calculator because the goal of this tool is to <strong>motivate action toward the future</strong>, not generate guilt about the past. Showing that \u201cyou\u2019ve already spent 85% of your time with your mother\u201d can provoke hopelessness or resignation, contradicting the tool's purpose. Additionally, this data comes from American surveys that may not reflect the reality of other cultures where family coexistence patterns differ.",
       "viewData": "View time use data"
     },
     "mathModel": {
@@ -412,15 +418,15 @@
     "sections": {
       "purpose": {
         "title": "Why this tool exists",
-        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we'll have \"time later\" to see the important people in our lives.",
+        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we\u2019ll have \u201ctime later\u201d to see the important people in our lives.",
         "p2": "Physical distance, work obligations, and the inertia of daily life make us postpone visits, calls, or simply being present. We assume there will always be a next time.",
         "p3": "This tool doesn't aim to scare, but to make explicit something that normally remains abstract: if we keep living as we do now, with the same frequency of encounters, how many more times will we actually see each other?"
       },
       "inspiration": {
         "title": "Inspiration",
-        "p1": "This project is inspired by Tim Urban's article \"The Tail End\" (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
+        "p1": "This project is inspired by Tim Urban\u2019s article \u201cThe Tail End\u201d (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
         "p2": "Unlike that article, which uses generic estimates, this tool incorporates official demographic data by age, country, and sex, to make the estimate more precise and personalized.",
-        "linkText": "\"The Tail End\""
+        "linkText": "\u201cThe Tail End\u201d"
       },
       "audience": {
         "title": "Who this tool is for",
@@ -430,7 +436,7 @@
         },
         "card2": {
           "title": "Those prioritizing career or personal goals",
-          "text": "If you're focused on professional development or personal projects and feel that \"there will be time later\" for family visits."
+          "text": "If you're focused on professional development or personal projects and feel that \u201cthere will be time later\u201d for family visits."
         },
         "card3": {
           "title": "People in long-distance relationships",
@@ -526,20 +532,20 @@
       "other": "Other"
     },
     "messageLabel": "Your message",
-    "messagePlaceholder": "Describe your suggestion, issue, or feedback...",
+    "messagePlaceholder": "Describe your suggestion, issue, or feedback\u2026",
     "emailLabel": "Email",
     "optional": "optional",
     "emailPlaceholder": "your@email.com",
     "emailNote": "Only if you want us to contact you about your feedback.",
     "send": "Send",
-    "sending": "Sending...",
+    "sending": "Sending\u2026",
     "successTitle": "Thank you!",
     "successMessage": "Your feedback has been received. We'll review it soon.",
     "required": "required",
     "messagePlaceholders": {
-      "suggestion": "Tell us your idea or what could be improved in the tool...",
+      "suggestion": "Tell us your idea or what could be improved in the tool\u2026",
       "bug": "Describe the problem you encountered. When does it happen? What were you doing?",
-      "other": "Share your thoughts, questions, or any other feedback..."
+      "other": "Share your thoughts, questions, or any other feedback\u2026"
     }
   }
 }

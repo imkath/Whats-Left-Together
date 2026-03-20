@@ -76,6 +76,12 @@
       "quarterly": "veces por trimestre",
       "yearly": "veces por año"
     },
+    "frequencyTimeSingular": {
+      "weekly": "vez por semana",
+      "monthly": "vez por mes",
+      "quarterly": "vez por trimestre",
+      "yearly": "vez por año"
+    },
     "resultsRegion": "Resultados del cálculo",
     "resultsHeading": "Resultados del cálculo"
   },
@@ -162,7 +168,7 @@
       "ageExceedsThem": "Las tablas de vida solo incluyen datos hasta 100 años para la persona que quieres ver. Los datos más allá de esa edad no están disponibles en nuestra fuente.",
       "networkError": "Error de conexión. Verifica tu conexión a internet e intenta de nuevo.",
       "calculationError": "Error al calcular. Por favor verifica los datos ingresados.",
-      "calculating": "Calculando...",
+      "calculating": "Calculando\u2026",
       "boundaryTitle": "Algo salió mal",
       "boundaryMessage": "Ocurrió un error inesperado. Por favor, recarga la página e intenta de nuevo.",
       "boundaryReload": "Recargar página"
@@ -319,7 +325,7 @@
       "item2": "Después de esa edad, la frecuencia de encuentros disminuye dramáticamente",
       "item3": "El patrón es similar para abuelos, con concentración aún más temprana",
       "conclusion": "Esto significa que <strong>la mayoría del tiempo ya se consumió</strong>, incluso cuando ambos siguen vivos.",
-      "whyNotImplemented": "<strong>¿Por qué no mostramos este dato?</strong> Decidimos no incluir el porcentaje de \"tiempo ya pasado\" en la calculadora porque el objetivo de esta herramienta es <strong>motivar acción hacia el futuro</strong>, no generar culpa sobre el pasado. Mostrar que \"ya pasaste el 85% del tiempo con tu madre\" puede provocar desesperanza o resignación, contradiciendo el propósito de la herramienta. Además, estos datos provienen de encuestas estadounidenses que pueden no reflejar la realidad de otras culturas donde la convivencia familiar es diferente.",
+      "whyNotImplemented": "<strong>¿Por qué no mostramos este dato?</strong> Decidimos no incluir el porcentaje de \u201ctiempo ya pasado\u201d en la calculadora porque el objetivo de esta herramienta es <strong>motivar acción hacia el futuro</strong>, no generar culpa sobre el pasado. Mostrar que \u201cya pasaste el 85% del tiempo con tu madre\u201d puede provocar desesperanza o resignación, contradiciendo el propósito de la herramienta. Además, estos datos provienen de encuestas estadounidenses que pueden no reflejar la realidad de otras culturas donde la convivencia familiar es diferente.",
       "viewData": "→ Ver datos de uso del tiempo"
     },
     "mathModel": {
@@ -394,15 +400,15 @@
     "sections": {
       "purpose": {
         "title": "Por qué existe esta herramienta",
-        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos \"tiempo después\" para ver a las personas importantes en nuestras vidas.",
+        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos \u201ctiempo despu\u00e9s\u201d para ver a las personas importantes en nuestras vidas.",
         "p2": "La distancia física, las obligaciones laborales, y la inercia del día a día hacen que posterguemos visitas, llamadas, o simplemente estar presentes. Asumimos que siempre habrá una próxima vez.",
         "p3": "Esta herramienta no pretende asustar, sino hacer explícito algo que normalmente permanece abstracto: si seguimos viviendo como hasta ahora, con la misma frecuencia de encuentros, ¿cuántas veces más nos veremos realmente?"
       },
       "inspiration": {
         "title": "Inspiración",
-        "p1": "Este proyecto está inspirado en el artículo \"The Tail End\" de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
+        "p1": "Este proyecto está inspirado en el art\u00edculo \u201cThe Tail End\u201d de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
         "p2": "A diferencia de ese artículo, que usa estimaciones genéricas, esta herramienta incorpora datos demográficos oficiales por edad, país y sexo, para hacer la estimación más precisa y personalizada.",
-        "linkText": "\"The Tail End\""
+        "linkText": "\u201cThe Tail End\u201d"
       },
       "audience": {
         "title": "Para quién es esta herramienta",
@@ -412,7 +418,7 @@
         },
         "card2": {
           "title": "Quienes priorizan carrera o metas personales",
-          "text": "Si estás enfocado en tu desarrollo profesional o proyectos personales y sientes que \"después habrá tiempo\" para visitas familiares."
+          "text": "Si estás enfocado en tu desarrollo profesional o proyectos personales y sientes que \u201cdespu\u00e9s habr\u00e1 tiempo\u201d para visitas familiares."
         },
         "card3": {
           "title": "Personas en relaciones a distancia",
@@ -508,20 +514,20 @@
       "other": "Otro"
     },
     "messageLabel": "Tu mensaje",
-    "messagePlaceholder": "Describe tu sugerencia, problema o comentario...",
+    "messagePlaceholder": "Describe tu sugerencia, problema o comentario\u2026",
     "emailLabel": "Correo electrónico",
     "optional": "opcional",
     "emailPlaceholder": "tu@email.com",
     "emailNote": "Solo si quieres que te contactemos sobre tu comentario.",
     "send": "Enviar",
-    "sending": "Enviando...",
+    "sending": "Enviando\u2026",
     "successTitle": "¡Gracias!",
     "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto.",
     "required": "requerido",
     "messagePlaceholders": {
-      "suggestion": "Cuéntanos tu idea o qué mejorarías de la herramienta...",
+      "suggestion": "Cu\u00e9ntanos tu idea o qu\u00e9 mejorar\u00edas de la herramienta\u2026",
       "bug": "Describe el problema que encontraste. ¿Cuándo ocurre? ¿Qué estabas haciendo?",
-      "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario..."
+      "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario\u2026"
     }
   }
 }

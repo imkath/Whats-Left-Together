@@ -45,7 +45,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Calculator section */}
-      <section id="calculator" className="py-16 bg-white dark:bg-neutral-800">
+      <section id="calculator" className="py-12 bg-white dark:bg-neutral-800">
         <div className="container-custom">
           <Calculator />
         </div>
