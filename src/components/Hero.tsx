@@ -17,7 +17,7 @@ export default function Hero() {
             alt="What's Left Together"
             width={800}
             height={80}
-            className="w-full max-w-3xl mx-auto h-auto mb-6 dark:invert"
+            className="w-full max-w-3xl mx-auto h-auto mb-6 dark:invert hover:opacity-90 transition-opacity duration-300"
             fetchPriority="high"
           />
         </picture>
@@ -27,8 +27,12 @@ export default function Hero() {
         </p>
 
         <div className="mt-8">
-          <a href="#calculator" className="btn-primary inline-flex items-center gap-2">
-            <Calculator size={20} aria-hidden="true" />
+          <a href="#calculator" className="btn-primary inline-flex items-center gap-2 group">
+            <Calculator
+              size={20}
+              aria-hidden="true"
+              className="group-hover:translate-y-[1px] transition-transform duration-200"
+            />
             {t('cta')}
           </a>
         </div>
