@@ -3,6 +3,7 @@ import { Inter, Merriweather } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import Nav from '@/components/Nav';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
@@ -18,7 +19,7 @@ const merriweather = Merriweather({
   variable: '--font-serif',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whats-left-together-cl.vercel.app';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
 
 export const runtime = 'edge';
 
@@ -430,17 +431,11 @@ export default async function LocaleLayout({
       <body className="font-sans bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased">
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+            <Nav />
+            <div className="fixed top-0 right-4 z-50 flex items-center gap-2 h-12">
               <ThemeToggle />
               <LanguageSwitcher />
             </div>
-            <nav aria-label="Site navigation" className="sr-only">
-              <a href={`/${locale}`}>{locale === 'es' ? 'Inicio' : 'Home'}</a>
-              <a href={`/${locale}/methodology`}>
-                {locale === 'es' ? 'Cómo funciona' : 'How It Works'}
-              </a>
-              <a href={`/${locale}/about`}>{locale === 'es' ? 'Acerca de' : 'About'}</a>
-            </nav>
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>

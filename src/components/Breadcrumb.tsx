@@ -7,14 +7,17 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  locale?: string;
   siteUrl?: string;
 }
 
 export default function Breadcrumb({
   items,
+  locale,
   siteUrl = 'https://whatslefttogether.com',
 }: BreadcrumbProps) {
-  const allItems = [{ label: 'Home', href: '/' }, ...items];
+  const homeHref = locale ? `/${locale}` : '/';
+  const allItems = [{ label: 'Home', href: homeHref }, ...items];
 
   const jsonLd = {
     '@context': 'https://schema.org',

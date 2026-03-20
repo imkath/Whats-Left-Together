@@ -20,6 +20,7 @@ export default function AboutPage() {
         <div className="container-custom py-6">
           <Breadcrumb
             items={[{ label: tNav('about'), href: `/${locale}/about` }]}
+            locale={locale}
             siteUrl="https://whatslefttogether.com"
           />
           <a

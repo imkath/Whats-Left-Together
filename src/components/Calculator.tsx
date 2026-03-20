@@ -363,8 +363,8 @@ export default function Calculator() {
                     aria-pressed={formData.frequencyPeriod === period.value}
                     className={`px-4 py-2 rounded-lg border transition-colors ${
                       formData.frequencyPeriod === period.value
-                        ? 'bg-primary-600 text-white border-primary-600 dark:bg-primary-400 dark:text-neutral-900'
-                        : 'bg-white border-neutral-300 hover:border-primary-400 dark:bg-neutral-700 dark:border-neutral-600 dark:hover:border-neutral-500'
+                        ? 'bg-primary-600 text-white border-primary-600 dark:bg-white dark:text-neutral-900 dark:border-white'
+                        : 'bg-white border-neutral-300 hover:border-primary-400 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-600 dark:hover:border-neutral-400'
                     }`}
                   >
                     {period.label}

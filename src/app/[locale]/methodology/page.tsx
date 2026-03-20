@@ -17,6 +17,7 @@ export default function MethodologyPage() {
         <div className="container-custom py-6">
           <Breadcrumb
             items={[{ label: tNav('methodology'), href: `/${locale}/methodology` }]}
+            locale={locale}
             siteUrl="https://whatslefttogether.com"
           />
           <a
