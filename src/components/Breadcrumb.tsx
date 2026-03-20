@@ -40,7 +40,7 @@ export default function Breadcrumb({
         <ol className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-3">
           {allItems.map((item, index) => (
             <li key={index} className="flex items-center gap-1">
-              {index > 0 && <ChevronRight size={12} className="flex-shrink-0" />}
+              {index > 0 && <ChevronRight size={12} className="flex-shrink-0" aria-hidden="true" />}
               {item.href && index < allItems.length - 1 ? (
                 <a
                   href={item.href}

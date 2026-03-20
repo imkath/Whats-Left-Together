@@ -23,10 +23,11 @@ export default function LanguageSwitcher() {
   return (
     <div className="bg-white dark:bg-neutral-700 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-500 overflow-hidden flex items-center gap-1 p-1">
       <div className="px-2 text-neutral-500 dark:text-neutral-300">
-        <Languages size={16} />
+        <Languages size={16} aria-hidden="true" />
       </div>
       <button
         onClick={() => switchLocale('es')}
+        aria-label="Cambiar a español"
         className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
           locale === 'es'
             ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
@@ -37,6 +38,7 @@ export default function LanguageSwitcher() {
       </button>
       <button
         onClick={() => switchLocale('en')}
+        aria-label="Switch to English"
         className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
           locale === 'en'
             ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'

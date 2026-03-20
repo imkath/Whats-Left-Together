@@ -102,7 +102,11 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
-            <MessageSquare size={20} className="text-primary-600 dark:text-primary-400" />
+            <MessageSquare
+              size={20}
+              className="text-primary-600 dark:text-primary-400"
+              aria-hidden="true"
+            />
             <h2 id="feedback-title" className="text-lg font-semibold">
               {t('title')}
             </h2>
@@ -113,7 +117,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
             aria-label={t('close')}
           >
-            <X size={20} />
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
 
@@ -122,7 +126,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           {isSubmitted ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Send size={32} className="text-green-600 dark:text-green-400" />
+                <Send size={32} className="text-green-600 dark:text-green-400" aria-hidden="true" />
               </div>
               <h3 className="text-lg font-semibold mb-2">{t('successTitle')}</h3>
               <p className="text-neutral-600 dark:text-neutral-400">{t('successMessage')}</p>
@@ -190,6 +194,8 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required={isEmailRequired}
+                  autoComplete="email"
+                  spellCheck={false}
                   className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder={t('emailPlaceholder')}
                 />
@@ -209,7 +215,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   </>
                 ) : (
                   <>
-                    <Send size={16} />
+                    <Send size={16} aria-hidden="true" />
                     {t('send')}
                   </>
                 )}
