@@ -39,7 +39,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="text-xs tracking-wide uppercase text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mt-8 leading-relaxed">
+        <p className="text-xs text-neutral-500 dark:text-neutral-400 max-w-md mx-auto mt-8 leading-relaxed italic">
           {t('belowButton')}
         </p>
       </div>
