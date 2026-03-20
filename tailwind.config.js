@@ -35,9 +35,9 @@ module.exports = {
           900: '#78350f',
         },
         warm: {
-          50: '#fef3e2',
-          500: '#f59e0b',
-          600: '#d97706',
+          50: '#fafaf8',
+          100: '#f5f5f0',
+          200: '#e8e8e0',
         },
         neutral: {
           50: '#fafafa',

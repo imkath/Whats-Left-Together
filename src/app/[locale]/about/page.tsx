@@ -16,7 +16,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       {/* Header */}
-      <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+      <header className="bg-[#fafaf8] dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">
           <Breadcrumb
             items={[{ label: tNav('about'), href: `/${locale}/about` }]}
@@ -25,13 +25,14 @@ export default function AboutPage() {
           />
           <a
             href={`/${locale}`}
-            className="text-primary-700 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 text-sm mb-2 inline-flex items-center gap-2 font-medium transition-colors"
+            className="text-accent-600 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-300 text-sm mb-2 inline-flex items-center gap-2 font-medium transition-colors"
           >
             <ArrowLeft size={16} />
             {t('backToHome')}
           </a>
-          <h1 className="text-4xl font-bold mt-2">{t('title')}</h1>
+          <h1 className="text-4xl font-extrabold mt-2">{t('title')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
+          <div className="w-12 h-1 bg-accent-500 mt-4 rounded-full" />
         </div>
       </header>
 
