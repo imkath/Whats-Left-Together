@@ -13,10 +13,15 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const acceptButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Handle ESC key to close (though for this warning, we require explicit acceptance)
+  // Handle ESC key and focus trap
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       // For ethical warning, ESC should focus the accept button, not close
+      acceptButtonRef.current?.focus();
+    }
+    // Focus trap: only one interactive element (accept button), keep focus on it
+    if (event.key === 'Tab') {
+      event.preventDefault();
       acceptButtonRef.current?.focus();
     }
   }, []);
@@ -48,6 +53,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
     >
       <div
         ref={dialogRef}
+        tabIndex={-1}
         className="bg-white dark:bg-neutral-800 rounded-xl shadow-2xl max-w-2xl w-full p-8"
       >
         <div className="mb-6 border-b border-neutral-200 dark:border-neutral-700 pb-4 flex items-center gap-3">

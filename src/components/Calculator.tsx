@@ -425,7 +425,11 @@ export default function Calculator() {
 
         {/* Validation Errors Summary */}
         {Object.keys(validationErrors).length > 0 && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div
+            className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+            aria-live="polite"
+            role="status"
+          >
             <h4 className="text-sm font-semibold text-red-800 mb-2">
               {locale === 'es'
                 ? 'Por favor corrige los siguientes errores:'

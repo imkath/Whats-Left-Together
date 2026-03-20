@@ -37,7 +37,7 @@ export default function Breadcrumb({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <nav aria-label="Breadcrumb">
-        <ol className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-500 mb-3">
+        <ol className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-3">
           {allItems.map((item, index) => (
             <li key={index} className="flex items-center gap-1">
               {index > 0 && <ChevronRight size={12} className="flex-shrink-0" />}
@@ -49,7 +49,7 @@ export default function Breadcrumb({
                   {item.label}
                 </a>
               ) : (
-                <span className="text-neutral-500 dark:text-neutral-400">{item.label}</span>
+                <span className="text-neutral-600 dark:text-neutral-300">{item.label}</span>
               )}
             </li>
           ))}

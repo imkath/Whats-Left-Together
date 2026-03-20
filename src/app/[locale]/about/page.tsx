@@ -42,6 +42,7 @@ export default function AboutPage() {
             <Heart
               size={28}
               className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+              aria-hidden="true"
             />
             {t('sections.purpose.title')}
           </h2>
@@ -69,6 +70,7 @@ export default function AboutPage() {
             <Users
               size={28}
               className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+              aria-hidden="true"
             />
             {t('sections.inspiration.title')}
           </h2>
@@ -175,6 +177,7 @@ export default function AboutPage() {
             <Mail
               size={28}
               className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
+              aria-hidden="true"
             />
             {t('sections.contact.title')}
           </h2>
@@ -188,7 +191,7 @@ export default function AboutPage() {
               onClick={() => setIsFeedbackOpen(true)}
               className="btn-primary inline-flex items-center gap-2"
             >
-              <MessageSquare size={18} />
+              <MessageSquare size={18} aria-hidden="true" />
               {t('sections.contact.sendFeedback')}
             </button>
 

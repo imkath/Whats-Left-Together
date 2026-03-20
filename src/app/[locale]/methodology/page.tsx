@@ -62,7 +62,7 @@ export default function MethodologyPage() {
             <div className="card border-primary-300 dark:border-primary-700 bg-primary-50 dark:bg-neutral-800">
               <div className="mb-3 flex items-start gap-3">
                 <div className="mt-1 text-primary-700 dark:text-primary-400">
-                  <Database size={24} />
+                  <Database size={24} aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-primary-900 dark:text-primary-300">
@@ -192,6 +192,7 @@ export default function MethodologyPage() {
             <AlertTriangle
               size={28}
               className="text-red-600 dark:text-red-500 inline-block align-middle"
+              aria-hidden="true"
             />{' '}
             {t('section4.title').split('. ').slice(1).join('. ')}
           </h2>
@@ -221,6 +222,7 @@ export default function MethodologyPage() {
             <BookOpen
               size={28}
               className="text-primary-700 dark:text-primary-400 inline-block align-middle"
+              aria-hidden="true"
             />{' '}
             {t('section5.title').split('. ').slice(1).join('. ')}
           </h2>
@@ -414,7 +416,11 @@ export default function MethodologyPage() {
         {/* Complete references */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-            <FileText size={28} className="text-primary-700 dark:text-primary-400" />{' '}
+            <FileText
+              size={28}
+              className="text-primary-700 dark:text-primary-400"
+              aria-hidden="true"
+            />{' '}
             {t('references.title')}
           </h2>
 

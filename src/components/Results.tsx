@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import type { RelationshipInput, CalculationResult } from '@/types';
 import { calculateExpectedEncounters } from '@/lib/models/actuarial';
@@ -28,6 +28,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
   const [errorCode, setErrorCode] = useState<ErrorCode | null>(null);
   const [errorCountry, setErrorCountry] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
+  const resultsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function calculate() {
@@ -72,6 +73,13 @@ export default function Results({ input, directMode = false }: ResultsProps) {
         const calculation = calculateExpectedEncounters(input, yourLifeTable, theirLifeTable);
 
         setResult(calculation);
+
+        // After a retry succeeds, focus the results container
+        if (retryCount > 0) {
+          setTimeout(() => {
+            resultsContainerRef.current?.focus();
+          }, 100);
+        }
       } catch (err) {
         if (err instanceof NetworkError) {
           setErrorCode('networkError');
@@ -89,13 +97,12 @@ export default function Results({ input, directMode = false }: ResultsProps) {
   if (loading) {
     return (
       <div className="card text-center py-12" role="status" aria-live="polite" aria-busy="true">
-        <div className="animate-pulse">
-          <div
-            className="w-16 h-16 bg-primary-200 dark:bg-neutral-700 rounded-full mx-auto mb-4"
-            aria-hidden="true"
-          ></div>
-          <p className="text-neutral-600 dark:text-neutral-400">{t('errors.calculating')}</p>
+        <div aria-hidden="true" aria-label="Loading results">
+          <div className="animate-pulse motion-reduce:animate-none">
+            <div className="w-16 h-16 bg-primary-200 dark:bg-neutral-700 rounded-full mx-auto mb-4"></div>
+          </div>
         </div>
+        <p className="text-neutral-600 dark:text-neutral-400">{t('errors.calculating')}</p>
       </div>
     );
   }
@@ -160,7 +167,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
   // MODO NORMAL
   if (!directMode) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6" ref={resultsContainerRef} tabIndex={-1}>
         {/* Main result - Normal mode */}
         <div className="card bg-gradient-to-br from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900 border-primary-200 dark:border-neutral-700">
           <h3 className="text-2xl mb-6 text-center">
@@ -312,7 +319,7 @@ export default function Results({ input, directMode = false }: ResultsProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" ref={resultsContainerRef} tabIndex={-1}>
       {/* Main result - Direct mode */}
       <div className="card bg-gradient-to-br from-neutral-100 to-white dark:from-neutral-800 dark:to-neutral-900 border-neutral-400 dark:border-neutral-600">
         <h3 className="text-2xl mb-6 font-bold text-neutral-900 dark:text-neutral-100">

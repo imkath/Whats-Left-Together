@@ -93,6 +93,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="feedback-title"
+      aria-describedby="feedback-description"
     >
       <div
         ref={modalRef}
@@ -128,17 +129,23 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">{t('intro')}</p>
+              <p
+                id="feedback-description"
+                className="text-sm text-neutral-600 dark:text-neutral-400"
+              >
+                {t('intro')}
+              </p>
 
               {/* Feedback type */}
               <div>
                 <label className="block text-sm font-medium mb-2">{t('typeLabel')}</label>
-                <div className="flex gap-2">
+                <div className="flex gap-2" role="radiogroup" aria-label={t('typeLabel')}>
                   {(['suggestion', 'bug', 'other'] as const).map((type) => (
                     <button
                       key={type}
                       type="button"
                       onClick={() => setFeedbackType(type)}
+                      aria-pressed={feedbackType === type}
                       className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
                         feedbackType === type
                           ? 'bg-primary-600 text-white border-primary-600 dark:bg-primary-500 dark:border-primary-500'

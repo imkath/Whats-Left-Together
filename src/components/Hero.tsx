@@ -28,7 +28,7 @@ export default function Hero() {
 
         <div className="mt-8">
           <a href="#calculator" className="btn-primary inline-flex items-center gap-2">
-            <Calculator size={20} />
+            <Calculator size={20} aria-hidden="true" />
             {t('cta')}
           </a>
         </div>
