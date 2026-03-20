@@ -46,7 +46,7 @@ export default function HomePage() {
 
       {/* Calculator section */}
       <section id="calculator" className="py-12 bg-white dark:bg-neutral-800">
-        <div className="container-custom">
+        <div className="container-custom animate-slide-up">
           <Calculator />
         </div>
       </section>
@@ -58,7 +58,7 @@ export default function HomePage() {
 
           <div className="mt-12 space-y-6">
             {/* Featured card — full width, warm accent border */}
-            <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] border-l-4 border-accent-500 pl-6">
+            <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] border-l-4 border-accent-500 pl-6 opacity-0 animate-slide-up">
               <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                 <Clock size={40} />
               </div>
@@ -68,7 +68,10 @@ export default function HomePage() {
 
             {/* Secondary cards — 2-column row */}
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+              <div
+                className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] opacity-0 animate-slide-up"
+                style={{ animationDelay: '100ms' }}
+              >
                 <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                   <Heart size={28} />
                 </div>
@@ -78,7 +81,10 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+              <div
+                className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] opacity-0 animate-slide-up"
+                style={{ animationDelay: '200ms' }}
+              >
                 <div className="mb-4 text-neutral-700 dark:text-neutral-300">
                   <Target size={28} />
                 </div>

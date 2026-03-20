@@ -59,8 +59,9 @@
 @layer components {
   .btn-primary {
     @apply px-6 py-3 bg-neutral-900 text-white rounded-lg
-           hover:bg-neutral-800 transition-colors transition-shadow
+           hover:bg-neutral-800 transition-all duration-200
            font-medium shadow-md hover:shadow-lg
+           active:scale-[0.98] active:shadow-sm
            focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
            dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200
            dark:focus-visible:ring-blue-400;
@@ -68,8 +69,9 @@
 
   .btn-secondary {
     @apply px-6 py-3 bg-white text-neutral-900 rounded-lg
-           hover:bg-neutral-50 transition-colors transition-shadow
+           hover:bg-neutral-50 transition-all duration-200
            font-medium border-2 border-neutral-300 hover:border-neutral-400
+           active:scale-[0.98]
            focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
            dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 dark:hover:border-neutral-500
            dark:focus-visible:ring-blue-400;
@@ -86,7 +88,8 @@
   .card {
     @apply bg-white rounded-xl shadow-sm border border-neutral-200 p-6
            dark:bg-neutral-800 dark:border-neutral-700
-           hover:border-l-accent-400 hover:border-l-2;
+           hover:border-l-accent-400 hover:border-l-2
+           transition-all duration-200;
   }
 
   .container-custom {
@@ -100,7 +103,7 @@
   }
 
   .animate-slide-up {
-    animation: slideUp 0.5s ease-out;
+    animation: slideUp 0.5s ease-out forwards;
   }
 }
 
