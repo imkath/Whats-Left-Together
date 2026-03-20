@@ -73,7 +73,8 @@
 
   .card {
     @apply bg-white rounded-xl shadow-sm border border-neutral-200 p-6
-           dark:bg-neutral-800 dark:border-neutral-700;
+           dark:bg-neutral-800 dark:border-neutral-700
+           hover:border-l-accent-400 hover:border-l-2;
   }
 
   .container-custom {
@@ -81,8 +82,43 @@
   }
 }
 
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up {
+    animation: none !important;
   }
 }

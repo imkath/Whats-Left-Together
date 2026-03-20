@@ -56,29 +56,37 @@ export default function HomePage() {
         <div className="container-custom">
           <h2 className="text-center mb-8">{t('title')}</h2>
 
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            <div className="card hover:shadow-md transition-shadow">
+          <div className="mt-12 space-y-6">
+            {/* Featured card — full width, warm accent border */}
+            <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] border-l-4 border-accent-500 pl-6">
               <div className="mb-4 text-neutral-700 dark:text-neutral-300">
-                <Clock size={32} />
+                <Clock size={40} />
               </div>
-              <h3 className="text-xl mb-4">{t('section1.title')}</h3>
-              <p className="text-neutral-700 dark:text-neutral-300">{t('section1.text')}</p>
+              <h3 className="text-2xl mb-4">{t('section1.title')}</h3>
+              <p className="text-lg text-neutral-700 dark:text-neutral-300">{t('section1.text')}</p>
             </div>
 
-            <div className="card hover:shadow-md transition-shadow">
-              <div className="mb-4 text-neutral-700 dark:text-neutral-300">
-                <Heart size={32} />
+            {/* Secondary cards — 2-column row */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+                <div className="mb-4 text-neutral-700 dark:text-neutral-300">
+                  <Heart size={28} />
+                </div>
+                <h3 className="text-lg mb-3">{t('section2.title')}</h3>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                  {t('section2.text')}
+                </p>
               </div>
-              <h3 className="text-xl mb-4">{t('section2.title')}</h3>
-              <p className="text-neutral-700 dark:text-neutral-300">{t('section2.text')}</p>
-            </div>
 
-            <div className="card hover:shadow-md transition-shadow">
-              <div className="mb-4 text-neutral-700 dark:text-neutral-300">
-                <Target size={32} />
+              <div className="card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+                <div className="mb-4 text-neutral-700 dark:text-neutral-300">
+                  <Target size={28} />
+                </div>
+                <h3 className="text-lg mb-3">{t('section3.title')}</h3>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                  {t('section3.text')}
+                </p>
               </div>
-              <h3 className="text-xl mb-4">{t('section3.title')}</h3>
-              <p className="text-neutral-700 dark:text-neutral-300">{t('section3.text')}</p>
             </div>
           </div>
 
@@ -90,6 +98,7 @@ export default function HomePage() {
               <BookOpen size={18} />
               {t('seeMethodology')}
             </a>
+            <div className="mx-auto mt-4 w-16 border-t-2 border-accent-300" />
           </div>
         </div>
       </section>
