@@ -38,3 +38,4 @@ src/lib/data/raw/*.csv
 
 # Playwright MCP
 .playwright-mcp/
+audit-*.png
