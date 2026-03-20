@@ -7,7 +7,7 @@ export default function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="bg-gradient-to-b from-neutral-50 via-white to-neutral-50 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 py-16">
+    <section className="bg-gradient-to-b from-[#fafaf8] via-white to-[#fafaf8] dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 py-16">
       <div className="container-custom text-center animate-fade-in">
         <h1 className="mb-6 sr-only">{t('title')}</h1>
         <picture>
@@ -22,9 +22,11 @@ export default function Hero() {
           />
         </picture>
 
-        <p className="text-xl text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto mb-6">
+        <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-3xl mx-auto mb-6">
           {t('subtitle')}
         </p>
+
+        <div className="w-16 h-px bg-neutral-300 dark:bg-neutral-600 mx-auto my-6" />
 
         <div className="mt-8">
           <a href="#calculator" className="btn-primary inline-flex items-center gap-2 group">
@@ -37,7 +39,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mt-8 leading-relaxed">
+        <p className="text-xs tracking-wide uppercase text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mt-8 leading-relaxed">
           {t('belowButton')}
         </p>
       </div>

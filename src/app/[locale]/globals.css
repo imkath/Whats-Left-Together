@@ -13,8 +13,13 @@
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100;
+    @apply bg-[#fafaf8] text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100;
     font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    @apply leading-relaxed;
   }
 
   h1,
@@ -29,21 +34,20 @@
       BlinkMacSystemFont,
       'Segoe UI',
       sans-serif;
-    @apply font-black;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl;
+    @apply text-4xl md:text-5xl font-black;
     text-wrap: balance;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-3xl md:text-4xl font-extrabold;
     text-wrap: balance;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl font-bold;
+    @apply text-xl md:text-2xl font-semibold;
     text-wrap: balance;
   }
 
@@ -58,7 +62,7 @@
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-neutral-900 text-white rounded-lg
+    @apply px-7 py-3.5 bg-neutral-900 text-white rounded-xl
            hover:bg-neutral-800 transition-all duration-200
            font-medium shadow-md hover:shadow-lg
            active:scale-[0.98] active:shadow-sm
@@ -78,17 +82,16 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-2 border-2 border-neutral-300 rounded-lg
-           focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-neutral-900
-           transition-all outline-none
+    @apply w-full px-4 py-2.5 border border-neutral-300 rounded-xl
+           focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-500
+           transition-colors outline-none
            dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100
-           dark:focus-visible:ring-blue-400 dark:focus-visible:border-neutral-400;
+           dark:focus-visible:border-blue-400 dark:focus-visible:ring-blue-400;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-neutral-200 p-6
+    @apply bg-white rounded-xl shadow-sm border border-neutral-200/80 p-8
            dark:bg-neutral-800 dark:border-neutral-700
-           hover:border-l-accent-400 hover:border-l-2
            transition-all duration-200;
   }
 

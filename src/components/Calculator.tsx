@@ -153,6 +153,7 @@ export default function Calculator() {
   return (
     <div id="calculator" className="space-y-8">
       <div className="text-center mb-8">
+        <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
         <h2>{t('title')}</h2>
         <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
       </div>

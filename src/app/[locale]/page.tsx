@@ -46,7 +46,7 @@ export default function HomePage() {
 
       {/* Calculator section */}
       <section id="calculator" className="py-12 bg-white dark:bg-neutral-800">
-        <div className="container-custom animate-slide-up">
+        <div className="container-custom animate-slide-up bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
           <Calculator />
         </div>
       </section>
@@ -54,6 +54,7 @@ export default function HomePage() {
       {/* Why it matters section */}
       <section className="py-16 bg-neutral-100 dark:bg-neutral-900">
         <div className="container-custom">
+          <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
           <h2 className="text-center mb-8">{t('title')}</h2>
 
           <div className="mt-12 space-y-6">
