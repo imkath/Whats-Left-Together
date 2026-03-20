@@ -2,7 +2,7 @@
 
 import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Info } from 'lucide-react';
+import { Info, ArrowRight } from 'lucide-react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
@@ -160,10 +160,15 @@ export default function Calculator() {
 
       <form onSubmit={handleSubmit} className="card max-w-3xl mx-auto">
         {/* Your information */}
-        <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
-            {t('yourInfo')}
-          </h3>
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
+              1
+            </span>
+            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              {t('yourInfo')}
+            </h3>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-4">
             <div>
@@ -232,11 +237,18 @@ export default function Calculator() {
           </div>
         </div>
 
+        <div className="border-t border-neutral-100 dark:border-neutral-700/50 my-10" />
+
         {/* Their information */}
-        <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
-            {t('theirInfo')}
-          </h3>
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
+              2
+            </span>
+            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              {t('theirInfo')}
+            </h3>
+          </div>
 
           <div className="grid md:grid-cols-4 gap-4">
             <div>
@@ -334,11 +346,18 @@ export default function Calculator() {
           </div>
         </div>
 
+        <div className="border-t border-neutral-100 dark:border-neutral-700/50 my-10" />
+
         {/* Frequency */}
-        <div className="mb-8">
-          <h3 className="text-xl mb-4 pb-2 border-b border-neutral-200 dark:border-neutral-700">
-            {t('frequency')}
-          </h3>
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
+              3
+            </span>
+            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              {t('frequency')}
+            </h3>
+          </div>
 
           <div className="space-y-6">
             {/* Period selector */}
@@ -362,10 +381,10 @@ export default function Calculator() {
                     type="button"
                     onClick={() => updateFrequencyPeriod(period.value)}
                     aria-pressed={formData.frequencyPeriod === period.value}
-                    className={`px-4 py-2 rounded-lg border transition-colors ${
+                    className={`px-4 py-2 rounded-full border transition-colors ${
                       formData.frequencyPeriod === period.value
-                        ? 'bg-primary-600 text-white border-primary-600 dark:bg-white dark:text-neutral-900 dark:border-white'
-                        : 'bg-white border-neutral-300 hover:border-primary-400 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-600 dark:hover:border-neutral-400'
+                        ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-white dark:text-neutral-900 dark:border-white font-medium'
+                        : 'bg-white border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:border-neutral-400 dark:hover:text-neutral-200'
                     }`}
                   >
                     {period.label}
@@ -413,14 +432,20 @@ export default function Calculator() {
             </div>
 
             {/* Visual summary */}
-            <div className="p-4 bg-primary-50 dark:bg-neutral-700 rounded-lg border border-primary-200 dark:border-neutral-600">
-              <p className="text-sm text-primary-900 dark:text-neutral-100">
-                <span className="font-semibold">{t('frequencySummary')}:</span>{' '}
+            <div className="p-5 bg-accent-50 dark:bg-accent-900/20 rounded-xl border border-accent-200 dark:border-accent-800/50">
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">
+                <span className="font-medium">{t('frequencySummary')}:</span>
+              </p>
+              <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
                 {formData.timesPerPeriod || 1}{' '}
                 {(formData.timesPerPeriod || 1) === 1
                   ? t(`frequencyTimeSingular.${formData.frequencyPeriod || 'monthly'}`)
                   : t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)}{' '}
-                = <span className="font-bold">{formData.visitsPerYear}</span> {t('visitsPerYear')}
+                ={' '}
+                <span className="text-accent-600 dark:text-accent-400 text-2xl">
+                  {formData.visitsPerYear}
+                </span>{' '}
+                {t('visitsPerYear')}
               </p>
             </div>
           </div>
@@ -447,28 +472,36 @@ export default function Calculator() {
         )}
 
         {/* Direct mode option */}
-        <div className="mb-8 p-4 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
-          <label className="flex items-start gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={directMode}
-              onChange={(e) => setDirectMode(e.target.checked)}
-              className="mt-1"
+        <div className="mb-8 flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl border border-neutral-200 dark:border-neutral-600">
+          <div className="pr-4">
+            <span className="font-medium text-neutral-900 dark:text-neutral-100">
+              {t('directMode')}
+            </span>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
+              {t('directModeHelp')}
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={directMode}
+            onClick={() => setDirectMode(!directMode)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 flex-shrink-0 ${
+              directMode ? 'bg-neutral-900 dark:bg-white' : 'bg-neutral-300 dark:bg-neutral-600'
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white dark:bg-neutral-900 transition-transform duration-200 ${
+                directMode ? 'translate-x-6' : 'translate-x-1'
+              }`}
             />
-            <div>
-              <span className="font-medium text-neutral-900 dark:text-neutral-100">
-                {t('directMode')}
-              </span>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
-                {t('directModeHelp')}
-              </p>
-            </div>
-          </label>
+          </button>
         </div>
 
         <div className="flex justify-center">
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary inline-flex items-center gap-2 text-lg">
             {t('calculate')}
+            <ArrowRight size={20} aria-hidden="true" />
           </button>
         </div>
       </form>
