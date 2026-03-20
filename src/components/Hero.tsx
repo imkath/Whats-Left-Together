@@ -7,7 +7,19 @@ export default function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="bg-gradient-to-b from-[#fafaf8] via-white to-[#fafaf8] dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 py-16">
+    <section className="relative bg-gradient-to-b from-[#fafaf8] via-white to-[#fafaf8] dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 py-16">
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
+        aria-hidden="true"
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+      </div>
       <div className="container-custom text-center animate-fade-in">
         <h1 className="mb-6 sr-only">{t('title')}</h1>
         <picture>

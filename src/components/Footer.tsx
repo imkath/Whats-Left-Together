@@ -14,9 +14,10 @@ export default function Footer() {
     <>
       <footer className="border-t-2 border-accent-500 bg-neutral-900 dark:bg-neutral-950 text-neutral-300 py-12">
         <div className="container-custom">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-[2fr_1fr_1fr] gap-8">
             <div>
-              <h3 className="text-white text-lg mb-4">{t('title')}</h3>
+              <h3 className="text-white text-xl mb-1">{t('title')}</h3>
+              <div className="w-8 h-0.5 bg-accent-500 mt-3 mb-2" />
               <p className="text-sm">{t('tagline')}</p>
             </div>
 
@@ -27,20 +28,23 @@ export default function Footer() {
                   <li>
                     <a
                       href={`/${locale}/methodology`}
-                      className="hover:text-white transition-colors"
+                      className="hover:text-accent-400 transition-colors"
                     >
                       {t('methodology')}
                     </a>
                   </li>
                   <li>
-                    <a href={`/${locale}/about`} className="hover:text-white transition-colors">
+                    <a
+                      href={`/${locale}/about`}
+                      className="hover:text-accent-400 transition-colors"
+                    >
                       {t('about')}
                     </a>
                   </li>
                   <li>
                     <button
                       onClick={() => setIsFeedbackOpen(true)}
-                      className="hover:text-white transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
+                      className="hover:text-accent-400 transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
                     >
                       <MessageSquare size={14} />
                       {t('feedback')}
@@ -58,7 +62,7 @@ export default function Footer() {
                     href="https://population.un.org/wpp/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-accent-400 transition-colors"
                   >
                     {t('unData')}
                   </a>
@@ -66,7 +70,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={`/${locale}/methodology#fuentes`}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-accent-400 transition-colors"
                   >
                     + {t('moreSources')}
                   </a>
@@ -76,7 +80,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-neutral-800 text-center text-sm text-neutral-400">
+          <div className="mt-8 pt-8 border-t border-neutral-800 text-center text-xs text-neutral-500">
             <p>
               &copy; {new Date().getFullYear()} {t('copyright')}
             </p>
