@@ -40,7 +40,7 @@ export default function Footer() {
                   <li>
                     <button
                       onClick={() => setIsFeedbackOpen(true)}
-                      className="hover:text-white transition-colors inline-flex items-center gap-1.5"
+                      className="hover:text-white transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
                     >
                       <MessageSquare size={14} />
                       {t('feedback')}

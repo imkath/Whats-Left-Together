@@ -431,7 +431,7 @@ export default async function LocaleLayout({
       <body className="font-sans bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:dark:bg-neutral-800 focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:text-neutral-900 focus:dark:text-white"
+          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-2 focus-visible:left-2 focus-visible:z-[100] focus-visible:bg-white focus-visible:dark:bg-neutral-800 focus-visible:px-4 focus-visible:py-2 focus-visible:rounded-lg focus-visible:shadow-lg focus-visible:text-neutral-900 focus-visible:dark:text-white"
         >
           Skip to content
         </a>
