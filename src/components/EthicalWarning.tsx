@@ -45,7 +45,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="ethical-warning-title"
@@ -54,17 +54,19 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="bg-white dark:bg-neutral-800 rounded-xl shadow-2xl max-w-2xl w-full p-8"
+        className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-xl w-full p-6 md:p-8 border border-neutral-200 dark:border-neutral-700"
       >
-        <div className="mb-6 border-b border-neutral-200 dark:border-neutral-700 pb-4 flex items-center gap-3">
-          <AlertCircle
-            size={28}
-            className="text-neutral-700 dark:text-neutral-300"
-            aria-hidden="true"
-          />
+        <div className="text-center mb-6 pb-6 border-b border-neutral-200 dark:border-neutral-700">
+          <div className="w-12 h-12 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center mx-auto mb-4">
+            <AlertCircle
+              size={24}
+              className="text-accent-600 dark:text-accent-400"
+              aria-hidden="true"
+            />
+          </div>
           <h2
             id="ethical-warning-title"
-            className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100"
+            className="text-xl font-bold text-neutral-900 dark:text-neutral-100"
           >
             {t('warning')}
           </h2>
@@ -78,7 +80,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
             {t('notMedical')}
           </p>
 
-          <div className="bg-red-50 dark:bg-red-950/50 border-l-4 border-red-400 dark:border-red-500 p-4 rounded">
+          <div className="bg-red-50/80 dark:bg-red-950/50 border-l-4 border-red-400 dark:border-red-500 p-4 rounded">
             <p className="font-semibold mb-3 text-red-900 dark:text-red-100 flex items-center gap-2">
               <X size={20} className="text-red-600 dark:text-red-400" aria-hidden="true" />
               {t('whatIsNot')}
@@ -111,7 +113,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
             </ul>
           </div>
 
-          <div className="bg-green-50 dark:bg-green-950/50 border-l-4 border-green-600 dark:border-green-500 p-4 rounded">
+          <div className="bg-green-50/80 dark:bg-green-950/50 border-l-4 border-green-600 dark:border-green-500 p-4 rounded">
             <p className="font-semibold mb-3 text-green-900 dark:text-green-100 flex items-center gap-2">
               <Check size={20} className="text-green-600 dark:text-green-400" aria-hidden="true" />
               {t('whatIs')}
@@ -157,8 +159,13 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
           <p className="text-sm text-neutral-500 dark:text-neutral-400">{t('seekSupport')}</p>
         </div>
 
-        <div className="mt-8 flex justify-end">
-          <button ref={acceptButtonRef} onClick={onAccept} className="btn-primary" type="button">
+        <div className="mt-8">
+          <button
+            ref={acceptButtonRef}
+            onClick={onAccept}
+            className="w-full btn-primary py-4 text-base"
+            type="button"
+          >
             {t('understood')}
           </button>
         </div>

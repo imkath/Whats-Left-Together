@@ -7,6 +7,7 @@ import Calculator from '@/components/Calculator';
 import Hero from '@/components/Hero';
 import EthicalWarning from '@/components/EthicalWarning';
 import Footer from '@/components/Footer';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function HomePage() {
   // null = loading, true = accepted, false = not accepted
@@ -46,9 +47,9 @@ export default function HomePage() {
 
       {/* Calculator section */}
       <section id="calculator" className="py-12 bg-white dark:bg-neutral-800">
-        <div className="container-custom animate-slide-up bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
+        <ScrollReveal className="container-custom bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-8">
           <Calculator />
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Why it matters section */}
@@ -59,41 +60,43 @@ export default function HomePage() {
 
           <div className="mt-12 space-y-6">
             {/* Featured card — full width, warm accent border */}
-            <div className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] border-l-4 border-accent-500 pl-6 opacity-0 animate-slide-up">
-              <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
-                <Clock size={40} />
+            <ScrollReveal>
+              <div className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] border-l-4 border-accent-500 pl-6">
+                <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
+                  <Clock size={40} />
+                </div>
+                <h3 className="text-2xl mb-4">{t('section1.title')}</h3>
+                <p className="text-lg text-neutral-700 dark:text-neutral-300">
+                  {t('section1.text')}
+                </p>
               </div>
-              <h3 className="text-2xl mb-4">{t('section1.title')}</h3>
-              <p className="text-lg text-neutral-700 dark:text-neutral-300">{t('section1.text')}</p>
-            </div>
+            </ScrollReveal>
 
             {/* Secondary cards — 2-column row */}
             <div className="grid md:grid-cols-2 gap-6">
-              <div
-                className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] opacity-0 animate-slide-up"
-                style={{ animationDelay: '100ms' }}
-              >
-                <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
-                  <Heart size={28} />
+              <ScrollReveal delay={150}>
+                <div className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+                  <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
+                    <Heart size={28} />
+                  </div>
+                  <h3 className="text-lg mb-3">{t('section2.title')}</h3>
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                    {t('section2.text')}
+                  </p>
                 </div>
-                <h3 className="text-lg mb-3">{t('section2.title')}</h3>
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">
-                  {t('section2.text')}
-                </p>
-              </div>
+              </ScrollReveal>
 
-              <div
-                className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px] opacity-0 animate-slide-up"
-                style={{ animationDelay: '200ms' }}
-              >
-                <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
-                  <Target size={28} />
+              <ScrollReveal delay={300}>
+                <div className="group card hover:shadow-md transition-all duration-300 hover:translate-y-[-2px]">
+                  <div className="mb-4 text-neutral-700 dark:text-neutral-300 group-hover:text-accent-600 transition-colors duration-300">
+                    <Target size={28} />
+                  </div>
+                  <h3 className="text-lg mb-3">{t('section3.title')}</h3>
+                  <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                    {t('section3.text')}
+                  </p>
                 </div>
-                <h3 className="text-lg mb-3">{t('section3.title')}</h3>
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">
-                  {t('section3.text')}
-                </p>
-              </div>
+              </ScrollReveal>
             </div>
           </div>
 

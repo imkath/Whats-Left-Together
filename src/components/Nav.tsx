@@ -29,6 +29,51 @@ export default function Nav() {
       className="sticky top-0 z-40 bg-neutral-50/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800"
     >
       <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-12">
+        <Link
+          href={`/${locale}`}
+          className="mr-6 flex items-center"
+          aria-label="What's Left Together — Home"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="text-neutral-900 dark:text-white"
+            aria-hidden="true"
+          >
+            <rect x="2" y="2" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="8" y="2" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="14" y="2" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="2" y="8" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="8" y="8" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="14" y="8" width="3" height="3" rx="0.5" fill="currentColor" opacity="0.7" />
+            <rect x="19" y="3" width="2" height="2" rx="0.5" fill="currentColor" opacity="0.4" />
+            <rect x="2" y="14" width="4" height="4" rx="0.5" fill="currentColor" />
+            <rect x="8" y="14" width="3" height="3" rx="0.5" fill="currentColor" opacity="0.7" />
+            <rect x="14" y="14" width="2" height="2" rx="0.5" fill="currentColor" opacity="0.4" />
+            <rect x="3" y="20" width="2" height="2" rx="0.5" fill="currentColor" opacity="0.5" />
+            <rect
+              x="9"
+              y="19"
+              width="1.5"
+              height="1.5"
+              rx="0.5"
+              fill="currentColor"
+              opacity="0.3"
+            />
+            <rect
+              x="18"
+              y="9"
+              width="1.5"
+              height="1.5"
+              rx="0.5"
+              fill="currentColor"
+              opacity="0.3"
+            />
+            <rect x="20" y="7" width="1" height="1" rx="0.5" fill="currentColor" opacity="0.2" />
+          </svg>
+        </Link>
         <ul className="flex items-center gap-6">
           {links.map((link) => {
             const active = isActive(link.href);
