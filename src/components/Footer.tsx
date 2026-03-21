@@ -44,7 +44,7 @@ export default function Footer() {
                   <li>
                     <button
                       onClick={() => setIsFeedbackOpen(true)}
-                      className="hover:text-accent-400 transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
+                      className="hover:text-accent-400 transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-accent-500 rounded-sm outline-none"
                     >
                       <ChatLine size={14} />
                       {t('feedback')}

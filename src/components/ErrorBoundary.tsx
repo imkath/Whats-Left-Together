@@ -58,7 +58,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps, State> {
               <p className="text-red-700 text-sm">{translations.message}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-3 text-sm text-red-600 hover:text-red-800 underline focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
+                className="mt-3 text-sm text-red-600 hover:text-red-800 underline focus-visible:ring-2 focus-visible:ring-accent-500 rounded-sm outline-none"
               >
                 {translations.reload}
               </button>

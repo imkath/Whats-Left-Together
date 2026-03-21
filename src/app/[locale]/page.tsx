@@ -65,7 +65,7 @@ export default function HomePage() {
           <div className="space-y-6 max-w-4xl mx-auto">
             {/* Featured card */}
             <ScrollReveal>
-              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-8 md:p-10 transition-all duration-300 hover:shadow-xl border border-neutral-200 dark:border-neutral-800">
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-8 md:p-10 transition-shadow duration-300 hover:shadow-xl border border-neutral-200 dark:border-neutral-800">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 dark:bg-accent-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative">
                   <div className="mb-5 text-accent-500 dark:text-accent-400 group-hover:scale-110 transition-transform duration-300 inline-block">
@@ -84,7 +84,7 @@ export default function HomePage() {
             {/* Secondary cards */}
             <div className="grid md:grid-cols-2 gap-6">
               <ScrollReveal delay={150}>
-                <div className="group card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                <div className="group card hover:shadow-lg transition-shadow duration-300 h-full">
                   <div className="mb-4 text-accent-500 group-hover:scale-110 transition-transform duration-300 inline-block">
                     <Heart size={28} weight="BoldDuotone" />
                   </div>
@@ -96,7 +96,7 @@ export default function HomePage() {
               </ScrollReveal>
 
               <ScrollReveal delay={300}>
-                <div className="group card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
+                <div className="group card hover:shadow-lg transition-shadow duration-300 h-full">
                   <div className="mb-4 text-accent-500 group-hover:scale-110 transition-transform duration-300 inline-block">
                     <Target size={28} weight="BoldDuotone" />
                   </div>
@@ -113,7 +113,7 @@ export default function HomePage() {
             <div className="mt-12 text-center">
               <a
                 href={`/${locale}/methodology`}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:border-accent-500 hover:text-accent-600 dark:hover:border-accent-500 dark:hover:text-accent-400 transition-all duration-300 font-medium"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:border-accent-500 hover:text-accent-600 dark:hover:border-accent-500 dark:hover:text-accent-400 transition-colors duration-300 font-medium"
               >
                 <Book2 size={18} weight="BoldDuotone" />
                 {t('seeMethodology')}

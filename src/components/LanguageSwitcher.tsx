@@ -28,7 +28,7 @@ export default function LanguageSwitcher() {
       <button
         onClick={() => switchLocale('es')}
         aria-label="Cambiar a español"
-        className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
+        className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
           locale === 'es'
             ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
             : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'
@@ -39,7 +39,7 @@ export default function LanguageSwitcher() {
       <button
         onClick={() => switchLocale('en')}
         aria-label="Switch to English"
-        className={`px-3 py-1.5 text-sm font-medium rounded transition-all ${
+        className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
           locale === 'en'
             ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
             : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'

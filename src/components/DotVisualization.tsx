@@ -110,7 +110,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       ctx.translate(12, height / 2);
       ctx.rotate(-Math.PI / 2);
       ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
-      ctx.font = '11px Inter, system-ui, sans-serif';
+      ctx.font = '11px Sora, system-ui, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(label, 0, 0);
       ctx.restore();
@@ -148,7 +148,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       const yearsToShow = Math.min(Math.ceil(clampedDots / 12), 30);
       const labelStep = Math.max(1, Math.floor(yearsToShow / 6));
       ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
-      ctx.font = '11px Inter, system-ui, sans-serif';
+      ctx.font = '11px Sora, system-ui, sans-serif';
       ctx.textAlign = 'center';
 
       for (let yr = 0; yr <= yearsToShow; yr += labelStep) {

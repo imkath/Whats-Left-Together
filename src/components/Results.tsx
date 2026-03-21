@@ -147,7 +147,7 @@ export default function Results({ input }: ResultsProps) {
                 </ul>
                 <button
                   onClick={() => setRetryCount((c) => c + 1)}
-                  className="mt-3 px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 outline-none"
+                  className="mt-3 px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors focus-visible:ring-2 focus-visible:ring-accent-500 outline-none"
                 >
                   {t('errors.retry')}
                 </button>

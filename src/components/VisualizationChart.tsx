@@ -66,7 +66,7 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
   const dark = forceDark || isDarkMode;
 
   const colors = {
-    bothAlive: '#f59e0b', // accent-500 - main highlight
+    bothAlive: '#c8922e', // accent-500 - main highlight
     youAlive: '#3b82f6', // blue-500
     themAlive: '#10b981', // emerald-500
     grid: dark ? 'rgba(255,255,255,0.08)' : '#e5e7eb',
