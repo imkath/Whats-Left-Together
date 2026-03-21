@@ -65,14 +65,16 @@ export default function HomePage() {
           <div className="space-y-6 max-w-4xl mx-auto">
             {/* Featured card */}
             <ScrollReveal>
-              <div className="group relative overflow-hidden rounded-2xl bg-neutral-900 dark:bg-neutral-950 text-white p-8 md:p-10 transition-all duration-300 hover:shadow-xl">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-8 md:p-10 transition-all duration-300 hover:shadow-xl border border-neutral-200 dark:border-neutral-800">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 dark:bg-accent-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative">
-                  <div className="mb-5 text-accent-400 group-hover:scale-110 transition-transform duration-300 inline-block">
+                  <div className="mb-5 text-accent-500 dark:text-accent-400 group-hover:scale-110 transition-transform duration-300 inline-block">
                     <ClockCircle size={36} weight="BoldDuotone" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-white">{t('section1.title')}</h3>
-                  <p className="text-lg text-neutral-300 leading-relaxed max-w-2xl">
+                  <h3 className="text-2xl font-bold mb-4 text-neutral-900 dark:text-white">
+                    {t('section1.title')}
+                  </h3>
+                  <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl">
                     {t('section1.text')}
                   </p>
                 </div>

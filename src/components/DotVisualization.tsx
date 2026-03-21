@@ -128,16 +128,17 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
 
         // Warm amber/gold color with varying opacity
         const hue = 35 + (dots[i].x / width) * 10; // slight hue shift across
+        const lightness = isDarkMode ? 60 : 45; // darker on light backgrounds
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, currentSize, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${hue}, 90%, 60%, ${currentOpacity})`;
+        ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${currentOpacity})`;
         ctx.fill();
 
         // Glow effect for larger dots
         if (currentSize > 3) {
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, currentSize + 2, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${hue}, 90%, 60%, ${currentOpacity * 0.15})`;
+          ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${currentOpacity * 0.15})`;
           ctx.fill();
         }
       }
