@@ -2,7 +2,7 @@
 
 import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Info, ArrowRight, User, Users, Repeat } from 'lucide-react';
+import { Info, ArrowRight, User, Users, ArrowsClockwise } from '@phosphor-icons/react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
@@ -160,7 +160,7 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <User size={20} className="text-accent-600 dark:text-accent-400" />
+              <User size={20} weight="duotone" className="text-accent-600 dark:text-accent-400" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -241,7 +241,7 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <Users size={20} className="text-accent-600 dark:text-accent-400" />
+              <Users size={20} weight="duotone" className="text-accent-600 dark:text-accent-400" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -353,7 +353,11 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <Repeat size={20} className="text-accent-600 dark:text-accent-400" />
+              <ArrowsClockwise
+                size={20}
+                weight="duotone"
+                className="text-accent-600 dark:text-accent-400"
+              />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">

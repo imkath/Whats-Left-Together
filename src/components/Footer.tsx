@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { MessageSquare } from 'lucide-react';
+import { ChatCircle } from '@phosphor-icons/react';
 import FeedbackModal from './FeedbackModal';
 
 export default function Footer() {
@@ -46,7 +46,7 @@ export default function Footer() {
                       onClick={() => setIsFeedbackOpen(true)}
                       className="hover:text-accent-400 transition-colors inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
                     >
-                      <MessageSquare size={14} />
+                      <ChatCircle size={14} />
                       {t('feedback')}
                     </button>
                   </li>

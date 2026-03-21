@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowLeft, Users, Heart, Mail, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Users, Heart, Envelope, ChatCircle } from '@phosphor-icons/react';
 import Footer from '@/components/Footer';
 import FeedbackModal from '@/components/FeedbackModal';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -185,7 +185,7 @@ export default function AboutPage() {
         <ScrollReveal delay={400}>
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              <Mail
+              <Envelope
                 size={28}
                 className="text-neutral-700 dark:text-neutral-300 inline-block align-middle mr-3"
                 aria-hidden="true"
@@ -202,7 +202,7 @@ export default function AboutPage() {
                 onClick={() => setIsFeedbackOpen(true)}
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <MessageSquare size={18} aria-hidden="true" />
+                <ChatCircle size={18} aria-hidden="true" />
                 {t('sections.contact.sendFeedback')}
               </button>
 

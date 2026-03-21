@@ -2,7 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import { Languages } from 'lucide-react';
+import { Translate } from '@phosphor-icons/react';
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
@@ -23,7 +23,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="bg-white dark:bg-neutral-700 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-500 overflow-hidden flex items-center gap-1 p-1">
       <div className="px-2 text-neutral-500 dark:text-neutral-300">
-        <Languages size={16} aria-hidden="true" />
+        <Translate size={16} aria-hidden="true" />
       </div>
       <button
         onClick={() => switchLocale('es')}

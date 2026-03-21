@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useCallback, useRef } from 'react';
-import { AlertCircle, X, Check } from 'lucide-react';
+import { WarningCircle, X, Check } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 interface EthicalWarningProps {
@@ -58,8 +58,9 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
       >
         <div className="text-center mb-6 pb-6 border-b border-neutral-200 dark:border-neutral-700">
           <div className="w-12 h-12 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center mx-auto mb-4">
-            <AlertCircle
+            <WarningCircle
               size={24}
+              weight="duotone"
               className="text-accent-600 dark:text-accent-400"
               aria-hidden="true"
             />

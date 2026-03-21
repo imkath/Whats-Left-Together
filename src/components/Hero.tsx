@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ChevronDown } from 'lucide-react';
+import { CaretDown } from '@phosphor-icons/react';
 
 export default function Hero() {
   const t = useTranslations('hero');
@@ -74,7 +74,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
-        <ChevronDown size={24} className="text-neutral-500" />
+        <CaretDown size={24} className="text-neutral-500" />
       </div>
     </section>
   );

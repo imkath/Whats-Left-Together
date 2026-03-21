@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Clock, Heart, Calendar, Share2, PenLine, ChevronRight } from 'lucide-react';
+import {
+  Clock,
+  Heart,
+  CalendarBlank,
+  ShareNetwork,
+  PencilLine,
+  CaretRight,
+} from '@phosphor-icons/react';
 import type { RelationshipInput, CalculationResult } from '@/types';
 import { calculateExpectedEncounters } from '@/lib/models/actuarial';
 import { getLifeTable, getCountryName, hasLifeTableData, NetworkError } from '@/lib/data';
@@ -210,7 +217,7 @@ export default function Results({ input }: ResultsProps) {
           <h4 className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
             {t('stats.rangeTitle')}
           </h4>
-          <Clock size={20} className="text-accent-500" />
+          <Clock size={20} weight="duotone" className="text-accent-500" />
         </div>
         <p className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight">
           {min} <span className="text-neutral-400 dark:text-neutral-500">-</span> {max}
@@ -254,7 +261,11 @@ export default function Results({ input }: ResultsProps) {
       <div className="grid md:grid-cols-3 gap-4">
         <div className="action-card group">
           <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
-            <Calendar size={20} className="text-accent-600 dark:text-accent-400" />
+            <CalendarBlank
+              size={20}
+              weight="duotone"
+              className="text-accent-600 dark:text-accent-400"
+            />
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
@@ -264,7 +275,7 @@ export default function Results({ input }: ResultsProps) {
               {t('actions.plan.description')}
             </p>
           </div>
-          <ChevronRight
+          <CaretRight
             size={18}
             className="text-neutral-300 dark:text-neutral-600 group-hover:text-accent-500 transition-colors flex-shrink-0 mt-1"
           />
@@ -272,7 +283,11 @@ export default function Results({ input }: ResultsProps) {
 
         <div className="action-card group">
           <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
-            <Share2 size={20} className="text-accent-600 dark:text-accent-400" />
+            <ShareNetwork
+              size={20}
+              weight="duotone"
+              className="text-accent-600 dark:text-accent-400"
+            />
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
@@ -282,7 +297,7 @@ export default function Results({ input }: ResultsProps) {
               {t('actions.share.description')}
             </p>
           </div>
-          <ChevronRight
+          <CaretRight
             size={18}
             className="text-neutral-300 dark:text-neutral-600 group-hover:text-accent-500 transition-colors flex-shrink-0 mt-1"
           />
@@ -290,7 +305,11 @@ export default function Results({ input }: ResultsProps) {
 
         <div className="action-card group">
           <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
-            <PenLine size={20} className="text-accent-600 dark:text-accent-400" />
+            <PencilLine
+              size={20}
+              weight="duotone"
+              className="text-accent-600 dark:text-accent-400"
+            />
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-1">
@@ -300,7 +319,7 @@ export default function Results({ input }: ResultsProps) {
               {t('actions.write.description')}
             </p>
           </div>
-          <ChevronRight
+          <CaretRight
             size={18}
             className="text-neutral-300 dark:text-neutral-600 group-hover:text-accent-500 transition-colors flex-shrink-0 mt-1"
           />
@@ -313,7 +332,7 @@ export default function Results({ input }: ResultsProps) {
         <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-end gap-4 md:gap-8">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-3">
-              <Heart size={18} className="text-accent-500" />
+              <Heart size={18} weight="duotone" className="text-accent-500" />
               <h4 className="text-sm font-medium text-neutral-400">{t('stats.survivalTitle')}</h4>
             </div>
             <p className="text-4xl md:text-5xl font-bold text-white tracking-tight">

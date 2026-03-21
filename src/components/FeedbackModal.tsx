@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { X, Send, MessageSquare } from 'lucide-react';
+import { X, PaperPlaneTilt, ChatCircle } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 interface FeedbackModalProps {
@@ -102,7 +102,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
-            <MessageSquare
+            <ChatCircle
               size={20}
               className="text-primary-600 dark:text-primary-400"
               aria-hidden="true"
@@ -126,7 +126,11 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           {isSubmitted ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Send size={32} className="text-green-600 dark:text-green-400" aria-hidden="true" />
+                <PaperPlaneTilt
+                  size={32}
+                  className="text-green-600 dark:text-green-400"
+                  aria-hidden="true"
+                />
               </div>
               <h3 className="text-lg font-semibold mb-2">{t('successTitle')}</h3>
               <p className="text-neutral-600 dark:text-neutral-400">{t('successMessage')}</p>
@@ -215,7 +219,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   </>
                 ) : (
                   <>
-                    <Send size={16} aria-hidden="true" />
+                    <PaperPlaneTilt size={16} aria-hidden="true" />
                     {t('send')}
                   </>
                 )}
