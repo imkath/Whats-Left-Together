@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Clock, Heart, Crosshair, BookOpenText } from '@phosphor-icons/react';
+import { ClockCircle, Heart, Target, Book2 } from '@solar-icons/react';
 import { useTranslations, useLocale } from 'next-intl';
 import Calculator from '@/components/Calculator';
 import Hero from '@/components/Hero';
@@ -69,7 +69,7 @@ export default function HomePage() {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative">
                   <div className="mb-5 text-accent-400 group-hover:scale-110 transition-transform duration-300 inline-block">
-                    <Clock size={36} weight="duotone" />
+                    <ClockCircle size={36} weight="BoldDuotone" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-white">{t('section1.title')}</h3>
                   <p className="text-lg text-neutral-300 leading-relaxed max-w-2xl">
@@ -84,7 +84,7 @@ export default function HomePage() {
               <ScrollReveal delay={150}>
                 <div className="group card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
                   <div className="mb-4 text-accent-500 group-hover:scale-110 transition-transform duration-300 inline-block">
-                    <Heart size={28} weight="duotone" />
+                    <Heart size={28} weight="BoldDuotone" />
                   </div>
                   <h3 className="text-lg font-bold mb-3">{t('section2.title')}</h3>
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -96,7 +96,7 @@ export default function HomePage() {
               <ScrollReveal delay={300}>
                 <div className="group card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
                   <div className="mb-4 text-accent-500 group-hover:scale-110 transition-transform duration-300 inline-block">
-                    <Crosshair size={28} weight="duotone" />
+                    <Target size={28} weight="BoldDuotone" />
                   </div>
                   <h3 className="text-lg font-bold mb-3">{t('section3.title')}</h3>
                   <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -113,7 +113,7 @@ export default function HomePage() {
                 href={`/${locale}/methodology`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:border-accent-500 hover:text-accent-600 dark:hover:border-accent-500 dark:hover:text-accent-400 transition-all duration-300 font-medium"
               >
-                <BookOpenText size={18} weight="duotone" />
+                <Book2 size={18} weight="BoldDuotone" />
                 {t('seeMethodology')}
               </a>
             </div>

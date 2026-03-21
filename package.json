@@ -22,7 +22,7 @@
     "process-life-tables-f06": "node scripts/process-life-tables-f06.js"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
+    "@solar-icons/react": "^1.1.0",
     "next": "^15.5.2",
     "next-intl": "^3.17.0",
     "next-themes": "^0.4.6",
