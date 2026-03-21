@@ -7,7 +7,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: '/((?!_next).*)',
         headers: [
           {
             key: 'X-DNS-Prefetch-Control',
