@@ -152,7 +152,7 @@ If you use this project in research or publications:
 ```
 What's Left Together (2025). A statistical calculator for expected encounters
 based on UN World Population Prospects 2024.
-https://whats-left-together-cl.vercel.app
+https://whatslefttogether.com
 ```
 
 ---

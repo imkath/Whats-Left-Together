@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whats-left-together-cl.vercel.app';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['es', 'en'];

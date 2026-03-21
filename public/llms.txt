@@ -46,7 +46,7 @@ This tool helps users reflect on the finite nature of time with loved ones by pr
 
 ## Citation
 If referencing this tool:
-"What's Left Together. (2025). Life expectancy calculator based on UN WPP-2024 data. https://whats-left-together-cl.vercel.app"
+"What's Left Together. (2025). Life expectancy calculator based on UN WPP-2024 data. https://whatslefttogether.com"
 
 ## Feedback
 For suggestions or issues, use the feedback form available on the website footer.
