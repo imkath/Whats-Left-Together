@@ -29,7 +29,7 @@ export default function Hero() {
       <div className="relative z-10 container-custom text-center px-4">
         {/* Small label */}
         <div className="animate-fade-in">
-          <span className="inline-block text-accent-400/80 dark:text-accent-400/80 text-xs tracking-[0.3em] uppercase font-medium mb-8">
+          <span className="inline-block text-accent-600 dark:text-accent-400/80 text-xs tracking-[0.3em] uppercase font-medium mb-8">
             {t('label')}
           </span>
         </div>
