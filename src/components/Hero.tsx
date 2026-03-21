@@ -17,7 +17,7 @@ export default function Hero() {
         <div
           className="absolute inset-0 opacity-[0.15] dark:opacity-[0.15] light-hero-dots"
           style={{
-            backgroundImage: 'radial-gradient(circle, #f59e0b 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, #c8922e 1px, transparent 1px)',
             backgroundSize: '32px 32px',
           }}
         />
@@ -65,7 +65,7 @@ export default function Hero() {
         <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
           <a
             href="#calculator"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-all duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
           >
             {t('cta')}
           </a>

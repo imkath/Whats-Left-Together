@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Merriweather } from 'next/font/google';
+import { Sora, DM_Serif_Display } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -8,13 +8,13 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
 
-const inter = Inter({
+const sora = Sora({
   subsets: ['latin'],
   variable: '--font-sans',
 });
 
-const merriweather = Merriweather({
-  weight: ['400', '700'],
+const dmSerifDisplay = DM_Serif_Display({
+  weight: '400',
   subsets: ['latin'],
   variable: '--font-serif',
 });
@@ -410,7 +410,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${merriweather.variable}`}
+      className={`${sora.variable} ${dmSerifDisplay.variable}`}
       suppressHydrationWarning
     >
       <head>

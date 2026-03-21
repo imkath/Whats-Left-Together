@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-serif: 'Merriweather', Georgia, serif;
+    --font-sans: 'Sora', system-ui, sans-serif;
+    --font-serif: 'DM Serif Display', Georgia, serif;
   }
 
   html {
@@ -28,12 +28,7 @@
   h4,
   h5,
   h6 {
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      sans-serif;
+    font-family: var(--font-serif), Georgia, serif;
   }
 
   h1 {
@@ -63,28 +58,28 @@
 @layer components {
   .btn-primary {
     @apply px-7 py-3.5 bg-neutral-900 text-white rounded-xl
-           hover:bg-neutral-800 transition-all duration-200
+           hover:bg-neutral-800 transition-colors duration-200
            font-medium shadow-md hover:shadow-lg
            active:scale-[0.98] active:shadow-sm
-           focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+           focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2
            dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200
-           dark:focus-visible:ring-blue-400;
+           dark:focus-visible:ring-accent-400;
   }
 
   .btn-secondary {
     @apply px-6 py-3 bg-white text-neutral-900 rounded-lg
-           hover:bg-neutral-50 transition-all duration-200
+           hover:bg-neutral-50 transition-colors duration-200
            font-medium border-2 border-neutral-300 hover:border-neutral-400
            active:scale-[0.98]
-           focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+           focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2
            dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 dark:hover:border-neutral-500
-           dark:focus-visible:ring-blue-400;
+           dark:focus-visible:ring-accent-400;
   }
 
   .input-field {
     @apply w-full px-4 py-3 border border-neutral-200 rounded-xl
            focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:border-accent-500
-           transition-all duration-200 outline-none
+           transition-colors duration-200 outline-none
            bg-neutral-50 hover:bg-white
            dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-100
            dark:hover:bg-neutral-700
@@ -94,7 +89,7 @@
   .card {
     @apply bg-white rounded-2xl shadow-sm border border-neutral-200/80 p-8
            dark:bg-neutral-800 dark:border-neutral-700
-           transition-all duration-200;
+           transition-shadow duration-200;
   }
 
   .container-custom {
@@ -105,7 +100,7 @@
   .step-card {
     @apply bg-white rounded-2xl border border-neutral-200/80 p-6 md:p-8
            dark:bg-neutral-800/50 dark:border-neutral-700/50
-           transition-all duration-300;
+           transition-shadow duration-300;
   }
 
   .step-card:hover {
@@ -114,9 +109,9 @@
 
   /* Stat card for results */
   .stat-card {
-    @apply bg-white/80 backdrop-blur-sm rounded-2xl border border-neutral-200/50 p-6
+    @apply bg-white/80 rounded-2xl border border-neutral-200/50 p-6
            dark:bg-neutral-800/80 dark:border-neutral-700/50
-           transition-all duration-300 hover:shadow-lg;
+           transition-shadow duration-300 hover:shadow-lg;
   }
 
   /* Action card for results */
@@ -126,7 +121,7 @@
            dark:bg-neutral-800/50 dark:hover:bg-neutral-700/50
            border border-transparent hover:border-neutral-200
            dark:hover:border-neutral-600
-           transition-all duration-300 cursor-default;
+           transition-colors duration-300 cursor-default;
   }
 }
 
@@ -215,7 +210,7 @@
 
 :root:not(.dark) .light-hero-dots {
   opacity: 0.25;
-  background-image: radial-gradient(circle, #f59e0b 1.5px, transparent 1.5px);
+  background-image: radial-gradient(circle, #c8922e 1.5px, transparent 1.5px);
 }
 
 :root:not(.dark) .hero-particles {
@@ -279,8 +274,8 @@
 }
 
 .dot-grid .dot.active {
-  background-color: #f59e0b;
-  box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);
+  background-color: #c8922e;
+  box-shadow: 0 0 4px rgba(200, 146, 46, 0.4);
 }
 
 .dot-grid .dot.inactive {

@@ -26,7 +26,7 @@ export default function Nav() {
   return (
     <nav
       aria-label="Site navigation"
-      className="sticky top-0 z-40 bg-neutral-50/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800"
+      className="sticky top-0 z-40 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800"
     >
       <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-12">
         <Link
@@ -81,7 +81,7 @@ export default function Nav() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative text-sm font-medium transition-colors duration-200 pb-1 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-sm outline-none ${
+                  className={`relative text-sm font-medium transition-colors duration-200 pb-1 focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 rounded-sm outline-none ${
                     active
                       ? 'text-neutral-900 dark:text-white'
                       : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'

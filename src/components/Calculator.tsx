@@ -26,7 +26,7 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
         onMouseLeave={() => setIsVisible(false)}
         onFocus={() => setIsVisible(true)}
         onBlur={() => setIsVisible(false)}
-        className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-1"
+        className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-1"
         aria-label="More information"
       >
         <InfoCircle
@@ -396,7 +396,7 @@ export default function Calculator() {
                     type="button"
                     onClick={() => updateFrequencyPeriod(period.value)}
                     aria-pressed={formData.frequencyPeriod === period.value}
-                    className={`px-4 py-2.5 rounded-xl border-2 transition-all duration-200 text-sm font-medium ${
+                    className={`px-4 py-2.5 rounded-xl border-2 transition-colors duration-200 text-sm font-medium ${
                       formData.frequencyPeriod === period.value
                         ? 'bg-accent-500 text-white border-accent-500 shadow-md shadow-accent-500/20'
                         : 'bg-white border-neutral-200 text-neutral-600 hover:border-accent-300 hover:text-accent-600 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:border-accent-500/50 dark:hover:text-accent-400'
@@ -490,7 +490,7 @@ export default function Calculator() {
         <div className="flex justify-center pt-4">
           <button
             type="submit"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-all duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
           >
             {t('calculate')}
             <ArrowRight
