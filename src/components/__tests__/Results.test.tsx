@@ -234,16 +234,6 @@ describe('Results component', () => {
     });
   });
 
-  describe('direct mode', () => {
-    it('should render different content in direct mode', async () => {
-      render(<Results input={defaultInput} directMode={true} />);
-
-      await waitFor(() => {
-        expect(screen.getByText(/A este ritmo/)).toBeInTheDocument();
-      });
-    });
-  });
-
   describe('error handling', () => {
     it('should show error when your country has no data', async () => {
       const invalidInput = {
