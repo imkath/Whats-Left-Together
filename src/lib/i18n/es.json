@@ -22,8 +22,9 @@
   },
   "hero": {
     "title": "Lo que nos queda juntos",
+    "label": "Herramienta de reflexión estadística",
     "subtitle": "Un espejo estadístico de cuántas veces más podrías ver a las personas que quieres, si sigues viviendo como hasta ahora.",
-    "belowButton": "Usamos tablas de vida oficiales por edad y país, junto con tu frecuencia actual de visitas, para estimar cuántos momentos presenciales es probable que compartas desde hoy en adelante. No es una predicción. Es una llamada de atención.",
+    "belowButton": "Basado en tablas de vida oficiales por edad y país. No es una predicción. Es una llamada de atención.",
     "cta": "Calcular cuántas veces más"
   },
   "calculator": {
@@ -83,9 +84,38 @@
       "yearly": "vez por año"
     },
     "resultsRegion": "Resultados del cálculo",
-    "resultsHeading": "Resultados del cálculo"
+    "resultsHeading": "Resultados del cálculo",
+    "stepLabel": "Paso {step} de {total}"
   },
   "results": {
+    "visualization": {
+      "title": "Visualización Emocional de Resultados",
+      "yAxisLabel": "Encuentros Estimados",
+      "overlayLine1": "Cada punto es una oportunidad. Tienes aproximadamente",
+      "overlayCount": "{count}",
+      "overlayLine2": "encuentros estimados restantes."
+    },
+    "stats": {
+      "rangeTitle": "Rango Estimado de Visitas",
+      "rangeSubtitle": "visitas totales en los próximos años",
+      "survivalTitle": "Probabilidad de Supervivencia",
+      "survivalSubtitle": "probabilidad de que ambos estén vivos en 5 años"
+    },
+    "actions": {
+      "title": "¿Qué puedes hacer?",
+      "plan": {
+        "title": "Planifica una visita.",
+        "description": "El tiempo es precioso, agenda un encuentro pronto."
+      },
+      "share": {
+        "title": "Comparte un recuerdo.",
+        "description": "Envía una foto o anécdotas especial."
+      },
+      "write": {
+        "title": "Escribe una carta.",
+        "description": "Expresa tus sentimientos en papel."
+      }
+    },
     "normalMode": {
       "title": "Si todo sigue igual, podrías ver a {relation} unas {min} a {max} veces más en tu vida.",
       "explanation": "Según los datos de esperanza de vida para {country} y las edades de ambos, es razonable esperar que sigan con vida, al mismo tiempo, alrededor de {yearsMin} a {yearsMax} años más.\n\nSi ves a {relation} {frequency} veces al año, eso se traduce en un rango aproximado de {min} a {max} visitas presenciales futuras.\n\nEs solo una estimación estadística, no conoce la salud real de ninguno, ni accidentes, ni cambios de vida. Pero sí te muestra algo cierto: el número no es infinito.",
@@ -141,6 +171,7 @@
       "point4": "La frecuencia de visitas se asume estable (en la vida real puede cambiar)",
       "whatLabel": "Qué calculamos:",
       "sourceLabel": "Fuente de datos:",
+      "dataFreshness": "Esta es la revisión más reciente disponible. Actualizaremos la herramienta cuando la ONU publique una nueva revisión.",
       "viewSource": "→ Ver fuente oficial (ONU)"
     },
     "chart": {
@@ -151,6 +182,7 @@
       "bothAlive": "Ambos vivos",
       "youAlive": "Tú vivo/a",
       "themAlive": "Ellos vivos",
+      "intro": "Este gráfico muestra cómo cambia esa probabilidad con el tiempo, para ti, para la otra persona, y para ambos al mismo tiempo.",
       "title": "Probabilidad de supervivencia año a año",
       "description": "Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro, basado en las tablas de vida de {source}."
     },

@@ -22,8 +22,9 @@
   },
   "hero": {
     "title": "What's Left Together",
+    "label": "Statistical reflection tool",
     "subtitle": "A statistical mirror of how many times you might still see the people you love, if you keep living the way you do now.",
-    "belowButton": "We use official life tables by age and country, plus your current visiting habits, to estimate how many in-person moments you are likely to share from today on. It is not a prediction. It is a wake-up call.",
+    "belowButton": "Based on official life tables by age and country. It is not a prediction. It is a wake-up call.",
     "cta": "Calculate your remaining visits"
   },
   "calculator": {
@@ -83,9 +84,38 @@
       "yearly": "time per year"
     },
     "resultsRegion": "Calculation results",
-    "resultsHeading": "Calculation results"
+    "resultsHeading": "Calculation results",
+    "stepLabel": "Step {step} of {total}"
   },
   "results": {
+    "visualization": {
+      "title": "Emotional Results Visualization",
+      "yAxisLabel": "Estimated Encounters",
+      "overlayLine1": "Each dot is an opportunity. You have approximately",
+      "overlayCount": "{count}",
+      "overlayLine2": "estimated encounters remaining."
+    },
+    "stats": {
+      "rangeTitle": "Estimated Visit Range",
+      "rangeSubtitle": "total visits in the coming years",
+      "survivalTitle": "Survival Probability",
+      "survivalSubtitle": "probability both alive in 5 years"
+    },
+    "actions": {
+      "title": "What can you do?",
+      "plan": {
+        "title": "Plan a visit.",
+        "description": "Time is precious, schedule a meetup soon."
+      },
+      "share": {
+        "title": "Share a memory.",
+        "description": "Send a photo or a special anecdote."
+      },
+      "write": {
+        "title": "Write a letter.",
+        "description": "Express your feelings on paper."
+      }
+    },
     "normalMode": {
       "title": "If everything stays the same, you might see {relation} about {min} to {max} more times in your life.",
       "explanation": "According to life expectancy data for {country} and both of your ages, it is reasonable to expect that you will both be alive, at the same time, for about {yearsMin} to {yearsMax} more years.\n\nIf you see {relation} {frequency} times per year, that translates to an approximate range of {min} to {max} future in-person visits.\n\nThis is only a statistical estimate. It doesn't know either person's actual health, accidents, or life changes. But it does show you something true: the number is not infinite.",
@@ -141,6 +171,7 @@
       "point4": "Visit frequency is assumed stable (in real life it can change)",
       "whatLabel": "What we calculate:",
       "sourceLabel": "Data source:",
+      "dataFreshness": "This is the most recent revision available. We will update the tool when the UN publishes a new revision.",
       "viewSource": "→ View official source (UN)"
     },
     "errors": {
@@ -170,6 +201,7 @@
       "bothAlive": "Both alive",
       "youAlive": "You alive",
       "themAlive": "Them alive",
+      "intro": "This chart shows how that probability changes over time — for you, for them, and for both of you at the same time.",
       "title": "Survival probability year by year",
       "description": "This chart shows the probability of both being alive each future year, based on life tables from {source}."
     }

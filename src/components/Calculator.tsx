@@ -2,7 +2,7 @@
 
 import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Info, ArrowRight } from 'lucide-react';
+import { Info, ArrowRight, User, Users, Repeat } from 'lucide-react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
@@ -26,13 +26,13 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
         onMouseLeave={() => setIsVisible(false)}
         onFocus={() => setIsVisible(true)}
         onBlur={() => setIsVisible(false)}
-        className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1"
+        className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-1"
         aria-label="More information"
       >
         <Info
           size={14}
           strokeWidth={2.5}
-          className="text-neutral-500 dark:text-neutral-400"
+          className="text-neutral-400 dark:text-neutral-500"
           aria-hidden="true"
         />
       </button>
@@ -76,18 +76,15 @@ export default function Calculator() {
   });
 
   const [showResults, setShowResults] = useState(false);
-  const [directMode, setDirectMode] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setValidationErrors({});
 
-    // Validate with Zod
     const result = relationshipInputSchema.safeParse(formData);
 
     if (!result.success) {
-      // Convert Zod errors to a more usable format
       const errors: Record<string, string> = {};
       (result.error as ZodError).errors.forEach((error) => {
         const path = error.path.join('.');
@@ -99,10 +96,8 @@ export default function Calculator() {
 
     setShowResults(true);
 
-    // Scroll to results and focus for accessibility
     setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Focus on results heading for screen readers
       resultsHeadingRef.current?.focus();
     }, 100);
   };
@@ -131,10 +126,9 @@ export default function Calculator() {
     const period = formData.frequencyPeriod || 'monthly';
 
     if (times === null || times === 0) {
-      // Allow empty/zero temporarily for user to type a new number
       setFormData((prev) => ({
         ...prev,
-        timesPerPeriod: 0, // Keep as 0 to allow user to type
+        timesPerPeriod: 0,
         visitsPerYear: 0,
       }));
       return;
@@ -151,30 +145,36 @@ export default function Calculator() {
   };
 
   return (
-    <div id="calculator" className="space-y-8">
+    <div id="calculator" className="space-y-6">
+      {/* Section header */}
       <div className="text-center mb-8">
         <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
-        <h2>{t('title')}</h2>
-        <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
+        <h2 className="text-3xl md:text-4xl font-extrabold">{t('title')}</h2>
+        <p className="text-neutral-500 dark:text-neutral-400 mt-3 max-w-xl mx-auto">
+          {t('subtitle')}
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="card max-w-3xl mx-auto">
-        {/* Your information */}
-        <div className="mb-10">
+      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-4">
+        {/* Step 1: Your Information */}
+        <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
-              1
-            </span>
-            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-              {t('yourInfo')}
-            </h3>
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
+              <User size={20} className="text-accent-600 dark:text-accent-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                {t('yourInfo')}
+              </h3>
+              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 1, total: 3 })}</p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
             <div>
               <label
                 htmlFor="your-age"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('age')}
               </label>
@@ -196,7 +196,7 @@ export default function Calculator() {
             <div>
               <label
                 htmlFor="your-sex"
-                className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="flex items-center gap-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('sex')}
                 <AccessibleTooltip content={t('sexTooltip')} id={yourSexTooltipId} />
@@ -216,7 +216,7 @@ export default function Calculator() {
             <div>
               <label
                 htmlFor="your-country"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('country')}
               </label>
@@ -237,24 +237,25 @@ export default function Calculator() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-100 dark:border-neutral-700/50 my-10" />
-
-        {/* Their information */}
-        <div className="mb-10">
+        {/* Step 2: Their Information */}
+        <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
-              2
-            </span>
-            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-              {t('theirInfo')}
-            </h3>
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
+              <Users size={20} className="text-accent-600 dark:text-accent-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                {t('theirInfo')}
+              </h3>
+              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 2, total: 3 })}</p>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div>
               <label
                 htmlFor="relationship"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('relationship')}
               </label>
@@ -283,7 +284,7 @@ export default function Calculator() {
             <div>
               <label
                 htmlFor="their-age"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('age')}
               </label>
@@ -301,11 +302,13 @@ export default function Calculator() {
                 required
               />
             </div>
+          </div>
 
+          <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label
                 htmlFor="their-sex"
-                className="flex items-center gap-1 text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="flex items-center gap-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('sex')}
                 <AccessibleTooltip content={t('sexTooltip')} id={theirSexTooltipId} />
@@ -325,7 +328,7 @@ export default function Calculator() {
             <div>
               <label
                 htmlFor="their-country"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('country')}
               </label>
@@ -346,23 +349,24 @@ export default function Calculator() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-100 dark:border-neutral-700/50 my-10" />
-
-        {/* Frequency */}
-        <div className="mb-10">
+        {/* Step 3: Frequency */}
+        <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-sm font-bold flex-shrink-0">
-              3
-            </span>
-            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-              {t('frequency')}
-            </h3>
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
+              <Repeat size={20} className="text-accent-600 dark:text-accent-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                {t('frequency')}
+              </h3>
+              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 3, total: 3 })}</p>
+            </div>
           </div>
 
           <div className="space-y-6">
             {/* Period selector */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-3">
+              <label className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-3">
                 {t('frequencyPeriodLabel')}
               </label>
               <div
@@ -381,10 +385,10 @@ export default function Calculator() {
                     type="button"
                     onClick={() => updateFrequencyPeriod(period.value)}
                     aria-pressed={formData.frequencyPeriod === period.value}
-                    className={`px-4 py-2 rounded-full border transition-colors ${
+                    className={`px-4 py-2.5 rounded-xl border-2 transition-all duration-200 text-sm font-medium ${
                       formData.frequencyPeriod === period.value
-                        ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-white dark:text-neutral-900 dark:border-white font-medium'
-                        : 'bg-white border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:border-neutral-400 dark:hover:text-neutral-200'
+                        ? 'bg-accent-500 text-white border-accent-500 shadow-md shadow-accent-500/20'
+                        : 'bg-white border-neutral-200 text-neutral-600 hover:border-accent-300 hover:text-accent-600 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:border-accent-500/50 dark:hover:text-accent-400'
                     }`}
                   >
                     {period.label}
@@ -397,7 +401,7 @@ export default function Calculator() {
             <div>
               <label
                 htmlFor="times-per-period"
-                className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2"
+                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
               >
                 {t('timesPerPeriodLabel')}
               </label>
@@ -415,13 +419,13 @@ export default function Calculator() {
                   const value = e.target.value === '' ? null : parseInt(e.target.value);
                   updateTimesPerPeriod(value);
                 }}
-                className={`input-field max-w-xs ${validationErrors['timesPerPeriod'] ? 'border-red-500' : ''}`}
+                className={`input-field max-w-xs ${validationErrors['timesPerPeriod'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 placeholder="1"
               />
               {validationErrors['timesPerPeriod'] && (
                 <p className="text-xs text-red-600 mt-1">{validationErrors['timesPerPeriod']}</p>
               )}
-              <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-1">
+              <p className="text-xs text-neutral-400 mt-1.5">
                 {t('timesPerPeriodNote', {
                   max: getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly'),
                   period: t(
@@ -432,8 +436,8 @@ export default function Calculator() {
             </div>
 
             {/* Visual summary */}
-            <div className="p-5 bg-accent-50 dark:bg-accent-900/20 rounded-xl border border-accent-200 dark:border-accent-800/50">
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">
+            <div className="p-5 bg-gradient-to-r from-accent-50 to-accent-100/50 dark:from-accent-900/20 dark:to-accent-800/10 rounded-xl border border-accent-200/50 dark:border-accent-800/30">
+              <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">
                 <span className="font-medium">{t('frequencySummary')}:</span>
               </p>
               <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -454,16 +458,16 @@ export default function Calculator() {
         {/* Validation Errors Summary */}
         {Object.keys(validationErrors).length > 0 && (
           <div
-            className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+            className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-xl"
             aria-live="polite"
             role="status"
           >
-            <h4 className="text-sm font-semibold text-red-800 mb-2">
+            <h4 className="text-sm font-semibold text-red-800 dark:text-red-300 mb-2">
               {locale === 'es'
                 ? 'Por favor corrige los siguientes errores:'
                 : 'Please fix the following errors:'}
             </h4>
-            <ul className="text-sm text-red-700 space-y-1">
+            <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
               {Object.entries(validationErrors).map(([key, message]) => (
                 <li key={key}>• {message}</li>
               ))}
@@ -471,37 +475,18 @@ export default function Calculator() {
           </div>
         )}
 
-        {/* Direct mode option */}
-        <div className="mb-8 flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-700/50 rounded-xl border border-neutral-200 dark:border-neutral-600">
-          <div className="pr-4">
-            <span className="font-medium text-neutral-900 dark:text-neutral-100">
-              {t('directMode')}
-            </span>
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
-              {t('directModeHelp')}
-            </p>
-          </div>
+        {/* Submit button */}
+        <div className="flex justify-center pt-4">
           <button
-            type="button"
-            role="switch"
-            aria-checked={directMode}
-            onClick={() => setDirectMode(!directMode)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 flex-shrink-0 ${
-              directMode ? 'bg-neutral-900 dark:bg-white' : 'bg-neutral-300 dark:bg-neutral-600'
-            }`}
+            type="submit"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-all duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
           >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white dark:bg-neutral-900 transition-transform duration-200 ${
-                directMode ? 'translate-x-6' : 'translate-x-1'
-              }`}
-            />
-          </button>
-        </div>
-
-        <div className="flex justify-center">
-          <button type="submit" className="btn-primary inline-flex items-center gap-2 text-lg">
             {t('calculate')}
-            <ArrowRight size={20} aria-hidden="true" />
+            <ArrowRight
+              size={20}
+              className="group-hover:translate-x-1 transition-transform"
+              aria-hidden="true"
+            />
           </button>
         </div>
       </form>
@@ -510,7 +495,7 @@ export default function Calculator() {
       {showResults && (
         <div
           ref={resultsRef}
-          className="mt-12 scroll-mt-20"
+          className="mt-16 scroll-mt-20"
           role="region"
           aria-label={t('resultsRegion') || 'Results'}
         >
@@ -518,7 +503,7 @@ export default function Calculator() {
             {t('resultsHeading') || 'Calculation Results'}
           </h2>
           <ErrorBoundary>
-            <Results input={formData} directMode={directMode} />
+            <Results input={formData} />
           </ErrorBoundary>
         </div>
       )}
