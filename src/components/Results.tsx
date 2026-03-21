@@ -193,7 +193,7 @@ export default function Results({ input }: ResultsProps) {
         {/* Overlay message */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center px-6 max-w-2xl">
-            <p className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-snug drop-shadow-lg">
+            <p className="text-xl md:text-2xl lg:text-3xl font-bold text-neutral-800 dark:text-white leading-snug drop-shadow-sm dark:drop-shadow-lg">
               {t('visualization.overlayLine1')}{' '}
               <span className="text-accent-400">
                 {t('visualization.overlayCount', { count: median })}
@@ -316,29 +316,35 @@ export default function Results({ input }: ResultsProps) {
       </div>
 
       {/* Survival probability + chart unified block */}
-      <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700/50 bg-neutral-900 dark:bg-neutral-950">
+      <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700/50 bg-white dark:bg-neutral-900">
         {/* Header with stat */}
         <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-end gap-4 md:gap-8">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-3">
               <Heart size={18} weight="BoldDuotone" className="text-accent-500" />
-              <h4 className="text-sm font-medium text-neutral-400">{t('stats.survivalTitle')}</h4>
+              <h4 className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                {t('stats.survivalTitle')}
+              </h4>
             </div>
-            <p className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <p className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white tracking-tight">
               {survivalPercent}%
             </p>
-            <p className="text-sm text-neutral-400 mt-1">{t('stats.survivalSubtitle')}</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+              {t('stats.survivalSubtitle')}
+            </p>
           </div>
-          <p className="text-sm text-neutral-500 max-w-sm">{t('chart.intro')}</p>
+          <p className="text-sm text-neutral-400 dark:text-neutral-500 max-w-sm">
+            {t('chart.intro')}
+          </p>
         </div>
 
         {/* Chart area */}
         <div className="px-2 pb-4 md:px-4 md:pb-6">
-          <VisualizationChart data={result.yearByYearSurvival} forceDark />
+          <VisualizationChart data={result.yearByYearSurvival} />
         </div>
 
         <div className="px-6 pb-5 md:px-8 md:pb-6">
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-neutral-400 dark:text-neutral-500">
             {t('chart.description', { source: result.assumptions.dataSource })}
           </p>
         </div>

@@ -298,6 +298,11 @@
   aspect-ratio: 16/9;
   border-radius: 1rem;
   overflow: hidden;
+  background-color: #f5f5f0;
+}
+
+.dark .scatter-container {
+  background-color: #0a0a0a;
 }
 
 @media (prefers-reduced-motion: reduce) {
