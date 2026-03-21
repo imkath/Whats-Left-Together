@@ -1,6 +1,6 @@
 'use client';
 
-import { Moon, Sun } from '@phosphor-icons/react';
+import { Moon, Sun } from '@solar-icons/react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 

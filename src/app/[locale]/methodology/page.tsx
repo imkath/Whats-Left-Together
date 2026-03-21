@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Database, Warning, BookOpenText, FileText } from '@phosphor-icons/react';
+import { ArrowLeft, Database, ShieldWarning, Book2, DocumentText } from '@solar-icons/react';
 import { useTranslations, useLocale } from 'next-intl';
 import Footer from '@/components/Footer';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -200,7 +200,7 @@ export default function MethodologyPage() {
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-4">
               {t('section4.title').split('.')[0]}.{' '}
-              <Warning
+              <ShieldWarning
                 size={28}
                 className="text-red-600 dark:text-red-500 inline-block align-middle"
                 aria-hidden="true"
@@ -232,7 +232,7 @@ export default function MethodologyPage() {
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-4">
               {t('section5.title').split('.')[0]}.{' '}
-              <BookOpenText
+              <Book2
                 size={28}
                 className="text-primary-700 dark:text-primary-400 inline-block align-middle"
                 aria-hidden="true"
@@ -437,7 +437,7 @@ export default function MethodologyPage() {
         <ScrollReveal>
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-              <FileText
+              <DocumentText
                 size={28}
                 className="text-primary-700 dark:text-primary-400"
                 aria-hidden="true"

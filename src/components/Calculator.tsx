@@ -2,7 +2,7 @@
 
 import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Info, ArrowRight, User, Users, ArrowsClockwise } from '@phosphor-icons/react';
+import { InfoCircle, ArrowRight, UserCircle, UsersGroupRounded, Refresh } from '@solar-icons/react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
@@ -29,9 +29,8 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
         className="p-0.5 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-1"
         aria-label="More information"
       >
-        <Info
+        <InfoCircle
           size={14}
-          strokeWidth={2.5}
           className="text-neutral-400 dark:text-neutral-500"
           aria-hidden="true"
         />
@@ -160,7 +159,11 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <User size={20} weight="duotone" className="text-accent-600 dark:text-accent-400" />
+              <UserCircle
+                size={20}
+                weight="BoldDuotone"
+                className="text-accent-600 dark:text-accent-400"
+              />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -241,7 +244,11 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <Users size={20} weight="duotone" className="text-accent-600 dark:text-accent-400" />
+              <UsersGroupRounded
+                size={20}
+                weight="BoldDuotone"
+                className="text-accent-600 dark:text-accent-400"
+              />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
@@ -353,9 +360,9 @@ export default function Calculator() {
         <div className="step-card">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <ArrowsClockwise
+              <Refresh
                 size={20}
-                weight="duotone"
+                weight="BoldDuotone"
                 className="text-accent-600 dark:text-accent-400"
               />
             </div>

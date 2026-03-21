@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { X, PaperPlaneTilt, ChatCircle } from '@phosphor-icons/react';
+import { CloseCircle, SendSquare, ChatLine } from '@solar-icons/react';
 import { useTranslations } from 'next-intl';
 
 interface FeedbackModalProps {
@@ -102,7 +102,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
           <div className="flex items-center gap-2">
-            <ChatCircle
+            <ChatLine
               size={20}
               className="text-primary-600 dark:text-primary-400"
               aria-hidden="true"
@@ -117,7 +117,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
             aria-label={t('close')}
           >
-            <X size={20} aria-hidden="true" />
+            <CloseCircle size={20} aria-hidden="true" />
           </button>
         </div>
 
@@ -126,7 +126,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           {isSubmitted ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PaperPlaneTilt
+                <SendSquare
                   size={32}
                   className="text-green-600 dark:text-green-400"
                   aria-hidden="true"
@@ -219,7 +219,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   </>
                 ) : (
                   <>
-                    <PaperPlaneTilt size={16} aria-hidden="true" />
+                    <SendSquare size={16} aria-hidden="true" />
                     {t('send')}
                   </>
                 )}

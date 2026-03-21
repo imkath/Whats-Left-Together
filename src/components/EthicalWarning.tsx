@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useCallback, useRef } from 'react';
-import { WarningCircle, X, Check } from '@phosphor-icons/react';
+import { ShieldWarning, CloseCircle, Checklist } from '@solar-icons/react';
 import { useTranslations } from 'next-intl';
 
 interface EthicalWarningProps {
@@ -58,9 +58,9 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
       >
         <div className="text-center mb-6 pb-6 border-b border-neutral-200 dark:border-neutral-700">
           <div className="w-12 h-12 rounded-full bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center mx-auto mb-4">
-            <WarningCircle
+            <ShieldWarning
               size={24}
-              weight="duotone"
+              weight="BoldDuotone"
               className="text-accent-600 dark:text-accent-400"
               aria-hidden="true"
             />
@@ -83,12 +83,16 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
 
           <div className="bg-red-50/80 dark:bg-red-950/50 border-l-4 border-red-400 dark:border-red-500 p-4 rounded">
             <p className="font-semibold mb-3 text-red-900 dark:text-red-100 flex items-center gap-2">
-              <X size={20} className="text-red-600 dark:text-red-400" aria-hidden="true" />
+              <CloseCircle
+                size={20}
+                className="text-red-600 dark:text-red-400"
+                aria-hidden="true"
+              />
               {t('whatIsNot')}
             </p>
             <ul className="space-y-2 text-sm text-red-800 dark:text-red-200">
               <li className="flex items-start gap-2">
-                <X
+                <CloseCircle
                   size={16}
                   className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -96,7 +100,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
                 <span>{t('notIs1')}</span>
               </li>
               <li className="flex items-start gap-2">
-                <X
+                <CloseCircle
                   size={16}
                   className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -104,7 +108,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
                 <span>{t('notIs2')}</span>
               </li>
               <li className="flex items-start gap-2">
-                <X
+                <CloseCircle
                   size={16}
                   className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -116,12 +120,16 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
 
           <div className="bg-green-50/80 dark:bg-green-950/50 border-l-4 border-green-600 dark:border-green-500 p-4 rounded">
             <p className="font-semibold mb-3 text-green-900 dark:text-green-100 flex items-center gap-2">
-              <Check size={20} className="text-green-600 dark:text-green-400" aria-hidden="true" />
+              <Checklist
+                size={20}
+                className="text-green-600 dark:text-green-400"
+                aria-hidden="true"
+              />
               {t('whatIs')}
             </p>
             <ul className="space-y-2 text-sm text-green-800 dark:text-green-200">
               <li className="flex items-start gap-2">
-                <Check
+                <Checklist
                   size={16}
                   className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -129,7 +137,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
                 <span>{t('is1')}</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check
+                <Checklist
                   size={16}
                   className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -137,7 +145,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
                 <span>{t('is2')}</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check
+                <Checklist
                   size={16}
                   className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
@@ -145,7 +153,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
                 <span>{t('is3')}</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check
+                <Checklist
                   size={16}
                   className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
                   aria-hidden="true"
