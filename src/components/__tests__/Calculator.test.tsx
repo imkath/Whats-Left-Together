@@ -57,10 +57,8 @@ jest.mock('next-intl', () => ({
 
 // Mock the Results component to avoid loading life tables in tests
 jest.mock('../Results', () => {
-  return function MockResults({ directMode }: { input: unknown; directMode: boolean }) {
-    return (
-      <div data-testid="results">Results shown - Direct mode: {directMode ? 'yes' : 'no'}</div>
-    );
+  return function MockResults() {
+    return <div data-testid="results">Results shown</div>;
   };
 });
 
@@ -115,13 +113,6 @@ describe('Calculator component', () => {
 
       expect(screen.getByRole('button', { name: 'Calculate' })).toBeInTheDocument();
     });
-
-    it('should render the direct mode checkbox', () => {
-      render(<Calculator />);
-
-      expect(screen.getByRole('checkbox')).toBeInTheDocument();
-      expect(screen.getByText('Direct mode')).toBeInTheDocument();
-    });
   });
 
   describe('form interactions', () => {
@@ -143,9 +134,7 @@ describe('Calculator component', () => {
       render(<Calculator />);
       const user = userEvent.setup();
 
-      const theirAgeInput = screen.getByLabelText('Age', {
-        selector: '#their-age',
-      }) as HTMLInputElement;
+      const theirAgeInput = document.getElementById('their-age') as HTMLInputElement;
 
       await user.clear(theirAgeInput);
       await user.type(theirAgeInput, '60');
@@ -175,19 +164,6 @@ describe('Calculator component', () => {
       expect(relationshipSelect).toHaveValue('father');
     });
 
-    it('should toggle direct mode', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      const checkbox = screen.getByRole('checkbox');
-
-      expect(checkbox).not.toBeChecked();
-
-      await user.click(checkbox);
-
-      expect(checkbox).toBeChecked();
-    });
-
     it('should change frequency period when button is clicked', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
@@ -196,8 +172,8 @@ describe('Calculator component', () => {
 
       await user.click(weeklyButton);
 
-      // The button should have the active styling class
-      expect(weeklyButton).toHaveClass('bg-primary-600');
+      // The active button should be pressed
+      expect(weeklyButton).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('should update times per period input', async () => {
@@ -226,24 +202,6 @@ describe('Calculator component', () => {
       // Results should be shown
       await waitFor(() => {
         expect(screen.getByTestId('results')).toBeInTheDocument();
-      });
-    });
-
-    it('should pass directMode to Results component', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      // Enable direct mode
-      const checkbox = screen.getByRole('checkbox');
-      await user.click(checkbox);
-
-      // Submit the form
-      const submitButton = screen.getByRole('button', { name: 'Calculate' });
-      await user.click(submitButton);
-
-      // Results should show direct mode
-      await waitFor(() => {
-        expect(screen.getByText(/Direct mode: yes/)).toBeInTheDocument();
       });
     });
   });
@@ -334,14 +292,14 @@ describe('Calculator component', () => {
 
       const monthlyButton = screen.getByRole('button', { name: 'Monthly' });
 
-      expect(monthlyButton).toHaveClass('bg-primary-600');
+      expect(monthlyButton).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('should have Chile as default country', () => {
       render(<Calculator />);
 
-      const yourCountrySelect = screen.getByLabelText('Country', { selector: '#your-country' });
-      const theirCountrySelect = screen.getByLabelText('Country', { selector: '#their-country' });
+      const yourCountrySelect = document.getElementById('your-country') as HTMLSelectElement;
+      const theirCountrySelect = document.getElementById('their-country') as HTMLSelectElement;
 
       expect(yourCountrySelect).toHaveValue('CHL');
       expect(theirCountrySelect).toHaveValue('CHL');

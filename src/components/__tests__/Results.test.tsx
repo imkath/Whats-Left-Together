@@ -51,15 +51,15 @@ jest.mock('../VisualizationChart', () => {
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string, params?: Record<string, unknown>) => {
     const translations: Record<string, string> = {
+      // Error translations
       'errors.loadingTitle': 'Error al cargar los datos',
       'errors.unknown': 'Error desconocido',
       'errors.retrySuggestions': 'Puedes intentar:',
       'errors.retryReload': 'Recargar la página',
       'errors.retryCountry': 'Seleccionar otro país de la lista',
       'errors.retryLater': 'Intentar de nuevo más tarde',
+      'errors.retry': 'Reintentar',
       'errors.noDataForCountry': `No disponemos de datos demográficos oficiales para ${params?.country || 'este país'}. Por favor selecciona otro país de la lista.`,
-      'errors.noDataGeneric':
-        'No disponemos de datos demográficos oficiales para este país. Por favor selecciona otro país de la lista.',
       'errors.ageExceedsYou':
         'Las tablas de vida solo incluyen datos hasta 100 años. Si tienes más de 100 años, lamentablemente no podemos calcular la estadística con precisión.',
       'errors.ageExceedsThem':
@@ -68,6 +68,7 @@ jest.mock('next-intl', () => ({
         'Error de conexión. Verifica tu conexión a internet e intenta de nuevo.',
       'errors.calculationError': 'Error al calcular. Por favor verifica los datos ingresados.',
       'errors.calculating': 'Calculando...',
+      // Relation labels
       'relationLabels.mother': 'tu madre',
       'relationLabels.father': 'tu padre',
       'relationLabels.grandmother_maternal': 'tu abuela materna',
@@ -78,14 +79,50 @@ jest.mock('next-intl', () => ({
       'relationLabels.friend': 'esta persona',
       'relationLabels.other_family': 'esta persona',
       'relationLabels.other': 'esta persona',
-      // Direct mode translations
-      'directMode.headlineFew': `A este ritmo, solo te quedan unas pocas veces más para ver a ${params?.relation || 'esta persona'}.`,
-      'directMode.headlineSome': `A este ritmo, te quedan entre ${params?.min || 0} y ${params?.max || 0} veces más para ver a ${params?.relation || 'esta persona'}.`,
-      'directMode.headlineMany': `A este ritmo, aún tienes muchas oportunidades de ver a ${params?.relation || 'esta persona'}.`,
-      'directMode.headlineLots': `A este ritmo, tienes muchas oportunidades por delante con ${params?.relation || 'esta persona'}.`,
-      'directMode.bodyFew': `Según la estadística, podrías ver a ${params?.relation || 'esta persona'} entre ${params?.min || 0} y ${params?.max || 0} veces más.`,
-      'directMode.bodyMany': `Según la estadística, podrías ver a ${params?.relation || 'esta persona'} entre ${params?.min || 0} y ${params?.max || 0} veces más.`,
-      'directMode.closing': 'Cada encuentro cuenta.',
+      // Visualization
+      'visualization.title': 'Tus encuentros restantes',
+      'visualization.yAxisLabel': 'Encuentros',
+      'visualization.overlayLine1': 'Te quedan aproximadamente',
+      'visualization.overlayCount': `${params?.count || 0} encuentros`,
+      'visualization.overlayLine2': 'con esta persona.',
+      // Stats
+      'stats.rangeTitle': 'Rango estimado',
+      'stats.rangeSubtitle': 'encuentros estimados restantes (percentil 25-75)',
+      'stats.survivalTitle': 'Probabilidad a 5 años',
+      'stats.survivalSubtitle': 'de que ambos estén vivos en 5 años',
+      // Normal mode
+      'normalMode.para1': `Según los datos demográficos de ${params?.country || 'este país'}, es probable que ambos coincidan vivos entre ${params?.yearsMin || 0} y ${params?.yearsMax || 0} años más.`,
+      'normalMode.para2': `Si sigues viendo a ${params?.relation || 'esta persona'} ${params?.frequency || 0} veces al año, podrías compartir entre ${params?.min || 0} y ${params?.max || 0} encuentros más.`,
+      'normalMode.para3_main': 'Esto no es una predicción. Es una invitación a reflexionar.',
+      'normalMode.para3_emphasis': 'Cada encuentro importa.',
+      // Actions
+      'actions.title': '¿Qué puedes hacer?',
+      'actions.plan.title': 'Planifica una visita',
+      'actions.plan.description': 'No esperes al momento perfecto.',
+      'actions.share.title': 'Comparte un recuerdo',
+      'actions.share.description': 'Envía un mensaje a esa persona.',
+      'actions.write.title': 'Escribe una carta',
+      'actions.write.description': 'Pon en palabras lo que sientes.',
+      // Chart
+      'chart.intro': 'Probabilidad de supervivencia año a año.',
+      'chart.description': `Basado en ${params?.source || 'datos demográficos'}.`,
+      'chart.noData': 'No hay datos disponibles.',
+      'chart.bothAlive': 'Ambos vivos',
+      'chart.youAlive': 'Tú vivo/a',
+      'chart.themAlive': 'Ellos vivo/a',
+      'chart.futureYears': 'Años en el futuro',
+      'chart.now': 'Ahora',
+      // Assumptions
+      'assumptions.title': 'Supuestos y limitaciones',
+      'assumptions.whatLabel': '¿Qué es esto?',
+      'assumptions.what': 'Una reflexión estadística, no una predicción.',
+      'assumptions.whatNot': 'Esto NO es:',
+      'assumptions.point1': 'No predice cuándo morirá nadie.',
+      'assumptions.point2': 'No debe usarse para decisiones médicas.',
+      'assumptions.point3': 'No considera condiciones individuales de salud.',
+      'assumptions.point4': 'No tiene en cuenta eventos imprevistos.',
+      'assumptions.dataFreshness': 'Datos actualizados con las últimas tablas de vida disponibles.',
+      seeMethodology: 'Ver cómo funciona',
     };
     return translations[key] || key;
   },
@@ -109,13 +146,18 @@ const mockLifeTable = {
 
 const mockCalculationResult = {
   expectedVisits: 150,
-  expectedVisitsRange: { p25: 120, p75: 180 },
+  expectedVisitsRange: { p25: 120, p50: 150, p75: 180 },
   yearsWithBothAlive: { expected: 15, min: 10, max: 20 },
   yearByYearSurvival: [
-    { year: 1, probability: 0.99, cumulativeVisits: 12 },
-    { year: 2, probability: 0.98, cumulativeVisits: 24 },
+    { year: 0, youAlive: 1.0, themAlive: 1.0, bothAlive: 1.0 },
+    { year: 1, youAlive: 0.99, themAlive: 0.98, bothAlive: 0.97 },
+    { year: 2, youAlive: 0.98, themAlive: 0.96, bothAlive: 0.94 },
+    { year: 5, youAlive: 0.95, themAlive: 0.9, bothAlive: 0.86 },
+    { year: 10, youAlive: 0.9, themAlive: 0.8, bothAlive: 0.72 },
   ],
   assumptions: {
+    youLifeExpectancy: 53.5,
+    themLifeExpectancy: 30.2,
     dataSource: 'UN WPP-2024',
     dataYear: 2024,
   },
@@ -326,12 +368,12 @@ describe('Results component', () => {
       });
     });
 
-    it('should display UN data source link', async () => {
+    it('should display data source information', async () => {
       render(<Results input={defaultInput} />);
 
       await waitFor(() => {
-        const sourceLink = screen.getByText(/Ver fuente oficial/);
-        expect(sourceLink).toBeInTheDocument();
+        const elements = screen.getAllByText(/UN WPP-2024/);
+        expect(elements.length).toBeGreaterThan(0);
       });
     });
 

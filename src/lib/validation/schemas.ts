@@ -86,29 +86,10 @@ export const timesPerPeriodSchema = z
   );
 
 /**
- * Schema for the other person's input validation
- * Also limited to 100 due to life table data constraints
+ * Schema for the other person's input validation.
+ * Same constraints as personInputSchema (life table data caps at 100).
  */
-const theirPersonInputSchema = z.object({
-  age: z
-    .number({
-      required_error: 'Age is required',
-      invalid_type_error: 'Age must be a number',
-    })
-    .int('Age must be a whole number')
-    .min(0, 'Age must be at least 0')
-    .max(100, 'Age cannot exceed 100 (life table data limitation)'),
-  sex: z.enum(['male', 'female'], {
-    required_error: 'Sex is required',
-    invalid_type_error: 'Sex must be either male or female',
-  }),
-  country: z
-    .string({
-      required_error: 'Country is required',
-    })
-    .length(3, 'Country code must be 3 characters (ISO 3166-1 alpha-3)')
-    .regex(/^[A-Z]{3}$/, 'Country code must be uppercase letters'),
-});
+const theirPersonInputSchema = personInputSchema;
 
 /**
  * Schema for relationship input validation

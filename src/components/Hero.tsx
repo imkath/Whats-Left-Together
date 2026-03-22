@@ -65,7 +65,7 @@ export default function Hero() {
         <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
           <a
             href="#calculator"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
+            className="inline-flex items-center gap-3 px-6 py-3.5 md:px-8 md:py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group whitespace-nowrap"
           >
             {t('cta')}
           </a>

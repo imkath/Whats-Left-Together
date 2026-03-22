@@ -1,18 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { useTheme } from 'next-themes';
+import { ResponsiveLine } from '@nivo/line';
+import type { SliceTooltipProps, CommonCustomLayerProps, LineSvgLayer } from '@nivo/line';
 import type { SurvivalProbability } from '@/types';
+
+type ChartSeries = {
+  id: string;
+  data: readonly { x: number; y: number }[];
+};
 
 interface VisualizationChartProps {
   data: SurvivalProbability[];
@@ -22,20 +19,7 @@ interface VisualizationChartProps {
 
 export default function VisualizationChart({ data, forceDark = false }: VisualizationChartProps) {
   const t = useTranslations('results.chart');
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    };
-    checkDarkMode();
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-    return () => observer.disconnect();
-  }, []);
+  const { resolvedTheme } = useTheme();
 
   if (!data || data.length === 0) {
     return (
@@ -46,16 +30,9 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
   }
 
   const step = Math.max(1, Math.floor(data.length / 25));
-  const displayData = data
-    .filter((_, i) => i % step === 0)
-    .map((d) => ({
-      ...d,
-      bothAlivePercent: Math.round((d.bothAlive || 0) * 100),
-      youAlivePercent: Math.round((d.youAlive || 0) * 100),
-      themAlivePercent: Math.round((d.themAlive || 0) * 100),
-    }));
+  const sampled = data.filter((_, i) => i % step === 0);
 
-  if (displayData.length < 2) {
+  if (sampled.length < 2) {
     return (
       <div className="w-full h-64 rounded-lg p-4 flex items-center justify-center text-neutral-500">
         {t('noData')}
@@ -63,118 +40,174 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
     );
   }
 
-  const dark = forceDark || isDarkMode;
+  const dark = forceDark || resolvedTheme === 'dark';
 
-  const colors = {
-    bothAlive: '#c8922e', // accent-500 - main highlight
-    youAlive: '#3b82f6', // blue-500
-    themAlive: '#10b981', // emerald-500
-    grid: dark ? 'rgba(255,255,255,0.08)' : '#e5e7eb',
-    tick: dark ? '#737373' : '#6b7280',
-    tooltipBg: dark ? '#1a1a1a' : 'white',
-    tooltipBorder: dark ? '#333' : '#e5e7eb',
-    tooltipText: dark ? '#d4d4d4' : '#525252',
-    legendText: dark ? '#a3a3a3' : '#6b7280',
+  const seriesLabels: Record<string, string> = {
+    bothAlive: t('bothAlive'),
+    youAlive: t('youAlive'),
+    themAlive: t('themAlive'),
   };
+
+  const seriesColors = ['#c8922e', '#3b82f6', '#10b981'];
+
+  // Nivo expects series format: [{ id, data: [{ x, y }] }]
+  const nivoData = [
+    {
+      id: 'bothAlive',
+      data: sampled.map((d) => ({ x: d.year, y: Math.round(d.bothAlive * 100) })),
+    },
+    {
+      id: 'youAlive',
+      data: sampled.map((d) => ({ x: d.year, y: Math.round(d.youAlive * 100) })),
+    },
+    {
+      id: 'themAlive',
+      data: sampled.map((d) => ({ x: d.year, y: Math.round(d.themAlive * 100) })),
+    },
+  ];
+
+  // Show ~6 ticks on X axis to avoid crowding
+  const tickStep = Math.max(1, Math.floor(sampled.length / 6));
+  const xTickValues = sampled
+    .filter((_, i) => i === 0 || i % tickStep === 0 || i === sampled.length - 1)
+    .map((d) => d.year);
+
+  const nivoTheme = {
+    background: 'transparent' as const,
+    axis: {
+      domain: { line: { stroke: 'transparent' } },
+      ticks: {
+        line: { stroke: 'transparent' },
+        text: { fontSize: 11, fill: dark ? '#737373' : '#6b7280' },
+      },
+    },
+    grid: {
+      line: {
+        stroke: dark ? 'rgba(255,255,255,0.08)' : '#e5e7eb',
+        strokeDasharray: '3 3',
+      },
+    },
+    crosshair: {
+      line: { stroke: dark ? '#525252' : '#d1d5db', strokeWidth: 1 },
+    },
+    legends: {
+      text: { fontSize: 12, fill: dark ? '#a3a3a3' : '#6b7280' },
+    },
+  };
+
+  // Custom lines layer: solid for bothAlive, dashed for individual
+  const DashedLines = ({ series, lineGenerator }: CommonCustomLayerProps<ChartSeries>) => (
+    <>
+      {series.map(({ id, data: points, color }) => (
+        <path
+          key={id}
+          d={lineGenerator(points.map((d) => d.position)) || ''}
+          fill="none"
+          stroke={color}
+          strokeWidth={id === 'bothAlive' ? 3 : 2}
+          strokeDasharray={id === 'bothAlive' ? undefined : '6 3'}
+        />
+      ))}
+    </>
+  );
 
   return (
     <div className="w-full">
       <div
-        className={`h-72 rounded-xl p-4 ${forceDark ? '' : 'bg-neutral-50 dark:bg-neutral-800'}`}
+        className={`h-72 rounded-lg p-4 ${forceDark ? '' : 'bg-neutral-50 dark:bg-neutral-800'}`}
       >
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={displayData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={colors.grid} vertical={false} />
-            <XAxis
-              dataKey="year"
-              tick={{ fontSize: 11, fill: colors.tick }}
-              tickFormatter={(value) => (value === 0 ? t('now') : `+${value}`)}
-              axisLine={{ stroke: colors.grid }}
-              tickLine={false}
-            />
-            <YAxis
-              domain={[0, 100]}
-              tick={{ fontSize: 11, fill: colors.tick }}
-              tickFormatter={(value) => `${value}%`}
-              axisLine={false}
-              tickLine={false}
-              width={40}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: colors.tooltipBg,
-                border: `1px solid ${colors.tooltipBorder}`,
+        <ResponsiveLine
+          data={nivoData}
+          theme={nivoTheme}
+          colors={seriesColors}
+          margin={{ top: 10, right: 16, bottom: 50, left: 45 }}
+          xScale={{ type: 'point' }}
+          yScale={{ type: 'linear', min: 0, max: 100 }}
+          curve="monotoneX"
+          axisBottom={{
+            tickSize: 0,
+            tickPadding: 8,
+            tickValues: xTickValues,
+            format: (value) => (Number(value) === 0 ? t('now') : `+${value}`),
+          }}
+          axisLeft={{
+            tickSize: 0,
+            tickPadding: 8,
+            tickValues: [0, 25, 50, 75, 100],
+            format: (value) => `${value}%`,
+          }}
+          enableGridX={false}
+          enableGridY={true}
+          enablePoints={false}
+          enableSlices="x"
+          sliceTooltip={({ slice }: SliceTooltipProps<ChartSeries>) => (
+            <div
+              style={{
+                background: dark ? '#1a1a1a' : 'white',
+                border: `1px solid ${dark ? '#333' : '#e5e7eb'}`,
                 borderRadius: '12px',
+                padding: '10px 14px',
                 fontSize: '12px',
-                color: colors.tooltipText,
+                color: dark ? '#d4d4d4' : '#525252',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               }}
-              formatter={(value: number, name: string) => {
-                const labels: Record<string, string> = {
-                  bothAlivePercent: t('bothAlive'),
-                  youAlivePercent: t('youAlive'),
-                  themAlivePercent: t('themAlive'),
-                };
-                return [`${value}%`, labels[name] || name];
-              }}
-              labelFormatter={(label) => `${t('futureYears')}: +${label}`}
-            />
-            <Legend
-              formatter={(value: string) => {
-                const labels: Record<string, string> = {
-                  bothAlivePercent: t('bothAlive'),
-                  youAlivePercent: t('youAlive'),
-                  themAlivePercent: t('themAlive'),
-                };
-                return labels[value] || value;
-              }}
-              wrapperStyle={{ color: colors.legendText, fontSize: '12px' }}
-              iconType="circle"
-              iconSize={8}
-            />
-            <Line
-              type="monotone"
-              dataKey="bothAlivePercent"
-              stroke={colors.bothAlive}
-              strokeWidth={3}
-              dot={false}
-              activeDot={{
-                r: 5,
-                strokeWidth: 2,
-                stroke: colors.bothAlive,
-                fill: dark ? '#0a0a0a' : '#fff',
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="youAlivePercent"
-              stroke={colors.youAlive}
-              strokeWidth={2}
-              strokeDasharray="6 3"
-              dot={false}
-              activeDot={{
-                r: 4,
-                strokeWidth: 2,
-                stroke: colors.youAlive,
-                fill: dark ? '#0a0a0a' : '#fff',
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="themAlivePercent"
-              stroke={colors.themAlive}
-              strokeWidth={2}
-              strokeDasharray="6 3"
-              dot={false}
-              activeDot={{
-                r: 4,
-                strokeWidth: 2,
-                stroke: colors.themAlive,
-                fill: dark ? '#0a0a0a' : '#fff',
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+            >
+              <div style={{ marginBottom: '6px', fontWeight: 500 }}>
+                {t('futureYears')}: +{slice.points[0].data.x}
+              </div>
+              {slice.points.map((point) => (
+                <div
+                  key={point.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '2px 0',
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      background: point.seriesColor,
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span>{seriesLabels[point.seriesId as string] || point.seriesId}</span>
+                  <span style={{ fontWeight: 600, marginLeft: 'auto' }}>{point.data.y}%</span>
+                </div>
+              ))}
+            </div>
+          )}
+          layers={[
+            'grid',
+            'axes',
+            'crosshair',
+            DashedLines as unknown as LineSvgLayer<ChartSeries>,
+            'slices',
+            'mesh',
+            'legends',
+          ]}
+          legends={[
+            {
+              anchor: 'bottom',
+              direction: 'row',
+              translateY: 46,
+              itemWidth: 110,
+              itemHeight: 20,
+              symbolSize: 8,
+              symbolShape: 'circle',
+              data: [
+                { id: 'bothAlive', label: seriesLabels.bothAlive, color: seriesColors[0] },
+                { id: 'youAlive', label: seriesLabels.youAlive, color: seriesColors[1] },
+                { id: 'themAlive', label: seriesLabels.themAlive, color: seriesColors[2] },
+              ],
+            },
+          ]}
+          animate={true}
+          motionConfig="gentle"
+        />
       </div>
     </div>
   );
