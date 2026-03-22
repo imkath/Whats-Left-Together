@@ -2,7 +2,7 @@
 
 import { useState, useRef, useId } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { InfoCircle, ArrowRight, UserCircle, UsersGroupRounded, Refresh } from '@solar-icons/react';
+import { InfoCircle, ArrowRight, Refresh, User, Heart, Calendar } from '@solar-icons/react';
 import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/types';
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
@@ -11,9 +11,6 @@ import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/freque
 import { relationshipInputSchema } from '@/lib/validation/schemas';
 import type { ZodError } from 'zod';
 
-/**
- * Accessible tooltip component with keyboard support
- */
 function AccessibleTooltip({ content, id }: { content: string; id: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -38,7 +35,7 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
       <span
         id={id}
         role="tooltip"
-        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-lg w-64 text-center z-10 whitespace-normal transition-opacity ${
+        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-md w-64 text-center z-10 whitespace-normal transition-opacity ${
           isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -148,320 +145,344 @@ export default function Calculator() {
       {/* Section header */}
       <div className="text-center mb-8">
         <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
-        <h2 className="text-3xl md:text-4xl font-extrabold">{t('title')}</h2>
+        <h2 className="text-2xl md:text-4xl font-extrabold">{t('title')}</h2>
         <p className="text-neutral-500 dark:text-neutral-400 mt-3 max-w-xl mx-auto">
           {t('subtitle')}
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-4">
-        {/* Step 1: Your Information */}
-        <div className="step-card">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <UserCircle
-                size={20}
-                weight="BoldDuotone"
-                className="text-accent-600 dark:text-accent-400"
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                {t('yourInfo')}
-              </h3>
-              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 1, total: 3 })}</p>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            <div>
-              <label
-                htmlFor="your-age"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('age')}
-              </label>
-              <input
-                id="your-age"
-                type="number"
-                min="0"
-                max="100"
-                value={formData.you.age === 0 ? '' : formData.you.age}
-                onChange={(e) => {
-                  const value = e.target.value === '' ? 0 : parseInt(e.target.value);
-                  updateFormData('you', 'age', value);
-                }}
-                className="input-field"
-                required
-              />
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+        <div className="bg-white dark:bg-neutral-800/50 rounded-2xl border border-neutral-200/80 dark:border-neutral-700/50 overflow-hidden">
+          {/* Section 1: About you */}
+          <div className="p-6 md:p-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+                  <User
+                    size={18}
+                    weight="BoldDuotone"
+                    className="text-accent-600 dark:text-accent-400"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                  {t('yourInfo')}
+                </h3>
+              </div>
+              <span className="text-xs text-neutral-400 tabular-nums">
+                {t('stepLabel', { step: 1, total: 3 })}
+              </span>
             </div>
 
-            <div>
-              <label
-                htmlFor="your-sex"
-                className="flex items-center gap-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('sex')}
-                <AccessibleTooltip content={t('sexTooltip')} id={yourSexTooltipId} />
-              </label>
-              <select
-                id="your-sex"
-                value={formData.you.sex}
-                onChange={(e) => updateFormData('you', 'sex', e.target.value)}
-                className="input-field"
-                required
-              >
-                <option value="female">{t('female')}</option>
-                <option value="male">{t('male')}</option>
-              </select>
-            </div>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div>
+                <label
+                  htmlFor="your-age"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('age')}
+                </label>
+                <input
+                  id="your-age"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.you.age === 0 ? '' : formData.you.age}
+                  onChange={(e) => {
+                    const value = e.target.value === '' ? 0 : parseInt(e.target.value);
+                    updateFormData('you', 'age', value);
+                  }}
+                  className="input-field"
+                  required
+                />
+              </div>
 
-            <div>
-              <label
-                htmlFor="your-country"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('country')}
-              </label>
-              <select
-                id="your-country"
-                value={formData.you.country}
-                onChange={(e) => updateFormData('you', 'country', e.target.value)}
-                className="input-field"
-                required
-              >
-                {countries.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    {locale === 'es' ? country.nameEs : country.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+              <div>
+                <label
+                  htmlFor="your-sex"
+                  className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('sex')}
+                  <AccessibleTooltip content={t('sexTooltip')} id={yourSexTooltipId} />
+                </label>
+                <select
+                  id="your-sex"
+                  value={formData.you.sex}
+                  onChange={(e) => updateFormData('you', 'sex', e.target.value)}
+                  className="input-field"
+                  required
+                >
+                  <option value="female">{t('female')}</option>
+                  <option value="male">{t('male')}</option>
+                </select>
+              </div>
 
-        {/* Step 2: Their Information */}
-        <div className="step-card">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <UsersGroupRounded
-                size={20}
-                weight="BoldDuotone"
-                className="text-accent-600 dark:text-accent-400"
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                {t('theirInfo')}
-              </h3>
-              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 2, total: 3 })}</p>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label
-                htmlFor="relationship"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('relationship')}
-              </label>
-              <select
-                id="relationship"
-                value={formData.relationType}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, relationType: e.target.value as RelationType }))
-                }
-                className="input-field"
-                required
-              >
-                <option value="mother">{t('relations.mother')}</option>
-                <option value="father">{t('relations.father')}</option>
-                <option value="grandmother_maternal">{t('relations.grandmother_maternal')}</option>
-                <option value="grandmother_paternal">{t('relations.grandmother_paternal')}</option>
-                <option value="grandfather_maternal">{t('relations.grandfather_maternal')}</option>
-                <option value="grandfather_paternal">{t('relations.grandfather_paternal')}</option>
-                <option value="partner">{t('relations.partner')}</option>
-                <option value="friend">{t('relations.friend')}</option>
-                <option value="other_family">{t('relations.other_family')}</option>
-                <option value="other">{t('relations.other')}</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                htmlFor="their-age"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('age')}
-              </label>
-              <input
-                id="their-age"
-                type="number"
-                min="0"
-                max="100"
-                value={formData.them.age === 0 ? '' : formData.them.age}
-                onChange={(e) => {
-                  const value = e.target.value === '' ? 0 : parseInt(e.target.value);
-                  updateFormData('them', 'age', value);
-                }}
-                className="input-field"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="their-sex"
-                className="flex items-center gap-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('sex')}
-                <AccessibleTooltip content={t('sexTooltip')} id={theirSexTooltipId} />
-              </label>
-              <select
-                id="their-sex"
-                value={formData.them.sex}
-                onChange={(e) => updateFormData('them', 'sex', e.target.value)}
-                className="input-field"
-                required
-              >
-                <option value="female">{t('female')}</option>
-                <option value="male">{t('male')}</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                htmlFor="their-country"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('country')}
-              </label>
-              <select
-                id="their-country"
-                value={formData.them.country}
-                onChange={(e) => updateFormData('them', 'country', e.target.value)}
-                className="input-field"
-                required
-              >
-                {countries.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    {locale === 'es' ? country.nameEs : country.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 3: Frequency */}
-        <div className="step-card">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-accent-500/10 dark:bg-accent-500/20">
-              <Refresh
-                size={20}
-                weight="BoldDuotone"
-                className="text-accent-600 dark:text-accent-400"
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                {t('frequency')}
-              </h3>
-              <p className="text-xs text-neutral-400">{t('stepLabel', { step: 3, total: 3 })}</p>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            {/* Period selector */}
-            <div>
-              <label className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-3">
-                {t('frequencyPeriodLabel')}
-              </label>
-              <div
-                className="grid grid-cols-2 md:grid-cols-4 gap-2"
-                role="group"
-                aria-label={t('frequencyPeriodLabel')}
-              >
-                {[
-                  { label: t('frequencyPeriods.weekly'), value: 'weekly' as FrequencyPeriod },
-                  { label: t('frequencyPeriods.monthly'), value: 'monthly' as FrequencyPeriod },
-                  { label: t('frequencyPeriods.quarterly'), value: 'quarterly' as FrequencyPeriod },
-                  { label: t('frequencyPeriods.yearly'), value: 'yearly' as FrequencyPeriod },
-                ].map((period) => (
-                  <button
-                    key={period.value}
-                    type="button"
-                    onClick={() => updateFrequencyPeriod(period.value)}
-                    aria-pressed={formData.frequencyPeriod === period.value}
-                    className={`px-4 py-2.5 rounded-xl border-2 transition-colors duration-200 text-sm font-medium ${
-                      formData.frequencyPeriod === period.value
-                        ? 'bg-accent-500 text-white border-accent-500 shadow-md shadow-accent-500/20'
-                        : 'bg-white border-neutral-200 text-neutral-600 hover:border-accent-300 hover:text-accent-600 dark:bg-neutral-800 dark:text-neutral-400 dark:border-neutral-600 dark:hover:border-accent-500/50 dark:hover:text-accent-400'
-                    }`}
-                  >
-                    {period.label}
-                  </button>
-                ))}
+              <div className="col-span-2">
+                <label
+                  htmlFor="your-country"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('country')}
+                </label>
+                <select
+                  id="your-country"
+                  value={formData.you.country}
+                  onChange={(e) => updateFormData('you', 'country', e.target.value)}
+                  className="input-field"
+                  required
+                >
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {locale === 'es' ? country.nameEs : country.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
+          </div>
 
-            {/* Times per period */}
-            <div>
-              <label
-                htmlFor="times-per-period"
-                className="block text-sm font-medium text-neutral-600 dark:text-neutral-400 mb-2"
-              >
-                {t('timesPerPeriodLabel')}
-              </label>
-              <input
-                id="times-per-period"
-                type="number"
-                min="1"
-                max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
-                value={
-                  formData.timesPerPeriod === 0 || !formData.timesPerPeriod
-                    ? ''
-                    : formData.timesPerPeriod
-                }
-                onChange={(e) => {
-                  const value = e.target.value === '' ? null : parseInt(e.target.value);
-                  updateTimesPerPeriod(value);
-                }}
-                className={`input-field max-w-xs ${validationErrors['timesPerPeriod'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
-                placeholder="1"
-              />
-              {validationErrors['timesPerPeriod'] && (
-                <p className="text-xs text-red-600 mt-1">{validationErrors['timesPerPeriod']}</p>
-              )}
-              <p className="text-xs text-neutral-400 mt-1.5">
-                {t('timesPerPeriodNote', {
-                  max: getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly'),
-                  period: t(
-                    `frequencyPeriods.${formData.frequencyPeriod || 'monthly'}`
-                  ).toLowerCase(),
-                })}
-              </p>
+          {/* Divider */}
+          <div className="border-t border-neutral-100 dark:border-neutral-700/50" />
+
+          {/* Section 2: About them */}
+          <div className="p-6 md:p-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+                  <Heart
+                    size={18}
+                    weight="BoldDuotone"
+                    className="text-accent-600 dark:text-accent-400"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                  {t('theirInfo')}
+                </h3>
+              </div>
+              <span className="text-xs text-neutral-400 tabular-nums">
+                {t('stepLabel', { step: 2, total: 3 })}
+              </span>
             </div>
 
-            {/* Visual summary */}
-            <div className="p-5 bg-gradient-to-r from-accent-50 to-accent-100/50 dark:from-accent-900/20 dark:to-accent-800/10 rounded-xl border border-accent-200/50 dark:border-accent-800/30">
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-1">
-                <span className="font-medium">{t('frequencySummary')}:</span>
-              </p>
-              <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                {formData.timesPerPeriod || 1}{' '}
-                {(formData.timesPerPeriod || 1) === 1
-                  ? t(`frequencyTimeSingular.${formData.frequencyPeriod || 'monthly'}`)
-                  : t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)}{' '}
-                ={' '}
-                <span className="text-accent-600 dark:text-accent-400 text-2xl">
-                  {formData.visitsPerYear}
-                </span>{' '}
-                {t('visitsPerYear')}
-              </p>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div>
+                <label
+                  htmlFor="relationship"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('relationship')}
+                </label>
+                <select
+                  id="relationship"
+                  value={formData.relationType}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      relationType: e.target.value as RelationType,
+                    }))
+                  }
+                  className="input-field"
+                  required
+                >
+                  <option value="mother">{t('relations.mother')}</option>
+                  <option value="father">{t('relations.father')}</option>
+                  <option value="grandmother_maternal">
+                    {t('relations.grandmother_maternal')}
+                  </option>
+                  <option value="grandmother_paternal">
+                    {t('relations.grandmother_paternal')}
+                  </option>
+                  <option value="grandfather_maternal">
+                    {t('relations.grandfather_maternal')}
+                  </option>
+                  <option value="grandfather_paternal">
+                    {t('relations.grandfather_paternal')}
+                  </option>
+                  <option value="partner">{t('relations.partner')}</option>
+                  <option value="friend">{t('relations.friend')}</option>
+                  <option value="other_family">{t('relations.other_family')}</option>
+                  <option value="other">{t('relations.other')}</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="their-age"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('theirAge')}
+                </label>
+                <input
+                  id="their-age"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.them.age === 0 ? '' : formData.them.age}
+                  onChange={(e) => {
+                    const value = e.target.value === '' ? 0 : parseInt(e.target.value);
+                    updateFormData('them', 'age', value);
+                  }}
+                  className="input-field"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="their-sex"
+                  className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('theirSex')}
+                  <AccessibleTooltip content={t('sexTooltip')} id={theirSexTooltipId} />
+                </label>
+                <select
+                  id="their-sex"
+                  value={formData.them.sex}
+                  onChange={(e) => updateFormData('them', 'sex', e.target.value)}
+                  className="input-field"
+                  required
+                >
+                  <option value="female">{t('female')}</option>
+                  <option value="male">{t('male')}</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="their-country"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('theirCountry')}
+                </label>
+                <select
+                  id="their-country"
+                  value={formData.them.country}
+                  onChange={(e) => updateFormData('them', 'country', e.target.value)}
+                  className="input-field"
+                  required
+                >
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {locale === 'es' ? country.nameEs : country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-neutral-100 dark:border-neutral-700/50" />
+
+          {/* Section 3: Frequency */}
+          <div className="p-6 md:p-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+                  <Calendar
+                    size={18}
+                    weight="BoldDuotone"
+                    className="text-accent-600 dark:text-accent-400"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                  {t('frequency')}
+                </h3>
+              </div>
+              <span className="text-xs text-neutral-400 tabular-nums">
+                {t('stepLabel', { step: 3, total: 3 })}
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              {/* Period selector */}
+              <div>
+                <label className="block text-xs text-neutral-500 dark:text-neutral-400 mb-2">
+                  {t('frequencyPeriodLabel')}
+                </label>
+                <div
+                  className="grid grid-cols-4 gap-1.5 bg-neutral-100 dark:bg-neutral-700/50 p-1 rounded-lg"
+                  role="group"
+                  aria-label={t('frequencyPeriodLabel')}
+                >
+                  {[
+                    { label: t('frequencyPeriods.weekly'), value: 'weekly' as FrequencyPeriod },
+                    { label: t('frequencyPeriods.monthly'), value: 'monthly' as FrequencyPeriod },
+                    {
+                      label: t('frequencyPeriods.quarterly'),
+                      value: 'quarterly' as FrequencyPeriod,
+                    },
+                    { label: t('frequencyPeriods.yearly'), value: 'yearly' as FrequencyPeriod },
+                  ].map((period) => (
+                    <button
+                      key={period.value}
+                      type="button"
+                      onClick={() => updateFrequencyPeriod(period.value)}
+                      aria-pressed={formData.frequencyPeriod === period.value}
+                      className={`px-2 py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-150 ${
+                        formData.frequencyPeriod === period.value
+                          ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-white shadow-sm'
+                          : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
+                      }`}
+                    >
+                      {period.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Times per period */}
+              <div>
+                <label
+                  htmlFor="times-per-period"
+                  className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                >
+                  {t('timesPerPeriodLabel')}
+                </label>
+                <input
+                  id="times-per-period"
+                  type="number"
+                  min="1"
+                  max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
+                  value={
+                    formData.timesPerPeriod === 0 || !formData.timesPerPeriod
+                      ? ''
+                      : formData.timesPerPeriod
+                  }
+                  onChange={(e) => {
+                    const value = e.target.value === '' ? null : parseInt(e.target.value);
+                    updateTimesPerPeriod(value);
+                  }}
+                  className={`input-field max-w-[140px] ${validationErrors['timesPerPeriod'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                  placeholder="1"
+                />
+                {validationErrors['timesPerPeriod'] && (
+                  <p className="text-xs text-red-600 mt-1">{validationErrors['timesPerPeriod']}</p>
+                )}
+                <p className="text-xs text-neutral-400 mt-1">
+                  {t('timesPerPeriodNote', {
+                    max: getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly'),
+                    period: t(
+                      `frequencyPeriods.${formData.frequencyPeriod || 'monthly'}`
+                    ).toLowerCase(),
+                  })}
+                </p>
+              </div>
+
+              {/* Visual summary */}
+              <div className="flex items-center gap-3 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
+                <Refresh size={20} weight="BoldDuotone" className="text-accent-500 flex-shrink-0" />
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">
+                  {formData.timesPerPeriod || 1}{' '}
+                  {(formData.timesPerPeriod || 1) === 1
+                    ? t(`frequencyTimeSingular.${formData.frequencyPeriod || 'monthly'}`)
+                    : t(`frequencyTimes.${formData.frequencyPeriod || 'monthly'}`)}{' '}
+                  ={' '}
+                  <span className="font-bold text-accent-600 dark:text-accent-400">
+                    {formData.visitsPerYear}
+                  </span>{' '}
+                  {t('visitsPerYear')}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -469,7 +490,7 @@ export default function Calculator() {
         {/* Validation Errors Summary */}
         {Object.keys(validationErrors).length > 0 && (
           <div
-            className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-xl"
+            className="mt-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-lg"
             aria-live="polite"
             role="status"
           >
@@ -487,10 +508,10 @@ export default function Calculator() {
         )}
 
         {/* Submit button */}
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-6">
           <button
             type="submit"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-300 shadow-lg shadow-accent-500/20 hover:shadow-xl hover:shadow-accent-500/30 active:scale-[0.98] text-lg group"
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 md:px-8 md:py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group"
           >
             {t('calculate')}
             <ArrowRight

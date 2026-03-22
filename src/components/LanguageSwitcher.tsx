@@ -2,7 +2,6 @@
 
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import { Globus } from '@solar-icons/react';
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
@@ -12,26 +11,21 @@ export default function LanguageSwitcher() {
   const switchLocale = (newLocale: string) => {
     if (newLocale === locale) return;
 
-    // Extract path without locale prefix
     const segments = pathname.split('/').filter(Boolean);
     const pathWithoutLocale = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
 
-    // Navigate to new locale
     router.push(`/${newLocale}${pathWithoutLocale}`);
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-700 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-500 overflow-hidden flex items-center gap-1 p-1">
-      <div className="px-2 text-neutral-500 dark:text-neutral-300">
-        <Globus size={16} aria-hidden="true" />
-      </div>
+    <div className="flex items-center gap-0.5 rounded-lg bg-neutral-200/60 dark:bg-neutral-700/60 p-0.5">
       <button
         onClick={() => switchLocale('es')}
         aria-label="Cambiar a español"
-        className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${
           locale === 'es'
-            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
-            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'
+            ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-white shadow-sm'
+            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
         }`}
       >
         ES
@@ -39,10 +33,10 @@ export default function LanguageSwitcher() {
       <button
         onClick={() => switchLocale('en')}
         aria-label="Switch to English"
-        className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${
           locale === 'en'
-            ? 'bg-neutral-900 text-white shadow-sm dark:bg-neutral-200 dark:text-neutral-900'
-            : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-600'
+            ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-white shadow-sm'
+            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
         }`}
       >
         EN

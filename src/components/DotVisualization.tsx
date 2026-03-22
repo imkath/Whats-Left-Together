@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 
 interface DotVisualizationProps {
   totalDots: number;
@@ -14,21 +15,9 @@ interface DotVisualizationProps {
 export default function DotVisualization({ totalDots, label }: DotVisualizationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === 'dark';
   const animationRef = useRef<number>(0);
-
-  useEffect(() => {
-    const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
-    };
-    checkDarkMode();
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -49,12 +38,23 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
     const width = rect.width;
     const height = rect.height;
 
+    // Responsive margins based on canvas width
+    const isMobile = width < 400;
+    const leftMargin = isMobile ? 28 : 40;
+    const rightMargin = isMobile ? 12 : 20;
+    const topMargin = isMobile ? 12 : 16;
+    const bottomMargin = isMobile ? 36 : 40;
+    const fontSize = isMobile ? 9 : 11;
+    const plotLeft = leftMargin + 5;
+    const plotRight = width - rightMargin;
+    const plotTop = topMargin;
+    const plotBottom = height - bottomMargin;
+
     // Generate dot positions with a natural scatter pattern
     const dots: { x: number; y: number; size: number; opacity: number; delay: number }[] = [];
-    const clampedDots = Math.min(totalDots, 500); // Cap for performance
+    const clampedDots = Math.min(totalDots, 500);
     const seed = totalDots * 7 + 13;
 
-    // Simple seeded random
     let rng = seed;
     const random = () => {
       rng = (rng * 16807 + 0) % 2147483647;
@@ -63,24 +63,25 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
 
     for (let i = 0; i < clampedDots; i++) {
       const progress = i / clampedDots;
-      // Create a gentle curve distribution - more dots early, fewer later
-      const x = 40 + (width - 80) * progress + (random() - 0.5) * 60;
-      // Y follows a decay curve with scatter
-      const baseY = height * 0.2 + height * 0.5 * (1 - Math.pow(1 - progress, 0.7));
-      const y = baseY + (random() - 0.5) * height * 0.35;
+      const x =
+        plotLeft + (plotRight - plotLeft) * progress + (random() - 0.5) * (isMobile ? 30 : 60);
+      const baseY =
+        plotTop +
+        (plotBottom - plotTop) * 0.15 +
+        (plotBottom - plotTop) * 0.55 * (1 - Math.pow(1 - progress, 0.7));
+      const y = baseY + (random() - 0.5) * (plotBottom - plotTop) * 0.35;
 
       dots.push({
-        x: Math.max(20, Math.min(width - 20, x)),
-        y: Math.max(20, Math.min(height - 40, y)),
-        size: 2 + random() * 3,
+        x: Math.max(plotLeft, Math.min(plotRight, x)),
+        y: Math.max(plotTop, Math.min(plotBottom, y)),
+        size: (isMobile ? 1.5 : 2) + random() * (isMobile ? 2.5 : 3),
         opacity: 0.4 + random() * 0.6,
         delay: i * 2,
       });
     }
 
-    // Animation
     let startTime: number | null = null;
-    const animDuration = 2000; // ms
+    const animDuration = 2000;
 
     const draw = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -89,52 +90,49 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
 
       ctx.clearRect(0, 0, width, height);
 
-      // Draw axis lines (subtle)
+      // Draw axis lines
       ctx.strokeStyle = isDarkMode ? 'rgba(163, 163, 163, 0.15)' : 'rgba(163, 163, 163, 0.2)';
       ctx.lineWidth = 1;
 
       // Y axis
       ctx.beginPath();
-      ctx.moveTo(35, 10);
-      ctx.lineTo(35, height - 30);
+      ctx.moveTo(leftMargin, plotTop);
+      ctx.lineTo(leftMargin, plotBottom);
       ctx.stroke();
 
       // X axis
       ctx.beginPath();
-      ctx.moveTo(35, height - 30);
-      ctx.lineTo(width - 20, height - 30);
+      ctx.moveTo(leftMargin, plotBottom);
+      ctx.lineTo(plotRight, plotBottom);
       ctx.stroke();
 
-      // Y axis label
+      // Y axis label (rotated)
       ctx.save();
-      ctx.translate(12, height / 2);
+      ctx.translate(isMobile ? 8 : 12, height / 2);
       ctx.rotate(-Math.PI / 2);
       ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
-      ctx.font = '11px Sora, system-ui, sans-serif';
+      ctx.font = `${fontSize}px Sora, system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.fillText(label, 0, 0);
       ctx.restore();
 
-      // Draw dots with staggered animation
+      // Draw dots
       for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
         const dotProgress = Math.max(0, Math.min(1, (progress * animDuration - dot.delay) / 300));
-
         if (dotProgress <= 0) continue;
 
-        const eased = 1 - Math.pow(1 - dotProgress, 3); // ease out cubic
+        const eased = 1 - Math.pow(1 - dotProgress, 3);
         const currentOpacity = dot.opacity * eased;
         const currentSize = dot.size * eased;
 
-        // Warm amber/gold color with varying opacity
-        const hue = 35 + (dots[i].x / width) * 10; // slight hue shift across
-        const lightness = isDarkMode ? 60 : 45; // darker on light backgrounds
+        const hue = 35 + (dot.x / width) * 10;
+        const lightness = isDarkMode ? 60 : 45;
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, currentSize, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${currentOpacity})`;
         ctx.fill();
 
-        // Glow effect for larger dots
         if (currentSize > 3) {
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, currentSize + 2, 0, Math.PI * 2);
@@ -143,30 +141,42 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
         }
       }
 
-      // X axis year labels
+      // X axis year labels — use round intervals (5 or 10 years) for clean appearance
       const currentYear = new Date().getFullYear();
       const yearsToShow = Math.min(Math.ceil(clampedDots / 12), 30);
-      const labelStep = Math.max(1, Math.floor(yearsToShow / 6));
       ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
-      ctx.font = '11px Sora, system-ui, sans-serif';
+      ctx.font = `${fontSize}px Sora, system-ui, sans-serif`;
       ctx.textAlign = 'center';
+      const labelY = height - (isMobile ? 6 : 10);
 
-      for (let yr = 0; yr <= yearsToShow; yr += labelStep) {
-        const xPos = 40 + ((width - 80) * yr) / yearsToShow;
-        ctx.fillText(`${currentYear + yr}`, xPos, height - 12);
-      }
-      if (yearsToShow > 6) {
-        const xPos = 40 + (width - 80);
-        ctx.fillText(`${currentYear + yearsToShow}+`, xPos, height - 12);
+      // Pick a clean step: 5 or 10 years depending on range and screen
+      const niceStep = yearsToShow <= 10 ? (isMobile ? 3 : 2) : isMobile ? 5 : 5;
+      const endYear = currentYear + yearsToShow;
+
+      // Always show first year
+      ctx.fillText(`${currentYear}`, plotLeft, labelY);
+
+      // Show intermediate years at round intervals
+      for (let year = currentYear + niceStep; year < endYear; year += niceStep) {
+        const yr = year - currentYear;
+        const xPos = plotLeft + ((plotRight - plotLeft) * yr) / yearsToShow;
+        // Skip if too close to the end label
+        const endXPos = plotRight;
+        if (endXPos - xPos < (isMobile ? 28 : 36)) continue;
+        ctx.fillText(`${year}`, xPos, labelY);
       }
 
-      // Y axis tick labels (encounter scale)
+      // Always show last year
+      ctx.fillText(`${endYear}`, plotRight, labelY);
+
+      // Y axis tick labels
       const maxEncounters = Math.ceil(totalDots / yearsToShow);
-      for (let i = 0; i <= 4; i++) {
-        const val = Math.round((maxEncounters * (4 - i)) / 4);
-        const yPos = 20 + ((height - 50) * i) / 4;
+      const yTicks = isMobile ? 3 : 4;
+      for (let i = 0; i <= yTicks; i++) {
+        const val = Math.round((maxEncounters * (yTicks - i)) / yTicks);
+        const yPos = plotTop + ((plotBottom - plotTop) * i) / yTicks;
         ctx.textAlign = 'right';
-        ctx.fillText(`${val}`, 30, yPos + 4);
+        ctx.fillText(`${val}`, leftMargin - 4, yPos + 3);
       }
 
       if (progress < 1) {
@@ -174,10 +184,8 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       }
     };
 
-    // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      // Draw all at once without animation
       startTime = -animDuration;
       draw(0);
     } else {
@@ -191,10 +199,8 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
     };
   }, [totalDots, isDarkMode, label]);
 
-  // Handle resize
   useEffect(() => {
     const handleResize = () => {
-      // Force re-render by updating a dependency
       const canvas = canvasRef.current;
       const container = containerRef.current;
       if (canvas && container) {

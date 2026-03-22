@@ -2,10 +2,8 @@ import type { Metadata } from 'next';
 import { Sora, DM_Serif_Display } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
 import Nav from '@/components/Nav';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import './globals.css';
 
 const sora = Sora({
@@ -438,10 +436,6 @@ export default async function LocaleLayout({
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Nav />
-            <div className="fixed top-0 right-4 z-50 flex items-center gap-2 h-12">
-              <ThemeToggle />
-              <LanguageSwitcher />
-            </div>
             <div id="main-content">{children}</div>
           </NextIntlClientProvider>
         </ThemeProvider>

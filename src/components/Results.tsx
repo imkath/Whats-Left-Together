@@ -186,22 +186,19 @@ export default function Results({ input }: ResultsProps) {
         </h3>
       </div>
 
-      {/* Dot Visualization with overlay message */}
-      <div className="relative rounded-2xl overflow-hidden shadow-xl">
-        <DotVisualization totalDots={median} label={t('visualization.yAxisLabel')} />
-
-        {/* Overlay message */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-center px-6 max-w-2xl">
-            <p className="text-xl md:text-2xl lg:text-3xl font-bold text-neutral-800 dark:text-white leading-snug drop-shadow-sm dark:drop-shadow-lg">
-              {t('visualization.overlayLine1')}{' '}
-              <span className="text-accent-400">
-                {t('visualization.overlayCount', { count: median })}
-              </span>{' '}
-              {t('visualization.overlayLine2')}
-            </p>
-          </div>
+      {/* Dot Visualization with caption below */}
+      <div className="space-y-4">
+        <div className="rounded-lg overflow-hidden shadow-md">
+          <DotVisualization totalDots={median} label={t('visualization.yAxisLabel')} />
         </div>
+
+        <p className="text-center text-lg md:text-xl lg:text-2xl font-bold text-neutral-900 dark:text-white leading-snug px-4">
+          {t('visualization.overlayLine1')}{' '}
+          <span className="text-accent-500 dark:text-accent-400">
+            {t('visualization.overlayCount', { count: median })}
+          </span>{' '}
+          {t('visualization.overlayLine2')}
+        </p>
       </div>
 
       {/* Stat card - Estimated range */}
@@ -253,7 +250,7 @@ export default function Results({ input }: ResultsProps) {
 
       <div className="grid md:grid-cols-3 gap-4">
         <div className="action-card group">
-          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
             <Calendar
               size={20}
               weight="BoldDuotone"
@@ -275,7 +272,7 @@ export default function Results({ input }: ResultsProps) {
         </div>
 
         <div className="action-card group">
-          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
             <Share
               size={20}
               weight="BoldDuotone"
@@ -297,7 +294,7 @@ export default function Results({ input }: ResultsProps) {
         </div>
 
         <div className="action-card group">
-          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent-100 dark:bg-accent-900/30 flex items-center justify-center">
             <Pen size={20} weight="BoldDuotone" className="text-accent-600 dark:text-accent-400" />
           </div>
           <div className="flex-1 min-w-0">
@@ -351,7 +348,7 @@ export default function Results({ input }: ResultsProps) {
       </div>
 
       {/* Assumptions / disclaimers - minimal and clean */}
-      <div className="rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 p-6">
+      <div className="rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700/50 p-6">
         <h4 className="text-sm font-semibold mb-3 text-neutral-700 dark:text-neutral-300">
           {t('assumptions.title')}
         </h4>
