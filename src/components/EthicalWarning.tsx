@@ -85,12 +85,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
             </p>
 
             <div className="bg-red-50/80 dark:bg-red-950/50 border-l-4 border-red-400 dark:border-red-500 p-3 rounded">
-              <p className="font-semibold mb-2 text-sm text-red-900 dark:text-red-100 flex items-center gap-2">
-                <CloseCircle
-                  size={18}
-                  className="text-red-600 dark:text-red-400"
-                  aria-hidden="true"
-                />
+              <p className="font-bold mb-2 text-sm text-red-900 dark:text-red-100">
                 {t('whatIsNot')}
               </p>
               <ul className="space-y-1 text-xs text-red-800 dark:text-red-200">
@@ -122,12 +117,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
             </div>
 
             <div className="bg-green-50/80 dark:bg-green-950/50 border-l-4 border-green-600 dark:border-green-500 p-3 rounded">
-              <p className="font-semibold mb-2 text-sm text-green-900 dark:text-green-100 flex items-center gap-2">
-                <Checklist
-                  size={18}
-                  className="text-green-600 dark:text-green-400"
-                  aria-hidden="true"
-                />
+              <p className="font-bold mb-2 text-sm text-green-900 dark:text-green-100">
                 {t('whatIs')}
               </p>
               <ul className="space-y-1 text-xs text-green-800 dark:text-green-200">
