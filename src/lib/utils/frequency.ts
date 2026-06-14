@@ -6,13 +6,18 @@ import type { FrequencyPeriod } from '@/types';
 
 /**
  * Get maximum number of times per period
+ *
+ * Each cap is bounded so that `max × annualMultiplier` never exceeds 365 visits
+ * per year (the annual ceiling enforced by relationshipInputSchema). Monthly is
+ * therefore 30 (30 × 12 = 360), not 31, since 31 × 12 = 372 would overflow that
+ * ceiling and be rejected on submit.
  */
 export function getMaxTimesForPeriod(period: FrequencyPeriod): number {
   switch (period) {
     case 'weekly':
       return 7;
     case 'monthly':
-      return 31;
+      return 30;
     case 'quarterly':
       return 90;
     case 'yearly':
