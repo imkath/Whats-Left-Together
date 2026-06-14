@@ -8,7 +8,7 @@ import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
 import { getAvailableCountries } from '@/lib/data';
 import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/frequency';
-import { relationshipInputSchema } from '@/lib/validation/schemas';
+import { buildRelationshipInputSchema } from '@/lib/validation/schemas';
 import type { ZodError } from 'zod';
 
 function AccessibleTooltip({ content, id }: { content: string; id: string }) {
@@ -47,10 +47,12 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
 
 export default function Calculator() {
   const t = useTranslations('calculator');
+  const tValidation = useTranslations('validation');
   const locale = useLocale();
   const countries = getAvailableCountries();
   const resultsRef = useRef<HTMLDivElement>(null);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
   const yourSexTooltipId = useId();
   const theirSexTooltipId = useId();
 
@@ -78,15 +80,24 @@ export default function Calculator() {
     e.preventDefault();
     setValidationErrors({});
 
-    const result = relationshipInputSchema.safeParse(formData);
+    // Built per submit so messages reflect the active locale (cheap to construct).
+    const schema = buildRelationshipInputSchema(tValidation);
+    const result = schema.safeParse(formData);
 
     if (!result.success) {
       const errors: Record<string, string> = {};
       (result.error as ZodError).errors.forEach((error) => {
         const path = error.path.join('.');
-        errors[path] = error.message;
+        // Keep the first message per field so the summary stays concise.
+        if (!errors[path]) errors[path] = error.message;
       });
       setValidationErrors(errors);
+
+      // Move focus to the error summary so keyboard and screen-reader users land on it.
+      setTimeout(() => {
+        errorSummaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        errorSummaryRef.current?.focus();
+      }, 0);
       return;
     }
 
@@ -191,9 +202,16 @@ export default function Calculator() {
                     const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                     updateFormData('you', 'age', value);
                   }}
-                  className="input-field"
+                  className={`input-field ${validationErrors['you.age'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                   required
+                  aria-invalid={!!validationErrors['you.age']}
+                  aria-describedby={validationErrors['you.age'] ? 'your-age-error' : undefined}
                 />
+                {validationErrors['you.age'] && (
+                  <p id="your-age-error" className="text-xs text-red-600 mt-1">
+                    {validationErrors['you.age']}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -321,9 +339,16 @@ export default function Calculator() {
                     const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                     updateFormData('them', 'age', value);
                   }}
-                  className="input-field"
+                  className={`input-field ${validationErrors['them.age'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                   required
+                  aria-invalid={!!validationErrors['them.age']}
+                  aria-describedby={validationErrors['them.age'] ? 'their-age-error' : undefined}
                 />
+                {validationErrors['them.age'] && (
+                  <p id="their-age-error" className="text-xs text-red-600 mt-1">
+                    {validationErrors['them.age']}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -454,9 +479,15 @@ export default function Calculator() {
                   }}
                   className={`input-field max-w-[140px] ${validationErrors['timesPerPeriod'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                   placeholder="1"
+                  aria-invalid={!!validationErrors['timesPerPeriod']}
+                  aria-describedby={
+                    validationErrors['timesPerPeriod'] ? 'times-per-period-error' : undefined
+                  }
                 />
                 {validationErrors['timesPerPeriod'] && (
-                  <p className="text-xs text-red-600 mt-1">{validationErrors['timesPerPeriod']}</p>
+                  <p id="times-per-period-error" className="text-xs text-red-600 mt-1">
+                    {validationErrors['timesPerPeriod']}
+                  </p>
                 )}
                 <p className="text-xs text-neutral-400 mt-1">
                   {t('timesPerPeriodNote', {
@@ -490,14 +521,13 @@ export default function Calculator() {
         {/* Validation Errors Summary */}
         {Object.keys(validationErrors).length > 0 && (
           <div
-            className="mt-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-lg"
-            aria-live="polite"
-            role="status"
+            ref={errorSummaryRef}
+            tabIndex={-1}
+            className="mt-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+            role="alert"
           >
             <h4 className="text-sm font-semibold text-red-800 dark:text-red-300 mb-2">
-              {locale === 'es'
-                ? 'Por favor corrige los siguientes errores:'
-                : 'Please fix the following errors:'}
+              {tValidation('summaryTitle')}
             </h4>
             <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
               {Object.entries(validationErrors).map(([key, message]) => (

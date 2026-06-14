@@ -562,5 +562,23 @@
       "bug": "Describe el problema que encontraste. ¿Cuándo ocurre? ¿Qué estabas haciendo?",
       "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario\u2026"
     }
+  },
+  "validation": {
+    "summaryTitle": "Por favor corrige lo siguiente:",
+    "ageRequired": "Indica la edad",
+    "ageInvalid": "La edad debe ser un n\u00famero",
+    "ageInteger": "La edad debe ser un n\u00famero entero",
+    "ageMin": "La edad no puede ser negativa",
+    "ageMax": "La edad no puede superar los {max} a\u00f1os",
+    "sexRequired": "Selecciona el sexo biol\u00f3gico",
+    "sexInvalid": "Selecciona una opci\u00f3n v\u00e1lida",
+    "countryRequired": "Selecciona un pa\u00eds",
+    "countryInvalid": "Selecciona un pa\u00eds v\u00e1lido",
+    "relationRequired": "Selecciona el tipo de relaci\u00f3n",
+    "relationInvalid": "Selecciona una opci\u00f3n v\u00e1lida",
+    "visitsMin": "La frecuencia no puede ser negativa",
+    "visitsMax": "No puede superar las {max} visitas al a\u00f1o",
+    "timesMin": "Indica cu\u00e1ntas veces se ven (al menos 1)",
+    "olderThanYou": "Para madre, padre o abuelos, la otra persona debe ser mayor que t\u00fa"
   }
 }
