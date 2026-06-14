@@ -580,5 +580,23 @@
       "bug": "Describe the problem you encountered. When does it happen? What were you doing?",
       "other": "Share your thoughts, questions, or any other feedback\u2026"
     }
+  },
+  "validation": {
+    "summaryTitle": "Please fix the following:",
+    "ageRequired": "Enter the age",
+    "ageInvalid": "Age must be a number",
+    "ageInteger": "Age must be a whole number",
+    "ageMin": "Age can't be negative",
+    "ageMax": "Age can't exceed {max}",
+    "sexRequired": "Select the biological sex",
+    "sexInvalid": "Select a valid option",
+    "countryRequired": "Select a country",
+    "countryInvalid": "Select a valid country",
+    "relationRequired": "Select the relationship type",
+    "relationInvalid": "Select a valid option",
+    "visitsMin": "Frequency can't be negative",
+    "visitsMax": "Can't exceed {max} visits per year",
+    "timesMin": "Enter how many times you meet (at least 1)",
+    "olderThanYou": "For a mother, father, or grandparent, the other person must be older than you"
   }
 }

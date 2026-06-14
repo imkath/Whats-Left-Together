@@ -1,148 +1,95 @@
 /**
- * Zod validation schemas for form inputs
+ * Zod validation schemas for form inputs.
+ *
+ * Messages are localized: the schema is built through `buildRelationshipInputSchema(t)`,
+ * which receives a translator bound to the `validation` i18n namespace. Building the
+ * schema is cheap, so it is constructed per submit, keeping error messages in sync with
+ * the active locale instead of shipping hardcoded English strings to the user.
  */
 
 import { z } from 'zod';
 
+/** Translator bound to the `validation` namespace (e.g. `useTranslations('validation')`). */
+export type ValidationTranslator = (
+  key: string,
+  params?: Record<string, string | number>
+) => string;
+
+const RELATION_TYPES = [
+  'mother',
+  'father',
+  'grandmother_maternal',
+  'grandmother_paternal',
+  'grandfather_maternal',
+  'grandfather_paternal',
+  'partner',
+  'friend',
+  'other_family',
+  'other',
+] as const;
+
+/** Relations where the other person is expected to be older than the user. */
+const PARENT_RELATIONS: readonly string[] = [
+  'mother',
+  'father',
+  'grandmother_maternal',
+  'grandmother_paternal',
+  'grandfather_maternal',
+  'grandfather_paternal',
+];
+
+const FREQUENCY_PERIODS = ['weekly', 'monthly', 'quarterly', 'yearly'] as const;
+
 /**
- * Schema for person input validation
+ * Build the relationship-input validation schema with localized messages.
+ *
+ * @param t - Translator bound to the `validation` namespace.
  */
-export const personInputSchema = z.object({
-  age: z
-    .number({
-      required_error: 'Age is required',
-      invalid_type_error: 'Age must be a number',
+export function buildRelationshipInputSchema(t: ValidationTranslator) {
+  // Shared by "you" and "them"; life-table data caps age at 100.
+  const personSchema = z.object({
+    age: z
+      .number({
+        required_error: t('ageRequired'),
+        invalid_type_error: t('ageInvalid'),
+      })
+      .int(t('ageInteger'))
+      .min(0, t('ageMin'))
+      .max(100, t('ageMax', { max: 100 })),
+    sex: z.enum(['male', 'female'], {
+      required_error: t('sexRequired'),
+      invalid_type_error: t('sexInvalid'),
+    }),
+    country: z
+      .string({ required_error: t('countryRequired') })
+      .length(3, t('countryInvalid'))
+      .regex(/^[A-Z]{3}$/, t('countryInvalid')),
+  });
+
+  return z
+    .object({
+      you: personSchema,
+      them: personSchema,
+      relationType: z.enum(RELATION_TYPES, {
+        required_error: t('relationRequired'),
+        invalid_type_error: t('relationInvalid'),
+      }),
+      visitsPerYear: z
+        .number()
+        .int()
+        .min(0, t('visitsMin'))
+        .max(365, t('visitsMax', { max: 365 })),
+      frequencyPeriod: z.enum(FREQUENCY_PERIODS).optional(),
+      timesPerPeriod: z.number().int().min(1, t('timesMin')).optional(),
     })
-    .int('Age must be a whole number')
-    .min(0, 'Age must be at least 0')
-    .max(100, 'Age cannot exceed 100 (life table data limitation)'),
-  sex: z.enum(['male', 'female'], {
-    required_error: 'Sex is required',
-    invalid_type_error: 'Sex must be either male or female',
-  }),
-  country: z
-    .string({
-      required_error: 'Country is required',
-    })
-    .length(3, 'Country code must be 3 characters (ISO 3166-1 alpha-3)')
-    .regex(/^[A-Z]{3}$/, 'Country code must be uppercase letters'),
-});
-
-/**
- * Schema for frequency period validation
- */
-export const frequencyPeriodSchema = z.enum(['weekly', 'monthly', 'quarterly', 'yearly'], {
-  required_error: 'Frequency period is required',
-  invalid_type_error: 'Invalid frequency period',
-});
-
-/**
- * Schema for relation type validation
- */
-export const relationTypeSchema = z.enum(
-  [
-    'mother',
-    'father',
-    'grandmother_maternal',
-    'grandmother_paternal',
-    'grandfather_maternal',
-    'grandfather_paternal',
-    'partner',
-    'friend',
-    'other_family',
-    'other',
-  ],
-  {
-    required_error: 'Relationship type is required',
-    invalid_type_error: 'Invalid relationship type',
-  }
-);
-
-/**
- * Schema for times per period validation
- * Validates against maximum allowed for each period
- */
-export const timesPerPeriodSchema = z
-  .object({
-    period: frequencyPeriodSchema,
-    times: z.number().int().min(1, 'Must have at least 1 visit per period'),
-  })
-  .refine(
-    (data) => {
-      // Bounded so that times × annualMultiplier never exceeds 365 visits/year.
-      const maxTimes: Record<string, number> = {
-        weekly: 7,
-        monthly: 30,
-        quarterly: 90,
-        yearly: 365,
-      };
-      return data.times <= maxTimes[data.period];
-    },
-    (data) => ({
-      message: `For ${data.period} period, maximum is ${
-        { weekly: 7, monthly: 30, quarterly: 90, yearly: 365 }[data.period]
-      } times`,
-      path: ['times'],
-    })
-  );
-
-/**
- * Schema for the other person's input validation.
- * Same constraints as personInputSchema (life table data caps at 100).
- */
-const theirPersonInputSchema = personInputSchema;
-
-/**
- * Schema for relationship input validation
- */
-export const relationshipInputSchema = z
-  .object({
-    you: personInputSchema,
-    them: theirPersonInputSchema,
-    relationType: relationTypeSchema,
-    visitsPerYear: z
-      .number()
-      .int()
-      .min(0, 'Visits per year cannot be negative')
-      .max(365, 'Cannot exceed 365 visits per year'),
-    frequencyPeriod: frequencyPeriodSchema.optional(),
-    timesPerPeriod: z.number().int().min(1).optional(),
-  })
-  .refine(
-    (data) => {
-      // Ensure "you" are not older than 100 or younger than 0
-      return data.you.age >= 0 && data.you.age <= 100;
-    },
-    {
-      message: 'Your age must be between 0 and 100',
-      path: ['you', 'age'],
-    }
-  )
-  .refine(
-    (data) => {
-      // Logical check: for parent relations, "them" should be older
-      const parentRelations = [
-        'mother',
-        'father',
-        'grandmother_maternal',
-        'grandmother_paternal',
-        'grandfather_maternal',
-        'grandfather_paternal',
-      ];
-
-      if (parentRelations.includes(data.relationType)) {
-        return data.them.age > data.you.age;
+    .refine(
+      (data) =>
+        PARENT_RELATIONS.includes(data.relationType) ? data.them.age > data.you.age : true,
+      {
+        message: t('olderThanYou'),
+        path: ['them', 'age'],
       }
-      return true;
-    },
-    {
-      message: 'For parent/grandparent relations, they should be older than you',
-      path: ['them', 'age'],
-    }
-  );
+    );
+}
 
-/**
- * Type exports for TypeScript integration
- */
-export type PersonInputValidation = z.infer<typeof personInputSchema>;
-export type RelationshipInputValidation = z.infer<typeof relationshipInputSchema>;
+export type RelationshipInputValidation = z.infer<ReturnType<typeof buildRelationshipInputSchema>>;
