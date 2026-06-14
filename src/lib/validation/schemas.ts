@@ -69,9 +69,10 @@ export const timesPerPeriodSchema = z
   })
   .refine(
     (data) => {
+      // Bounded so that times × annualMultiplier never exceeds 365 visits/year.
       const maxTimes: Record<string, number> = {
         weekly: 7,
-        monthly: 31,
+        monthly: 30,
         quarterly: 90,
         yearly: 365,
       };
@@ -79,7 +80,7 @@ export const timesPerPeriodSchema = z
     },
     (data) => ({
       message: `For ${data.period} period, maximum is ${
-        { weekly: 7, monthly: 31, quarterly: 90, yearly: 365 }[data.period]
+        { weekly: 7, monthly: 30, quarterly: 90, yearly: 365 }[data.period]
       } times`,
       path: ['times'],
     })
