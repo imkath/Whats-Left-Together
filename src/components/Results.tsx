@@ -393,7 +393,7 @@ export default function Results({ input }: ResultsProps) {
               {result.assumptions.dataSource} ({result.assumptions.dataYear})
             </p>
             <a
-              href="/methodology"
+              href={`/${locale}/methodology`}
               className="text-sm font-medium text-accent-600 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-300 transition-colors"
             >
               {t('seeMethodology')}

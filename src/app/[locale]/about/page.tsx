@@ -241,7 +241,7 @@ export default function AboutPage() {
         {/* CTA final */}
         <ScrollReveal>
           <div className="text-center py-8">
-            <a href="/" className="btn-primary inline-flex items-center gap-2">
+            <a href={`/${locale}`} className="btn-primary inline-flex items-center gap-2">
               <ArrowLeft size={18} />
               {t('backToCalculator')}
             </a>
