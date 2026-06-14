@@ -221,32 +221,3 @@ export function calculateExpectedEncounters(
     },
   };
 }
-
-/**
- * Calculate what percentage of total lifetime together has already passed
- * Based on typical time-use data (from Our World in Data)
- */
-export function calculateTimeAlreadySpent(yourAge: number, relationType: string): number {
-  // Simplified model: most time with parents/grandparents happens before age 20
-  // This is based on American Time Use Survey data
-
-  // Parent/grandparent relations typically peak around age 18
-  const parentRelations = [
-    'mother',
-    'father',
-    'grandmother_maternal',
-    'grandmother_paternal',
-    'grandfather_maternal',
-    'grandfather_paternal',
-  ];
-
-  const typicalPeakAge = parentRelations.includes(relationType) ? 18 : 15;
-
-  if (yourAge <= typicalPeakAge) {
-    return yourAge / typicalPeakAge;
-  }
-
-  // After peak age, asymptotic approach to ~95% spent
-  const yearsAfterPeak = yourAge - typicalPeakAge;
-  return 0.7 + 0.25 * (1 - Math.exp(-yearsAfterPeak / 10));
-}

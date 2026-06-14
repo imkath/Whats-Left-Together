@@ -10,10 +10,9 @@ This project uses official demographic life tables to estimate how many more in-
 
 ## Features
 
-- **Real UN Data**: Life tables from UN World Population Prospects 2024 (81 countries)
+- **Real UN Data**: Life tables from UN World Population Prospects 2024 (197 countries and areas)
 - **Age-specific calculations**: Uses residual life expectancy (ex) by age, sex, and country
 - **Uncertainty ranges**: Shows probabilistic ranges (p25-p75), not single predictions
-- **Two modes**: Normal (thoughtful) and Direct (blunt) language options
 - **Multiple relationships**: Parents, grandparents, partners, friends, and others
 - **Bilingual**: Spanish and English
 
@@ -34,7 +33,7 @@ npm run dev
 ### Primary Source
 
 - **UN World Population Prospects 2024** - Official life tables by age, sex, and country
-- Coverage: 81 countries (expandable to 237)
+- Coverage: 197 countries and areas
 - Year: 2023 (most recent estimates)
 - URL: https://population.un.org/wpp/
 
@@ -74,7 +73,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **i18n**: next-intl
@@ -84,7 +83,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 
 ```
 .
-├── public/data/life-tables/     # 162 JSON files (81 countries × 2 sexes)
+├── public/data/life-tables/     # 394 JSON files (197 countries × 2 sexes)
 ├── src/
 │   ├── app/[locale]/           # Next.js pages (ES/EN)
 │   ├── components/             # React components
@@ -159,4 +158,4 @@ https://whatslefttogether.com
 
 **Last updated**: 2025-01-21
 **Data version**: UN WPP-2024 (year 2023)
-**Countries**: 81 (expandable to 237)
+**Countries**: 197 countries and areas
