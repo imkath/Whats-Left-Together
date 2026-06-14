@@ -435,7 +435,7 @@ export default function MethodologyPage() {
 
         {/* Complete references */}
         <ScrollReveal>
-          <section className="mb-12">
+          <section id="fuentes" className="mb-12 scroll-mt-24">
             <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
               <DocumentText
                 size={28}
