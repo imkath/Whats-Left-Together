@@ -14,7 +14,7 @@ export default function MethodologyPage() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       {/* Header */}
-      <header className="bg-[#fafaf8] dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+      <header className="bg-neutral-50 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">
           <Breadcrumb
             items={[{ label: tNav('methodology'), href: `/${locale}/methodology` }]}
@@ -30,7 +30,7 @@ export default function MethodologyPage() {
           </a>
           <h1 className="text-4xl font-extrabold mt-2">{t('title')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
-          <div className="w-12 h-1 bg-accent-500 mt-4 rounded-full" />
+          <div className="w-12 h-1 bg-presence mt-4 rounded-full" />
         </div>
       </header>
 
@@ -202,13 +202,13 @@ export default function MethodologyPage() {
               {t('section4.title').split('.')[0]}.{' '}
               <ShieldWarning
                 size={28}
-                className="text-red-600 dark:text-red-500 inline-block align-middle"
+                className="text-presence inline-block align-middle"
                 aria-hidden="true"
               />{' '}
               {t('section4.title').split('. ').slice(1).join('. ')}
             </h2>
 
-            <div className="card bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 border-l-4">
+            <div className="card border-l-4 border-l-presence">
               <ul className="space-y-2 text-neutral-800 dark:text-neutral-200 list-disc list-inside">
                 <li>
                   <strong>{t('section4.item1')}</strong>
@@ -296,7 +296,7 @@ export default function MethodologyPage() {
                 dangerouslySetInnerHTML={{ __html: t.raw('timeUse.conclusion') }}
               />
 
-              <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded">
+              <div className="mt-4 p-4 bg-warm-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 rounded-lg">
                 <p
                   className="text-sm text-neutral-700 dark:text-neutral-300"
                   dangerouslySetInnerHTML={{ __html: t.raw('timeUse.whyNotImplemented') }}

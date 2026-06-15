@@ -37,10 +37,10 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps, State> {
       const { translations } = this.props;
 
       return (
-        <div className="card bg-red-50 border-red-200" role="alert">
+        <div className="card border-neutral-200 dark:border-neutral-700" role="alert">
           <div className="flex items-start gap-3">
             <svg
-              className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5"
+              className="w-6 h-6 text-neutral-500 dark:text-neutral-400 flex-shrink-0 mt-0.5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -54,11 +54,15 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps, State> {
               />
             </svg>
             <div>
-              <h4 className="text-red-900 font-semibold mb-2">{translations.title}</h4>
-              <p className="text-red-700 text-sm">{translations.message}</p>
+              <h4 className="text-neutral-900 dark:text-neutral-100 font-semibold mb-2">
+                {translations.title}
+              </h4>
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                {translations.message}
+              </p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-3 text-sm text-red-600 hover:text-red-800 underline focus-visible:ring-2 focus-visible:ring-accent-500 rounded-sm outline-none"
+                className="mt-3 text-sm text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 underline focus-visible:ring-2 focus-visible:ring-presence rounded-sm outline-none"
               >
                 {translations.reload}
               </button>

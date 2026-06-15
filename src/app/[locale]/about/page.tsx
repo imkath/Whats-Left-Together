@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
       {/* Header */}
-      <header className="bg-[#fafaf8] dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
+      <header className="bg-neutral-50 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container-custom py-6">
           <Breadcrumb
             items={[{ label: tNav('about'), href: `/${locale}/about` }]}
@@ -33,7 +33,7 @@ export default function AboutPage() {
           </a>
           <h1 className="text-4xl font-extrabold mt-2">{t('title')}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mt-2">{t('subtitle')}</p>
-          <div className="w-12 h-1 bg-accent-500 mt-4 rounded-full" />
+          <div className="w-12 h-1 bg-presence mt-4 rounded-full" />
         </div>
       </header>
 
@@ -218,8 +218,8 @@ export default function AboutPage() {
           <section className="mb-12">
             <h2 className="text-3xl font-bold mb-4">{t('sections.ethics.title')}</h2>
 
-            <div className="card border-red-300 dark:border-red-800 border-l-4 bg-red-50 dark:bg-red-900/20">
-              <h3 className="text-lg font-semibold mb-3 text-red-900 dark:text-red-300">
+            <div className="card border-l-4 border-l-presence">
+              <h3 className="text-lg font-semibold mb-3 text-neutral-900 dark:text-neutral-100">
                 {t('sections.ethics.warningTitle')}
               </h3>
 

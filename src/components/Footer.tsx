@@ -16,13 +16,13 @@ export default function Footer() {
         <div className="container-custom">
           <div className="grid md:grid-cols-[2fr_1fr_1fr] gap-8">
             <div>
-              <h3 className="text-white text-xl mb-1">{t('title')}</h3>
-              <div className="w-8 h-0.5 bg-accent-500 mt-3 mb-2" />
+              <h3 className="text-neutral-50 text-xl mb-1">{t('title')}</h3>
+              <div className="w-8 h-0.5 bg-presence mt-3 mb-2" />
               <p className="text-sm">{t('tagline')}</p>
             </div>
 
             <div>
-              <h4 className="text-white text-sm font-semibold mb-3">{t('links')}</h4>
+              <h4 className="text-neutral-50 text-sm font-semibold mb-3">{t('links')}</h4>
               <nav aria-label="Footer navigation">
                 <ul className="space-y-2 text-sm">
                   <li>
@@ -55,7 +55,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="text-white text-sm font-semibold mb-3">{t('dataSources')}</h4>
+              <h4 className="text-neutral-50 text-sm font-semibold mb-3">{t('dataSources')}</h4>
               <ul className="space-y-2 text-sm">
                 <li>
                   <a

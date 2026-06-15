@@ -1,4 +1,22 @@
 /** @type {import('tailwindcss').Config} */
+
+// Warm ink ramp: paper (50) -> ink (950). Drives light surfaces and, by
+// inversion, dark text. The brand is monochrome (the logo is ink on paper),
+// so the decorative palettes collapse into this single warm-neutral system.
+const ink = {
+  50: '#F6F2EA', // paper
+  100: '#ECE6DB', // tiza / warm surface
+  200: '#E3DCCF', // line
+  300: '#D2C8B8',
+  400: '#A89E8E',
+  500: '#7D7365',
+  600: '#5E5648',
+  700: '#423B31',
+  800: '#2A241E',
+  900: '#17130F', // pizarra / ink
+  950: '#110E0B',
+};
+
 module.exports = {
   darkMode: 'class',
   content: [
@@ -9,52 +27,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Palette: warm, human, intentional
-        primary: {
-          50: '#f7f6f4',
-          100: '#eeece8',
-          200: '#ddd9d2',
-          300: '#b8b1a6',
-          400: '#8a8177',
-          500: '#635a50',
-          600: '#4d443c',
-          700: '#352e28',
-          800: '#1f1b17',
-          900: '#110e0c',
-        },
-        accent: {
-          50: '#fdf8ef',
-          100: '#faefd9',
-          200: '#f5deb0',
-          300: '#ecc97a',
-          400: '#dba94a',
-          500: '#c8922e',
-          600: '#a87624',
-          700: '#885c1d',
-          800: '#6d4818',
-          900: '#573914',
-        },
+        neutral: ink,
+        // Formerly gold/brown accents. Collapsed into the monochrome ink system:
+        // emphasis comes from weight and ink, never from a decorative hue.
+        accent: ink,
+        primary: ink,
+        // The single color of the system: crepúsculo. Reserved for "what is still
+        // alive" (median encounters, the "both alive" series). Flips light/dark via
+        // the --presence CSS variable defined in globals.css.
+        presence: 'rgb(var(--presence) / <alpha-value>)',
         warm: {
-          50: '#fafaf8',
-          100: '#f5f5f0',
-          200: '#e8e8e0',
-        },
-        neutral: {
-          50: '#fafaf9',
-          100: '#f3f2f0',
-          200: '#e5e3df',
-          300: '#d4d1cc',
-          400: '#a19d97',
-          500: '#726e68',
-          600: '#56524d',
-          700: '#413e3a',
-          800: '#2a2724',
-          900: '#1a1816',
+          50: '#FAF7F1',
+          100: '#F1ECE2',
+          200: '#E3DCCF',
         },
       },
       fontFamily: {
         sans: ['Sora', 'system-ui', 'sans-serif'],
-        serif: ['DM Serif Display', 'Georgia', 'serif'],
       },
     },
   },

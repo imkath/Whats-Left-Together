@@ -48,7 +48,14 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
     themAlive: t('themAlive'),
   };
 
-  const seriesColors = ['#c8922e', '#3b82f6', '#10b981'];
+  // bothAlive (the data that's alive) carries the single accent: crepúsculo.
+  // The individual curves stay monochrome — two warm grays, subordinate.
+  const presence = dark ? '#9C7E86' : '#834E60';
+  const seriesColors = [
+    presence, // bothAlive
+    dark ? '#A89E8E' : '#6B6258', // youAlive (warm gray)
+    dark ? '#7D7365' : '#A89E8E', // themAlive (warm gray, distinct lightness)
+  ];
 
   // Nivo expects series format: [{ id, data: [{ x, y }] }]
   const nivoData = [
@@ -78,20 +85,20 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
       domain: { line: { stroke: 'transparent' } },
       ticks: {
         line: { stroke: 'transparent' },
-        text: { fontSize: 11, fill: dark ? '#737373' : '#6b7280' },
+        text: { fontSize: 11, fill: dark ? '#9A9186' : '#6B6258' },
       },
     },
     grid: {
       line: {
-        stroke: dark ? 'rgba(255,255,255,0.08)' : '#e5e7eb',
+        stroke: dark ? 'rgba(236,230,219,0.08)' : '#E3DCCF',
         strokeDasharray: '3 3',
       },
     },
     crosshair: {
-      line: { stroke: dark ? '#525252' : '#d1d5db', strokeWidth: 1 },
+      line: { stroke: dark ? '#5E5648' : '#D2C8B8', strokeWidth: 1 },
     },
     legends: {
-      text: { fontSize: 12, fill: dark ? '#a3a3a3' : '#6b7280' },
+      text: { fontSize: 12, fill: dark ? '#9A9186' : '#6B6258' },
     },
   };
 
@@ -143,12 +150,12 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
           sliceTooltip={({ slice }: SliceTooltipProps<ChartSeries>) => (
             <div
               style={{
-                background: dark ? '#1a1a1a' : 'white',
-                border: `1px solid ${dark ? '#333' : '#e5e7eb'}`,
+                background: dark ? '#1F1A15' : '#F6F2EA',
+                border: `1px solid ${dark ? '#2C261F' : '#E3DCCF'}`,
                 borderRadius: '12px',
                 padding: '10px 14px',
                 fontSize: '12px',
-                color: dark ? '#d4d4d4' : '#525252',
+                color: dark ? '#ECE6DB' : '#423B31',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               }}
             >
