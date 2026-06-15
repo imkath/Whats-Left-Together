@@ -7,6 +7,7 @@ import type { RelationshipInput, Sex, RelationType, FrequencyPeriod } from '@/ty
 import Results from './Results';
 import ErrorBoundary from './ErrorBoundary';
 import CountryField from './CountryField';
+import AgeField from './AgeField';
 import { getAvailableCountries } from '@/lib/data';
 import { getMaxTimesForPeriod, calculateVisitsPerYear } from '@/lib/utils/frequency';
 import { buildRelationshipInputSchema } from '@/lib/validation/schemas';
@@ -131,7 +132,6 @@ export default function Calculator() {
 
   const [step, setStep] = useState(1);
   const [youDiffCountry, setYouDiffCountry] = useState(false);
-  const [showCustomFreq, setShowCustomFreq] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
@@ -141,6 +141,12 @@ export default function Calculator() {
   useEffect(() => {
     stepHeadingRef.current?.focus();
   }, [step]);
+
+  // Hide a previous result when the inputs change, so the visualization only
+  // ever reflects a calculation the user explicitly asked for.
+  useEffect(() => {
+    setShowResults(false);
+  }, [formData]);
 
   const update = (section: 'you' | 'them', field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [section]: { ...prev[section], [field]: value } }));
@@ -160,7 +166,6 @@ export default function Calculator() {
   };
 
   const applyPreset = (p: { period: FrequencyPeriod; times: number }) => {
-    setShowCustomFreq(false);
     setFormData((prev) => ({
       ...prev,
       frequencyPeriod: p.period,
@@ -169,7 +174,7 @@ export default function Calculator() {
     }));
   };
   const isPresetActive = (p: { period: FrequencyPeriod; times: number }) =>
-    !showCustomFreq && formData.frequencyPeriod === p.period && formData.timesPerPeriod === p.times;
+    formData.frequencyPeriod === p.period && formData.timesPerPeriod === p.times;
 
   const updateFrequencyPeriod = (period: FrequencyPeriod) => {
     const times = formData.timesPerPeriod || 1;
@@ -372,28 +377,24 @@ export default function Calculator() {
             {/* STEP 2 — about them */}
             {step === 2 && (
               <>
-                <div>
-                  <label
-                    htmlFor="their-age"
-                    className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
-                  >
-                    {displayName ? tw('ageOfNamed', { name: displayName }) : tw('ageOfGeneric')}
-                  </label>
-                  <input
-                    id="their-age"
-                    type="number"
-                    inputMode="numeric"
-                    min="0"
-                    max="100"
-                    value={formData.them.age === 0 ? '' : formData.them.age}
-                    onChange={(e) =>
-                      update('them', 'age', e.target.value === '' ? 0 : parseInt(e.target.value))
-                    }
-                    className={`input-field ${errClass('them.age')}`}
-                    aria-invalid={!!validationErrors['them.age']}
-                  />
-                  {fieldError('them.age')}
-                </div>
+                <AgeField
+                  id="their-age"
+                  ageLabel={
+                    displayName ? tw('ageOfNamed', { name: displayName }) : tw('ageOfGeneric')
+                  }
+                  yearLabel={
+                    displayName
+                      ? tw('birthYearNamed', { name: displayName })
+                      : tw('birthYearGeneric')
+                  }
+                  useBirthYearLabel={tw('useBirthYear')}
+                  useAgeLabel={tw('useAge')}
+                  yearPlaceholder={tw('birthYearPlaceholder')}
+                  age={formData.them.age}
+                  onAge={(a) => update('them', 'age', a)}
+                  invalid={!!validationErrors['them.age']}
+                  error={fieldError('them.age')}
+                />
                 <div>
                   <span className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5">
                     {displayName
@@ -427,28 +428,18 @@ export default function Calculator() {
             {/* STEP 3 — about you */}
             {step === 3 && (
               <>
-                <div>
-                  <label
-                    htmlFor="your-age"
-                    className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
-                  >
-                    {tw('yourAgeQ')}
-                  </label>
-                  <input
-                    id="your-age"
-                    type="number"
-                    inputMode="numeric"
-                    min="0"
-                    max="100"
-                    value={formData.you.age === 0 ? '' : formData.you.age}
-                    onChange={(e) =>
-                      update('you', 'age', e.target.value === '' ? 0 : parseInt(e.target.value))
-                    }
-                    className={`input-field ${errClass('you.age')}`}
-                    aria-invalid={!!validationErrors['you.age']}
-                  />
-                  {fieldError('you.age')}
-                </div>
+                <AgeField
+                  id="your-age"
+                  ageLabel={tw('yourAgeQ')}
+                  yearLabel={tw('yourBirthYear')}
+                  useBirthYearLabel={tw('useBirthYear')}
+                  useAgeLabel={tw('useAge')}
+                  yearPlaceholder={tw('birthYearPlaceholder')}
+                  age={formData.you.age}
+                  onAge={(a) => update('you', 'age', a)}
+                  invalid={!!validationErrors['you.age']}
+                  error={fieldError('you.age')}
+                />
                 <div>
                   <span className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 mb-1.5">
                     {tw('yourSexQ')}
@@ -517,71 +508,61 @@ export default function Calculator() {
                   ))}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setShowCustomFreq((v) => !v)}
-                  aria-expanded={showCustomFreq}
-                  className="text-sm font-medium text-neutral-500 dark:text-neutral-400 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-presence rounded-sm"
-                >
-                  {tw('presetCustom')}
-                </button>
-
-                {showCustomFreq && (
-                  <div className="space-y-4 pt-1">
-                    <div
-                      className="grid grid-cols-4 gap-1.5 bg-neutral-100 dark:bg-neutral-700/50 p-1 rounded-lg"
-                      role="group"
-                      aria-label={t('frequencyPeriodLabel')}
-                    >
-                      {(['weekly', 'monthly', 'quarterly', 'yearly'] as FrequencyPeriod[]).map(
-                        (period) => (
-                          <button
-                            key={period}
-                            type="button"
-                            onClick={() => updateFrequencyPeriod(period)}
-                            aria-pressed={formData.frequencyPeriod === period}
-                            className={`px-2 py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-150 ${
-                              formData.frequencyPeriod === period
-                                ? 'bg-warm-50 dark:bg-neutral-600 text-neutral-900 dark:text-neutral-50 shadow-sm'
-                                : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
-                            }`}
-                          >
-                            {t(`frequencyPeriods.${period}`)}
-                          </button>
-                        )
-                      )}
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="times-per-period"
-                        className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
-                      >
-                        {t('timesPerPeriodLabel')}
-                      </label>
-                      <input
-                        id="times-per-period"
-                        type="number"
-                        inputMode="numeric"
-                        min="1"
-                        max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
-                        value={
-                          formData.timesPerPeriod === 0 || !formData.timesPerPeriod
-                            ? ''
-                            : formData.timesPerPeriod
-                        }
-                        onChange={(e) =>
-                          updateTimesPerPeriod(
-                            e.target.value === '' ? null : parseInt(e.target.value)
-                          )
-                        }
-                        className={`input-field max-w-[140px] ${errClass('timesPerPeriod')}`}
-                        placeholder="1"
-                        aria-invalid={!!validationErrors['timesPerPeriod']}
-                      />
-                      {fieldError('timesPerPeriod')}
-                    </div>
+                <div className="space-y-3 pt-1">
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400">{tw('orExact')}</p>
+                  <div
+                    className="grid grid-cols-4 gap-1.5 bg-neutral-100 dark:bg-neutral-700/50 p-1 rounded-lg"
+                    role="group"
+                    aria-label={t('frequencyPeriodLabel')}
+                  >
+                    {(['weekly', 'monthly', 'quarterly', 'yearly'] as FrequencyPeriod[]).map(
+                      (period) => (
+                        <button
+                          key={period}
+                          type="button"
+                          onClick={() => updateFrequencyPeriod(period)}
+                          aria-pressed={formData.frequencyPeriod === period}
+                          className={`px-2 py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-150 ${
+                            formData.frequencyPeriod === period
+                              ? 'bg-warm-50 dark:bg-neutral-600 text-neutral-900 dark:text-neutral-50 shadow-sm'
+                              : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
+                          }`}
+                        >
+                          {t(`frequencyPeriods.${period}`)}
+                        </button>
+                      )
+                    )}
                   </div>
-                )}
+                  <div>
+                    <label
+                      htmlFor="times-per-period"
+                      className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5"
+                    >
+                      {t('timesPerPeriodLabel')}
+                    </label>
+                    <input
+                      id="times-per-period"
+                      type="number"
+                      inputMode="numeric"
+                      min="1"
+                      max={getMaxTimesForPeriod(formData.frequencyPeriod || 'monthly')}
+                      value={
+                        formData.timesPerPeriod === 0 || !formData.timesPerPeriod
+                          ? ''
+                          : formData.timesPerPeriod
+                      }
+                      onChange={(e) =>
+                        updateTimesPerPeriod(
+                          e.target.value === '' ? null : parseInt(e.target.value)
+                        )
+                      }
+                      className={`input-field max-w-[160px] ${errClass('timesPerPeriod')}`}
+                      placeholder="1"
+                      aria-invalid={!!validationErrors['timesPerPeriod']}
+                    />
+                    {fieldError('timesPerPeriod')}
+                  </div>
+                </div>
 
                 <p className="text-xs text-neutral-400 dark:text-neutral-500">
                   {tw('freqExclude')}

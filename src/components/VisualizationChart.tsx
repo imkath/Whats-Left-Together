@@ -157,6 +157,8 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
                 fontSize: '12px',
                 color: dark ? '#ECE6DB' : '#423B31',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                minWidth: 210,
+                maxWidth: 'min(90vw, 280px)',
               }}
             >
               <div style={{ marginBottom: '6px', fontWeight: 500 }}>
@@ -181,8 +183,12 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
                       flexShrink: 0,
                     }}
                   />
-                  <span>{seriesLabels[point.seriesId as string] || point.seriesId}</span>
-                  <span style={{ fontWeight: 600, marginLeft: 'auto' }}>{point.data.y}%</span>
+                  <span style={{ whiteSpace: 'nowrap' }}>
+                    {seriesLabels[point.seriesId as string] || point.seriesId}
+                  </span>
+                  <span style={{ fontWeight: 600, marginLeft: 'auto', whiteSpace: 'nowrap' }}>
+                    {point.data.y}%
+                  </span>
                 </div>
               ))}
             </div>

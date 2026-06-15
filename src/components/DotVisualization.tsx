@@ -9,8 +9,8 @@ interface DotVisualizationProps {
 }
 
 /**
- * Scatter-style dot visualization where each dot represents an encounter opportunity.
- * Creates an emotional, visual representation of remaining visits.
+ * Scatter-style dot visualization where each dot is an encounter, in crepúsculo,
+ * on the page's own paper/pizarra so the dots keep a legible (WCAG AA) contrast.
  */
 export default function DotVisualization({ totalDots, label }: DotVisualizationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -38,7 +38,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
     const width = rect.width;
     const height = rect.height;
 
-    // Each dot is an encounter, rendered in the single accent: crepúsculo.
+    // Crepúsculo, per theme, with enough contrast against paper/pizarra to stay legible.
     const presenceRGB = isDarkMode ? '156, 126, 134' : '131, 78, 96';
 
     // Responsive margins based on canvas width
@@ -77,8 +77,8 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       dots.push({
         x: Math.max(plotLeft, Math.min(plotRight, x)),
         y: Math.max(plotTop, Math.min(plotBottom, y)),
-        size: (isMobile ? 1.5 : 2) + random() * (isMobile ? 2.5 : 3),
-        opacity: 0.4 + random() * 0.6,
+        size: (isMobile ? 1.6 : 2.2) + random() * (isMobile ? 2.4 : 3),
+        opacity: 0.62 + random() * 0.38,
         delay: i * 2,
       });
     }
@@ -129,15 +129,17 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
         const currentOpacity = dot.opacity * eased;
         const currentSize = dot.size * eased;
 
+        // Crisp solid dot.
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, currentSize, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${presenceRGB}, ${currentOpacity})`;
         ctx.fill();
 
+        // A single faint ring on the larger dots adds depth without haze.
         if (currentSize > 3) {
           ctx.beginPath();
-          ctx.arc(dot.x, dot.y, currentSize + 2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${presenceRGB}, ${currentOpacity * 0.15})`;
+          ctx.arc(dot.x, dot.y, currentSize + 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${presenceRGB}, ${currentOpacity * 0.12})`;
           ctx.fill();
         }
       }
@@ -198,7 +200,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [totalDots, isDarkMode, label]);
+  }, [totalDots, label, isDarkMode]);
 
   useEffect(() => {
     const handleResize = () => {
