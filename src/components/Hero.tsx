@@ -13,17 +13,15 @@ export default function Hero() {
         {/* Radial gradient overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] light-hero-gradient" />
 
-        {/* Dot grid pattern */}
+        {/* Subtle dot-grid substrate (a faint nod to the pixel/encounter unit).
+            The logo carries its own dissolution, so no floating particles collide with it. */}
         <div
-          className="absolute inset-0 opacity-[0.15] dark:opacity-[0.15] light-hero-dots"
+          className="absolute inset-0 opacity-[0.12] dark:opacity-[0.12] light-hero-dots"
           style={{
-            backgroundImage: 'radial-gradient(circle, #c8922e 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, #ECE6DB 1px, transparent 1px)',
             backgroundSize: '32px 32px',
           }}
         />
-
-        {/* Floating particles effect using CSS */}
-        <div className="hero-particles" />
       </div>
 
       <div className="relative z-10 container-custom text-center px-4">
@@ -54,7 +52,7 @@ export default function Hero() {
         </p>
 
         {/* Divider */}
-        <div className="w-16 h-px bg-accent-500/50 mx-auto my-8 animate-fade-in" />
+        <div className="w-16 h-px bg-presence/60 mx-auto my-8 animate-fade-in" />
 
         {/* Below text */}
         <p className="text-sm text-neutral-400 dark:text-neutral-500 max-w-lg mx-auto mb-12 leading-relaxed animate-slide-up italic">
@@ -65,7 +63,7 @@ export default function Hero() {
         <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
           <a
             href="#calculator"
-            className="inline-flex items-center gap-3 px-6 py-3.5 md:px-8 md:py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group whitespace-nowrap"
+            className="inline-flex items-center gap-3 px-6 py-3.5 md:px-8 md:py-4 bg-neutral-900 text-neutral-50 hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group whitespace-nowrap"
           >
             {t('cta')}
           </a>

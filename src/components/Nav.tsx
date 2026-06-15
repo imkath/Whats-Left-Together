@@ -187,7 +187,7 @@ export default function Nav() {
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm font-medium transition-colors duration-150 ${
                       active
-                        ? 'text-accent-600 dark:text-accent-400 bg-accent-500/8 dark:bg-accent-500/10'
+                        ? 'text-presence bg-presence/10'
                         : 'text-neutral-600 dark:text-neutral-400 active:bg-neutral-100 dark:active:bg-neutral-800'
                     }`}
                   >
@@ -195,7 +195,7 @@ export default function Nav() {
                       size={16}
                       weight={active ? 'Bold' : 'Linear'}
                       className={
-                        active ? 'text-accent-500' : 'text-neutral-400 dark:text-neutral-500'
+                        active ? 'text-presence' : 'text-neutral-400 dark:text-neutral-500'
                       }
                     />
                     {link.label}

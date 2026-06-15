@@ -97,7 +97,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     >
       <div
         ref={modalRef}
-        className="bg-white dark:bg-neutral-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+        className="bg-neutral-50 dark:bg-neutral-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
@@ -125,12 +125,8 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         <div className="p-4">
           {isSubmitted ? (
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <SendSquare
-                  size={32}
-                  className="text-green-600 dark:text-green-400"
-                  aria-hidden="true"
-                />
+              <div className="w-16 h-16 bg-presence/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                <SendSquare size={32} className="text-presence" aria-hidden="true" />
               </div>
               <h3 className="text-lg font-semibold mb-2">{t('successTitle')}</h3>
               <p className="text-neutral-600 dark:text-neutral-400">{t('successMessage')}</p>
@@ -156,7 +152,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       aria-pressed={feedbackType === type}
                       className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
                         feedbackType === type
-                          ? 'bg-primary-600 text-white border-primary-600 dark:bg-primary-500 dark:border-primary-500'
+                          ? 'bg-primary-600 text-neutral-50 border-primary-600 dark:bg-primary-200 dark:text-neutral-900 dark:border-primary-200'
                           : 'border-neutral-300 dark:border-neutral-600 hover:border-primary-400 dark:hover:border-primary-500'
                       }`}
                     >
@@ -169,7 +165,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               {/* Message */}
               <div>
                 <label htmlFor="feedback-message" className="block text-sm font-medium mb-2">
-                  {t('messageLabel')} <span className="text-red-500">*</span>
+                  {t('messageLabel')} <span className="text-presence">*</span>
                 </label>
                 <textarea
                   id="feedback-message"
@@ -177,7 +173,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
                   required
-                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                   placeholder={t(`messagePlaceholders.${feedbackType}`)}
                 />
               </div>
@@ -187,7 +183,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 <label htmlFor="feedback-email" className="block text-sm font-medium mb-2">
                   {t('emailLabel')}{' '}
                   {isEmailRequired ? (
-                    <span className="text-red-500">*</span>
+                    <span className="text-presence">*</span>
                   ) : (
                     <span className="text-neutral-500 font-normal">({t('optional')})</span>
                   )}
@@ -200,7 +196,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   required={isEmailRequired}
                   autoComplete="email"
                   spellCheck={false}
-                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder={t('emailPlaceholder')}
                 />
                 <p className="text-xs text-neutral-500 mt-1">{t('emailNote')}</p>

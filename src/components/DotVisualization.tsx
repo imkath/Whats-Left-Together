@@ -38,6 +38,9 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
     const width = rect.width;
     const height = rect.height;
 
+    // Each dot is an encounter, rendered in the single accent: crepúsculo.
+    const presenceRGB = isDarkMode ? '156, 126, 134' : '131, 78, 96';
+
     // Responsive margins based on canvas width
     const isMobile = width < 400;
     const leftMargin = isMobile ? 28 : 40;
@@ -91,7 +94,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       ctx.clearRect(0, 0, width, height);
 
       // Draw axis lines
-      ctx.strokeStyle = isDarkMode ? 'rgba(163, 163, 163, 0.15)' : 'rgba(163, 163, 163, 0.2)';
+      ctx.strokeStyle = isDarkMode ? 'rgba(154, 145, 134, 0.15)' : 'rgba(107, 98, 88, 0.2)';
       ctx.lineWidth = 1;
 
       // Y axis
@@ -110,7 +113,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       ctx.save();
       ctx.translate(isMobile ? 8 : 12, height / 2);
       ctx.rotate(-Math.PI / 2);
-      ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
+      ctx.fillStyle = isDarkMode ? 'rgba(154, 145, 134, 0.55)' : 'rgba(107, 98, 88, 0.65)';
       ctx.font = `${fontSize}px Sora, system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.fillText(label, 0, 0);
@@ -126,17 +129,15 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
         const currentOpacity = dot.opacity * eased;
         const currentSize = dot.size * eased;
 
-        const hue = 35 + (dot.x / width) * 10;
-        const lightness = isDarkMode ? 60 : 45;
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, currentSize, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${currentOpacity})`;
+        ctx.fillStyle = `rgba(${presenceRGB}, ${currentOpacity})`;
         ctx.fill();
 
         if (currentSize > 3) {
           ctx.beginPath();
           ctx.arc(dot.x, dot.y, currentSize + 2, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${hue}, 90%, ${lightness}%, ${currentOpacity * 0.15})`;
+          ctx.fillStyle = `rgba(${presenceRGB}, ${currentOpacity * 0.15})`;
           ctx.fill();
         }
       }
@@ -144,7 +145,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
       // X axis year labels — use round intervals (5 or 10 years) for clean appearance
       const currentYear = new Date().getFullYear();
       const yearsToShow = Math.min(Math.ceil(clampedDots / 12), 30);
-      ctx.fillStyle = isDarkMode ? 'rgba(163, 163, 163, 0.5)' : 'rgba(115, 115, 115, 0.6)';
+      ctx.fillStyle = isDarkMode ? 'rgba(154, 145, 134, 0.55)' : 'rgba(107, 98, 88, 0.65)';
       ctx.font = `${fontSize}px Sora, system-ui, sans-serif`;
       ctx.textAlign = 'center';
       const labelY = height - (isMobile ? 6 : 10);
@@ -218,7 +219,7 @@ export default function DotVisualization({ totalDots, label }: DotVisualizationP
   }, []);
 
   return (
-    <div ref={containerRef} className="scatter-container bg-neutral-900 dark:bg-neutral-950">
+    <div ref={containerRef} className="scatter-container bg-[#F6F2EA] dark:bg-[#110E0B]">
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );

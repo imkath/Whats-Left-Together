@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Sora, DM_Serif_Display } from 'next/font/google';
+import { Sora } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
@@ -9,12 +9,6 @@ import './globals.css';
 const sora = Sora({
   subsets: ['latin'],
   variable: '--font-sans',
-});
-
-const dmSerifDisplay = DM_Serif_Display({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-serif',
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
@@ -112,7 +106,7 @@ export async function generateMetadata({
     },
     other: {
       'mobile-web-app-capable': 'yes',
-      'msapplication-TileColor': '#171717',
+      'msapplication-TileColor': '#17130F',
       'msapplication-config': '/browserconfig.xml',
     },
   };
@@ -406,14 +400,10 @@ export default async function LocaleLayout({
   ];
 
   return (
-    <html
-      lang={locale}
-      className={`${sora.variable} ${dmSerifDisplay.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang={locale} className={sora.variable} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#171717" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#17130F" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#F6F2EA" media="(prefers-color-scheme: light)" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* GEO: Link to LLMs.txt for AI crawlers */}

@@ -35,7 +35,7 @@ function AccessibleTooltip({ content, id }: { content: string; id: string }) {
       <span
         id={id}
         role="tooltip"
-        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-md w-64 text-center z-10 whitespace-normal transition-opacity ${
+        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs bg-neutral-800 dark:bg-neutral-200 text-neutral-50 dark:text-neutral-800 rounded-md w-64 text-center z-10 whitespace-normal transition-opacity ${
           isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -155,7 +155,7 @@ export default function Calculator() {
     <div id="calculator" className="space-y-6">
       {/* Section header */}
       <div className="text-center mb-8">
-        <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
+        <div className="w-12 h-1 bg-presence mx-auto mb-4 rounded-full" />
         <h2 className="text-2xl md:text-4xl font-extrabold">{t('title')}</h2>
         <p className="text-neutral-500 dark:text-neutral-400 mt-3 max-w-xl mx-auto">
           {t('subtitle')}
@@ -163,7 +163,7 @@ export default function Calculator() {
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-        <div className="bg-white dark:bg-neutral-800/50 rounded-2xl border border-neutral-200/80 dark:border-neutral-700/50 overflow-hidden">
+        <div className="bg-warm-50 dark:bg-neutral-800/50 rounded-2xl border border-neutral-200/80 dark:border-neutral-700/50 overflow-hidden">
           {/* Section 1: About you */}
           <div className="p-6 md:p-10">
             <div className="flex items-center justify-between mb-6">
@@ -202,13 +202,16 @@ export default function Calculator() {
                     const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                     updateFormData('you', 'age', value);
                   }}
-                  className={`input-field ${validationErrors['you.age'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                  className={`input-field ${validationErrors['you.age'] ? 'border-neutral-800 dark:border-neutral-200' : ''}`}
                   required
                   aria-invalid={!!validationErrors['you.age']}
                   aria-describedby={validationErrors['you.age'] ? 'your-age-error' : undefined}
                 />
                 {validationErrors['you.age'] && (
-                  <p id="your-age-error" className="text-xs text-red-600 mt-1">
+                  <p
+                    id="your-age-error"
+                    className="text-xs text-neutral-700 dark:text-neutral-300 mt-1"
+                  >
                     {validationErrors['you.age']}
                   </p>
                 )}
@@ -339,13 +342,16 @@ export default function Calculator() {
                     const value = e.target.value === '' ? 0 : parseInt(e.target.value);
                     updateFormData('them', 'age', value);
                   }}
-                  className={`input-field ${validationErrors['them.age'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                  className={`input-field ${validationErrors['them.age'] ? 'border-neutral-800 dark:border-neutral-200' : ''}`}
                   required
                   aria-invalid={!!validationErrors['them.age']}
                   aria-describedby={validationErrors['them.age'] ? 'their-age-error' : undefined}
                 />
                 {validationErrors['them.age'] && (
-                  <p id="their-age-error" className="text-xs text-red-600 mt-1">
+                  <p
+                    id="their-age-error"
+                    className="text-xs text-neutral-700 dark:text-neutral-300 mt-1"
+                  >
                     {validationErrors['them.age']}
                   </p>
                 )}
@@ -477,7 +483,7 @@ export default function Calculator() {
                     const value = e.target.value === '' ? null : parseInt(e.target.value);
                     updateTimesPerPeriod(value);
                   }}
-                  className={`input-field max-w-[140px] ${validationErrors['timesPerPeriod'] ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                  className={`input-field max-w-[140px] ${validationErrors['timesPerPeriod'] ? 'border-neutral-800 dark:border-neutral-200' : ''}`}
                   placeholder="1"
                   aria-invalid={!!validationErrors['timesPerPeriod']}
                   aria-describedby={
@@ -485,7 +491,10 @@ export default function Calculator() {
                   }
                 />
                 {validationErrors['timesPerPeriod'] && (
-                  <p id="times-per-period-error" className="text-xs text-red-600 mt-1">
+                  <p
+                    id="times-per-period-error"
+                    className="text-xs text-neutral-700 dark:text-neutral-300 mt-1"
+                  >
                     {validationErrors['timesPerPeriod']}
                   </p>
                 )}
@@ -523,13 +532,13 @@ export default function Calculator() {
           <div
             ref={errorSummaryRef}
             tabIndex={-1}
-            className="mt-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/50 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+            className="mt-4 p-4 bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-presence"
             role="alert"
           >
-            <h4 className="text-sm font-semibold text-red-800 dark:text-red-300 mb-2">
+            <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
               {tValidation('summaryTitle')}
             </h4>
-            <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
+            <ul className="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
               {Object.entries(validationErrors).map(([key, message]) => (
                 <li key={key}>• {message}</li>
               ))}
@@ -541,7 +550,7 @@ export default function Calculator() {
         <div className="flex justify-center pt-6">
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 md:px-8 md:py-4 bg-accent-500 hover:bg-accent-400 text-neutral-900 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group"
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 md:px-8 md:py-4 bg-neutral-900 text-neutral-50 hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group"
           >
             {t('calculate')}
             <ArrowRight

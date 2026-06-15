@@ -92,8 +92,8 @@ export default function Results({ input }: ResultsProps) {
     return (
       <div className="text-center py-16" role="status" aria-live="polite" aria-busy="true">
         <div className="animate-pulse motion-reduce:animate-none">
-          <div className="w-20 h-20 rounded-full bg-accent-500/20 mx-auto mb-6 flex items-center justify-center">
-            <div className="w-10 h-10 rounded-full bg-accent-500/40" />
+          <div className="w-20 h-20 rounded-full bg-presence/20 mx-auto mb-6 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-presence/40" />
           </div>
         </div>
         <p className="text-neutral-500 dark:text-neutral-400 text-lg">{t('errors.calculating')}</p>
@@ -111,14 +111,14 @@ export default function Results({ input }: ResultsProps) {
 
     return (
       <div
-        className="card bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-800/50"
+        className="card border-neutral-200 dark:border-neutral-700"
         role="alert"
         aria-live="assertive"
       >
         <div className="flex flex-col gap-4">
           <div className="flex items-start gap-3">
             <svg
-              className="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5"
+              className="w-6 h-6 text-neutral-500 dark:text-neutral-400 flex-shrink-0 mt-0.5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -132,22 +132,22 @@ export default function Results({ input }: ResultsProps) {
               />
             </svg>
             <div className="flex-1">
-              <h4 className="text-red-900 dark:text-red-200 font-semibold mb-2">
+              <h4 className="text-neutral-900 dark:text-neutral-100 font-semibold mb-2">
                 {t('errors.loadingTitle')}
               </h4>
-              <p className="text-red-700 dark:text-red-300">{errorMessage}</p>
-              <div className="mt-4 pt-4 border-t border-red-200 dark:border-red-800/50">
-                <p className="text-sm text-red-800 dark:text-red-300 mb-2">
+              <p className="text-neutral-600 dark:text-neutral-400">{errorMessage}</p>
+              <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+                <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-2">
                   {t('errors.retrySuggestions')}
                 </p>
-                <ul className="text-sm text-red-700 dark:text-red-300 space-y-1">
+                <ul className="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
                   <li>• {t('errors.retryReload')}</li>
                   <li>• {t('errors.retryCountry')}</li>
                   <li>• {t('errors.retryLater')}</li>
                 </ul>
                 <button
                   onClick={() => setRetryCount((c) => c + 1)}
-                  className="mt-3 px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors focus-visible:ring-2 focus-visible:ring-accent-500 outline-none"
+                  className="mt-3 px-4 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-600 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700/40 transition-colors focus-visible:ring-2 focus-visible:ring-presence outline-none"
                 >
                   {t('errors.retry')}
                 </button>
@@ -194,7 +194,7 @@ export default function Results({ input }: ResultsProps) {
 
         <p className="text-center text-lg md:text-xl lg:text-2xl font-bold text-neutral-900 dark:text-white leading-snug px-4">
           {t('visualization.overlayLine1')}{' '}
-          <span className="text-accent-500 dark:text-accent-400">
+          <span className="text-presence">
             {t('visualization.overlayCount', { count: median })}
           </span>{' '}
           {t('visualization.overlayLine2')}

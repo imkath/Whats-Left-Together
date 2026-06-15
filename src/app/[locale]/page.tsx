@@ -43,18 +43,18 @@ export default function HomePage() {
       <Hero />
 
       {/* Calculator section */}
-      <section id="calculator" className="py-16 md:py-20 bg-[#fafaf8] dark:bg-neutral-900">
+      <section id="calculator" className="py-16 md:py-20 bg-neutral-50 dark:bg-neutral-900">
         <div className="container-custom">
           <Calculator />
         </div>
       </section>
 
       {/* Why it matters section - editorial style */}
-      <section className="py-16 md:py-24 bg-white dark:bg-neutral-800/50">
+      <section className="py-16 md:py-24 bg-warm-50 dark:bg-neutral-800/50">
         <div className="container-custom">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <div className="w-12 h-1 bg-accent-500 mx-auto mb-4 rounded-full" />
+              <div className="w-12 h-1 bg-presence mx-auto mb-4 rounded-full" />
               <h2 className="text-3xl md:text-4xl font-extrabold mb-4">{t('title')}</h2>
               <p className="text-lg text-neutral-500 dark:text-neutral-400 max-w-xl mx-auto">
                 {t('intro')}
@@ -66,7 +66,7 @@ export default function HomePage() {
             {/* Featured card */}
             <ScrollReveal>
               <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-950 p-8 md:p-10 transition-shadow duration-300 hover:shadow-xl border border-neutral-200 dark:border-neutral-800">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 dark:bg-accent-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-presence/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative">
                   <div className="mb-5 text-accent-500 dark:text-accent-400 group-hover:scale-110 transition-transform duration-300 inline-block">
                     <ClockCircle size={36} weight="BoldDuotone" />

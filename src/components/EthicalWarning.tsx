@@ -54,7 +54,7 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-xl w-full border border-neutral-200 dark:border-neutral-700 flex flex-col max-h-[calc(100dvh-1.5rem)] md:max-h-[calc(100dvh-2rem)]"
+        className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-xl w-full border border-neutral-200 dark:border-neutral-700 flex flex-col max-h-[calc(100dvh-1.5rem)] md:max-h-[calc(100dvh-2rem)]"
       >
         {/* Scrollable content */}
         <div className="overflow-y-auto flex-1 min-h-0 p-4 md:p-8">
@@ -84,31 +84,31 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
               {t('notMedical')}
             </p>
 
-            <div className="bg-red-50/80 dark:bg-red-950/50 border-l-4 border-red-400 dark:border-red-500 p-3 rounded">
-              <p className="font-bold mb-2 text-sm text-red-900 dark:text-red-100">
+            <div className="bg-neutral-100/70 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-700 p-3 rounded-lg">
+              <p className="font-semibold mb-2 text-sm text-neutral-700 dark:text-neutral-300">
                 {t('whatIsNot')}
               </p>
-              <ul className="space-y-1 text-xs text-red-800 dark:text-red-200">
-                <li className="flex items-start gap-1.5">
+              <ul className="space-y-1.5 text-xs text-neutral-600 dark:text-neutral-400">
+                <li className="flex items-start gap-2">
                   <CloseCircle
                     size={14}
-                    className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
+                    className="text-neutral-400 dark:text-neutral-500 mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('notIs1')}</span>
                 </li>
-                <li className="flex items-start gap-1.5">
+                <li className="flex items-start gap-2">
                   <CloseCircle
                     size={14}
-                    className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
+                    className="text-neutral-400 dark:text-neutral-500 mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('notIs2')}</span>
                 </li>
-                <li className="flex items-start gap-1.5">
+                <li className="flex items-start gap-2">
                   <CloseCircle
                     size={14}
-                    className="text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0"
+                    className="text-neutral-400 dark:text-neutral-500 mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('notIs3')}</span>
@@ -116,39 +116,39 @@ export default function EthicalWarning({ onAccept }: EthicalWarningProps) {
               </ul>
             </div>
 
-            <div className="bg-green-50/80 dark:bg-green-950/50 border-l-4 border-green-600 dark:border-green-500 p-3 rounded">
-              <p className="font-bold mb-2 text-sm text-green-900 dark:text-green-100">
+            <div className="bg-warm-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 p-3 rounded-lg">
+              <p className="font-semibold mb-2 text-sm text-neutral-900 dark:text-neutral-100">
                 {t('whatIs')}
               </p>
-              <ul className="space-y-1 text-xs text-green-800 dark:text-green-200">
-                <li className="flex items-start gap-1.5">
+              <ul className="space-y-1.5 text-xs text-neutral-700 dark:text-neutral-300">
+                <li className="flex items-start gap-2">
                   <Checklist
                     size={14}
-                    className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
+                    className="text-presence mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('is1')}</span>
                 </li>
-                <li className="flex items-start gap-1.5">
+                <li className="flex items-start gap-2">
                   <Checklist
                     size={14}
-                    className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
+                    className="text-presence mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('is2')}</span>
                 </li>
-                <li className="flex items-start gap-1.5">
+                <li className="flex items-start gap-2">
                   <Checklist
                     size={14}
-                    className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
+                    className="text-presence mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('is3')}</span>
                 </li>
-                <li className="flex items-start gap-1.5">
+                <li className="flex items-start gap-2">
                   <Checklist
                     size={14}
-                    className="text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0"
+                    className="text-presence mt-0.5 flex-shrink-0"
                     aria-hidden="true"
                   />
                   <span>{t('is4')}</span>
