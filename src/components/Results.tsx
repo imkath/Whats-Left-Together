@@ -22,6 +22,7 @@ interface ResultsProps {
 
 export default function Results({ input }: ResultsProps) {
   const t = useTranslations('results');
+  const tRel = useTranslations('calculator.relShort');
   const locale = useLocale() as 'es' | 'en';
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -159,7 +160,20 @@ export default function Results({ input }: ResultsProps) {
     );
   }
 
-  const relationLabel = t(`relationLabels.${input.relationType}`) || t('relationLabels.other');
+  // Personalized reference to the loved one: "tu abuela María" / "your grandmother María".
+  // Drops the maternal/paternal qualifier when a name is present, genders friend by sex,
+  // and falls back gracefully when there is no name.
+  const personName = input.them.name?.trim();
+  const relKey = input.relationType === 'friend' ? `friend_${input.them.sex}` : input.relationType;
+  const relWord = tRel(relKey);
+  const relationRef =
+    personName && input.relationType === 'other'
+      ? personName
+      : personName
+        ? t('personNamed', { relation: relWord, name: personName })
+        : input.relationType === 'other'
+          ? t('relationLabels.other')
+          : t('personGeneric', { relation: relWord });
   const countryName = getCountryName(input.them.country, locale);
 
   const min = result.expectedVisitsRange.p25;
@@ -197,7 +211,7 @@ export default function Results({ input }: ResultsProps) {
           <span className="text-presence">
             {t('visualization.overlayCount', { count: median })}
           </span>{' '}
-          {t('visualization.overlayLine2')}
+          {t('visualization.overlayLine2Named', { person: relationRef })}
         </p>
       </div>
 
@@ -225,7 +239,7 @@ export default function Results({ input }: ResultsProps) {
           </p>
           <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
             {t('normalMode.para2', {
-              relation: relationLabel,
+              relation: relationRef,
               frequency: input.visitsPerYear,
               min,
               max,

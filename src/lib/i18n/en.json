@@ -86,7 +86,57 @@
     },
     "resultsRegion": "Calculation results",
     "resultsHeading": "Calculation results",
-    "stepLabel": "{step} of {total}"
+    "stepLabel": "{step} of {total}",
+    "wizard": {
+      "progress": "Step {step} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "calculate": "See how many are left",
+      "step1Title": "Who do you want to see more often?",
+      "step1Help": "The person you'd most want to spend more time with in person.",
+      "nameLabel": "What's their name?",
+      "nameOptional": "optional",
+      "namePlaceholder": "A name or nickname",
+      "step2TitleNamed": "About {name}",
+      "step2Title": "About that person",
+      "step3Title": "And now, about you",
+      "step4TitleNamed": "How often do you see {name}?",
+      "step4Title": "How often do you meet?",
+      "ageOfNamed": "How old is {name}?",
+      "ageOfGeneric": "How old are they?",
+      "yourAgeQ": "How old are you?",
+      "theirSexNamed": "{name}'s biological sex",
+      "theirSexGeneric": "Their biological sex",
+      "yourSexQ": "Your biological sex",
+      "differentCountry": "They live in another country",
+      "youElsewhere": "I live in another country",
+      "sameCountryNote": "You live in the same country",
+      "countryOfNamed": "Where does {name} live?",
+      "countryOfGeneric": "Where do they live?",
+      "countryYou": "Where do you live?",
+      "countrySearch": "Type to search your country",
+      "presetDaily": "Almost daily",
+      "presetWeekly": "Every week",
+      "presetMonthly": "Once a month",
+      "presetRarely": "A few times a year",
+      "presetCustom": "Another frequency",
+      "freqExclude": "Count in-person meetings: visits, trips, weekends together. Not video calls.",
+      "summaryNamed": "You'll see {name} about {visits} times a year",
+      "summaryGeneric": "About {visits} times a year"
+    },
+    "relShort": {
+      "mother": "mother",
+      "father": "father",
+      "grandmother_maternal": "grandmother",
+      "grandmother_paternal": "grandmother",
+      "grandfather_maternal": "grandfather",
+      "grandfather_paternal": "grandfather",
+      "partner": "partner",
+      "friend_female": "friend",
+      "friend_male": "friend",
+      "other_family": "family member",
+      "other": "loved one"
+    }
   },
   "results": {
     "visualization": {
@@ -94,7 +144,8 @@
       "yAxisLabel": "Estimated Encounters",
       "overlayLine1": "Each dot is an opportunity. You have approximately",
       "overlayCount": "{count}",
-      "overlayLine2": "estimated encounters remaining."
+      "overlayLine2": "estimated encounters remaining.",
+      "overlayLine2Named": "encounters left with {person}."
     },
     "stats": {
       "rangeTitle": "Estimated Visit Range",
@@ -149,6 +200,8 @@
     "timeAlreadySpent": "Time already shared",
     "timeAlreadySpentPercent": "~{percent}% of typical time together already lived",
     "seeMethodology": "See how it works",
+    "personNamed": "your {relation} {name}",
+    "personGeneric": "your {relation}",
     "relationLabels": {
       "mother": "your mother",
       "father": "your father",

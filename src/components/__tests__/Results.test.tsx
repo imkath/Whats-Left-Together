@@ -79,12 +79,27 @@ jest.mock('next-intl', () => ({
       'relationLabels.friend': 'esta persona',
       'relationLabels.other_family': 'esta persona',
       'relationLabels.other': 'esta persona',
+      // relShort (bare keys, since the mock ignores the namespace)
+      mother: 'madre',
+      father: 'padre',
+      grandmother_maternal: 'abuela',
+      grandmother_paternal: 'abuela',
+      grandfather_maternal: 'abuelo',
+      grandfather_paternal: 'abuelo',
+      partner: 'pareja',
+      friend_female: 'amiga',
+      friend_male: 'amigo',
+      other_family: 'familiar',
+      other: 'ser querido',
+      personNamed: `tu ${params?.relation} ${params?.name}`,
+      personGeneric: `tu ${params?.relation}`,
       // Visualization
       'visualization.title': 'Tus encuentros restantes',
       'visualization.yAxisLabel': 'Encuentros',
       'visualization.overlayLine1': 'Te quedan aproximadamente',
       'visualization.overlayCount': `${params?.count || 0} encuentros`,
       'visualization.overlayLine2': 'con esta persona.',
+      'visualization.overlayLine2Named': `con ${params?.person}.`,
       // Stats
       'stats.rangeTitle': 'Rango estimado',
       'stats.rangeSubtitle': 'encuentros estimados restantes (percentil 25-75)',
@@ -269,8 +284,8 @@ describe('Results component', () => {
       render(<Results input={input} />);
 
       await waitFor(() => {
-        // "esta persona" appears multiple times in the results
-        const elements = screen.getAllByText(/esta persona/);
+        // friend (female by default) personalizes to "tu amiga"
+        const elements = screen.getAllByText(/tu amiga/);
         expect(elements.length).toBeGreaterThan(0);
       });
     });
