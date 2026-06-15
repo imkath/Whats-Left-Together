@@ -6,6 +6,7 @@ import { ClockCircle, Heart, Calendar, Share, Pen, AltArrowRight } from '@solar-
 import type { RelationshipInput, CalculationResult } from '@/types';
 import { calculateExpectedEncounters } from '@/lib/models/actuarial';
 import { getLifeTable, getCountryName, hasLifeTableData, NetworkError } from '@/lib/data';
+import { useCountUp } from '@/lib/hooks/useCountUp';
 import DotVisualization from './DotVisualization';
 import VisualizationChart from './VisualizationChart';
 
@@ -30,6 +31,15 @@ export default function Results({ input }: ResultsProps) {
   const [errorCountry, setErrorCountry] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
   const resultsContainerRef = useRef<HTMLDivElement>(null);
+  const animatedMedian = useCountUp(result?.expectedVisitsRange.p50 ?? 0);
+  const survivalTarget = (() => {
+    if (!result) return 0;
+    const five = result.yearByYearSurvival.find((s) => s.year === 5);
+    if (five) return Math.round(five.bothAlive * 100);
+    const arr = result.yearByYearSurvival;
+    return Math.round((arr[Math.min(4, arr.length - 1)]?.bothAlive ?? 0) * 100);
+  })();
+  const animatedSurvival = useCountUp(survivalTarget, 1200);
 
   useEffect(() => {
     async function calculate() {
@@ -182,15 +192,6 @@ export default function Results({ input }: ResultsProps) {
   const yearsMin = Math.floor(result.yearsWithBothAlive.min);
   const yearsMax = Math.ceil(result.yearsWithBothAlive.max);
 
-  // Calculate 5-year survival probability
-  const fiveYearSurvival = result.yearByYearSurvival.find((s) => s.year === 5);
-  const survivalPercent = fiveYearSurvival
-    ? Math.round(fiveYearSurvival.bothAlive * 100)
-    : Math.round(
-        result.yearByYearSurvival[Math.min(4, result.yearByYearSurvival.length - 1)]?.bothAlive *
-          100
-      ) || 0;
-
   return (
     <div className="space-y-8 animate-slide-up" ref={resultsContainerRef} tabIndex={-1}>
       {/* Section title */}
@@ -208,8 +209,8 @@ export default function Results({ input }: ResultsProps) {
 
         <p className="text-center text-lg md:text-xl lg:text-2xl font-bold text-neutral-900 dark:text-white leading-snug px-4">
           {t('visualization.overlayLine1')}{' '}
-          <span className="text-presence">
-            {t('visualization.overlayCount', { count: median })}
+          <span className="text-presence tabular-nums">
+            {t('visualization.overlayCount', { count: animatedMedian })}
           </span>{' '}
           {t('visualization.overlayLine2Named', { person: relationRef })}
         </p>
@@ -332,13 +333,18 @@ export default function Results({ input }: ResultsProps) {
         <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-end gap-4 md:gap-8">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-3">
-              <Heart size={18} weight="BoldDuotone" className="text-accent-500" />
+              <Heart
+                size={18}
+                weight="BoldDuotone"
+                className="text-presence animate-heartbeat"
+                aria-hidden="true"
+              />
               <h4 className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
                 {t('stats.survivalTitle')}
               </h4>
             </div>
-            <p className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white tracking-tight">
-              {survivalPercent}%
+            <p className="text-5xl md:text-6xl font-bold text-presence tracking-tight tabular-nums">
+              {animatedSurvival}%
             </p>
             <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
               {t('stats.survivalSubtitle')}

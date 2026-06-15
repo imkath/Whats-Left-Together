@@ -42,10 +42,12 @@ export default function ScrollReveal({ children, className = '', delay = 0 }: Sc
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${className} ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      className={`transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${className} ${
+        isVisible
+          ? 'opacity-100 translate-y-0 blur-0 scale-100'
+          : 'opacity-0 translate-y-10 blur-[5px] scale-[0.985]'
       }`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, willChange: 'transform, opacity, filter' }}
     >
       {children}
     </div>
