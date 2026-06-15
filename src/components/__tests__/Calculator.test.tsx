@@ -1,5 +1,5 @@
 /**
- * Tests for Calculator component
+ * Tests for the Calculator wizard
  */
 
 import React from 'react';
@@ -8,28 +8,16 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Calculator from '../Calculator';
 
-// Mock next-intl
+// Mock next-intl. The mock ignores the namespace and falls back to the key,
+// which is enough for the wizard keys (next/back/presetMonthly/...).
 jest.mock('next-intl', () => ({
-  useTranslations: () => (key: string, params?: Record<string, unknown>) => {
+  useTranslations: () => (key: string) => {
     const translations: Record<string, string> = {
       title: 'Calculator',
       subtitle: 'Calculate how many times you will see someone',
-      yourInfo: 'Your Information',
-      theirInfo: 'Their Information',
-      age: 'Age',
-      sex: 'Sex',
-      country: 'Country',
       female: 'Female',
       male: 'Male',
       relationship: 'Relationship',
-      frequency: 'Frequency',
-      frequencyPeriodLabel: 'How often do you see them?',
-      timesPerPeriodLabel: 'How many times?',
-      timesPerPeriodNote: `Maximum ${params?.max || 31} times per ${params?.period || 'month'}`,
-      frequencySummary: 'Summary',
-      visitsPerYear: 'visits per year',
-      directMode: 'Direct mode',
-      directModeHelp: 'Show result more directly',
       calculate: 'Calculate',
       'relations.mother': 'Mother',
       'relations.father': 'Father',
@@ -41,268 +29,142 @@ jest.mock('next-intl', () => ({
       'relations.friend': 'Friend',
       'relations.other_family': 'Other Family',
       'relations.other': 'Other',
-      'frequencyPeriods.weekly': 'Weekly',
-      'frequencyPeriods.monthly': 'Monthly',
-      'frequencyPeriods.quarterly': 'Quarterly',
-      'frequencyPeriods.yearly': 'Yearly',
-      'frequencyTimes.weekly': 'times per week',
-      'frequencyTimes.monthly': 'times per month',
-      'frequencyTimes.quarterly': 'times per quarter',
-      'frequencyTimes.yearly': 'times per year',
     };
     return translations[key] || key;
   },
   useLocale: () => 'es',
 }));
 
-// Mock the Results component to avoid loading life tables in tests
+// Mock Results to avoid loading life tables in tests
 jest.mock('../Results', () => {
   return function MockResults() {
     return <div data-testid="results">Results shown</div>;
   };
 });
 
-describe('Calculator component', () => {
+const next = (user: ReturnType<typeof userEvent.setup>) =>
+  user.click(screen.getByRole('button', { name: 'next' }));
+
+describe('Calculator wizard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('rendering', () => {
-    it('should render the calculator form', () => {
+  describe('step 1 — the person', () => {
+    it('renders the relationship and optional name fields', () => {
       render(<Calculator />);
-
       expect(screen.getByText('Calculator')).toBeInTheDocument();
-      expect(screen.getByText('Your Information')).toBeInTheDocument();
-      expect(screen.getByText('Their Information')).toBeInTheDocument();
-      expect(screen.getByText('Frequency')).toBeInTheDocument();
-    });
-
-    it('should render all form fields with proper label associations', () => {
-      render(<Calculator />);
-
-      // Age inputs (use getElementById since there are multiple "Age" labels)
-      expect(document.getElementById('your-age')).toBeInTheDocument();
-      expect(document.getElementById('their-age')).toBeInTheDocument();
-
-      // Sex selects (use getElementById since labels contain extra tooltip elements)
-      expect(document.getElementById('your-sex')).toBeInTheDocument();
-      expect(document.getElementById('their-sex')).toBeInTheDocument();
-
-      // Country selects
-      expect(document.getElementById('your-country')).toBeInTheDocument();
-      expect(document.getElementById('their-country')).toBeInTheDocument();
-
-      // Relationship select
       expect(screen.getByLabelText('Relationship')).toBeInTheDocument();
-
-      // Times per period
-      expect(screen.getByLabelText('How many times?')).toBeInTheDocument();
+      expect(document.getElementById('them-name')).toBeInTheDocument();
     });
 
-    it('should render frequency period buttons', () => {
+    it('defaults the relationship to grandmother_maternal', () => {
       render(<Calculator />);
-
-      expect(screen.getByRole('button', { name: 'Weekly' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Monthly' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Quarterly' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Yearly' })).toBeInTheDocument();
+      expect(screen.getByLabelText('Relationship')).toHaveValue('grandmother_maternal');
     });
 
-    it('should render the calculate button', () => {
+    it('updates the relationship', async () => {
       render(<Calculator />);
+      const user = userEvent.setup();
+      await user.selectOptions(screen.getByLabelText('Relationship'), 'father');
+      expect(screen.getByLabelText('Relationship')).toHaveValue('father');
+    });
 
-      expect(screen.getByRole('button', { name: 'Calculate' })).toBeInTheDocument();
+    it('captures an optional name', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      const name = document.getElementById('them-name') as HTMLInputElement;
+      await user.type(name, 'María');
+      expect(name.value).toBe('María');
     });
   });
 
-  describe('form interactions', () => {
-    it('should update your age when changed', async () => {
+  describe('step 2 — about them', () => {
+    it('shows their age (default 75) and a sex toggle defaulting to female', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
-
-      const yourAgeInput = screen.getByLabelText('Age', {
-        selector: '#your-age',
-      }) as HTMLInputElement;
-
-      await user.clear(yourAgeInput);
-      await user.type(yourAgeInput, '25');
-
-      expect(yourAgeInput.value).toBe('25');
+      await next(user);
+      const theirAge = document.getElementById('their-age') as HTMLInputElement;
+      expect(theirAge.value).toBe('75');
+      expect(screen.getByRole('radio', { name: 'Female' })).toHaveAttribute('aria-checked', 'true');
     });
 
-    it('should update their age when changed', async () => {
+    it('switches sex through the toggle', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
-
-      const theirAgeInput = document.getElementById('their-age') as HTMLInputElement;
-
-      await user.clear(theirAgeInput);
-      await user.type(theirAgeInput, '60');
-
-      expect(theirAgeInput.value).toBe('60');
+      await next(user);
+      const male = screen.getByRole('radio', { name: 'Male' });
+      await user.click(male);
+      expect(male).toHaveAttribute('aria-checked', 'true');
     });
 
-    it('should update sex selection', async () => {
+    it('blocks advancing when their age is cleared', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
-
-      const yourSexSelect = document.getElementById('your-sex') as HTMLSelectElement;
-
-      await user.selectOptions(yourSexSelect, 'male');
-
-      expect(yourSexSelect).toHaveValue('male');
-    });
-
-    it('should update relationship selection', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      const relationshipSelect = screen.getByLabelText('Relationship');
-
-      await user.selectOptions(relationshipSelect, 'father');
-
-      expect(relationshipSelect).toHaveValue('father');
-    });
-
-    it('should change frequency period when button is clicked', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      const weeklyButton = screen.getByRole('button', { name: 'Weekly' });
-
-      await user.click(weeklyButton);
-
-      // The active button should be pressed
-      expect(weeklyButton).toHaveAttribute('aria-pressed', 'true');
-    });
-
-    it('should update times per period input', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      const timesInput = screen.getByLabelText('How many times?') as HTMLInputElement;
-
-      // Clear and type new value
-      await user.tripleClick(timesInput);
-      await user.keyboard('3');
-
-      expect(timesInput.value).toBe('3');
+      await next(user);
+      const theirAge = document.getElementById('their-age') as HTMLInputElement;
+      await user.clear(theirAge);
+      await next(user);
+      // Still on step 2
+      expect(document.getElementById('their-age')).toBeInTheDocument();
     });
   });
 
-  describe('form submission', () => {
-    it('should show results when form is submitted with valid data', async () => {
+  describe('step 3 — about you', () => {
+    it('shows your age (default 30)', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
+      await next(user);
+      await next(user);
+      const yourAge = document.getElementById('your-age') as HTMLInputElement;
+      expect(yourAge.value).toBe('30');
+    });
+  });
 
-      // Submit the form with default values
-      const submitButton = screen.getByRole('button', { name: 'Calculate' });
-      await user.click(submitButton);
+  describe('step 4 — frequency', () => {
+    it('shows presets with the monthly preset active by default', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      await next(user);
+      await next(user);
+      await next(user);
+      expect(screen.getByRole('button', { name: 'presetMonthly' })).toHaveAttribute(
+        'aria-pressed',
+        'true'
+      );
+    });
 
-      // Results should be shown
+    it('changes the active preset', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      await next(user);
+      await next(user);
+      await next(user);
+      const weekly = screen.getByRole('button', { name: 'presetWeekly' });
+      await user.click(weekly);
+      expect(weekly).toHaveAttribute('aria-pressed', 'true');
+    });
+  });
+
+  describe('navigation & submission', () => {
+    it('lets you go back a step', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      await next(user);
+      await user.click(screen.getByRole('button', { name: 'back' }));
+      expect(screen.getByLabelText('Relationship')).toBeInTheDocument();
+    });
+
+    it('shows results after calculating with defaults', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      await next(user);
+      await next(user);
+      await next(user);
+      await user.click(screen.getByRole('button', { name: 'Calculate' }));
       await waitFor(() => {
         expect(screen.getByTestId('results')).toBeInTheDocument();
       });
-    });
-  });
-
-  describe('frequency calculations', () => {
-    it('should calculate visits per year correctly for monthly frequency', () => {
-      render(<Calculator />);
-
-      // Monthly is default, 1 time per month = 12 visits per year
-      expect(screen.getByText(/12/)).toBeInTheDocument();
-    });
-
-    it('should calculate visits per year correctly for weekly frequency', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      // Click weekly
-      const weeklyButton = screen.getByRole('button', { name: 'Weekly' });
-      await user.click(weeklyButton);
-
-      // 1 time per week = 52 visits per year
-      await waitFor(() => {
-        expect(screen.getByText(/52/)).toBeInTheDocument();
-      });
-    });
-
-    it('should calculate visits per year correctly for quarterly frequency', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      // Click quarterly
-      const quarterlyButton = screen.getByRole('button', { name: 'Quarterly' });
-      await user.click(quarterlyButton);
-
-      // 1 time per quarter = 4 visits per year
-      await waitFor(() => {
-        expect(screen.getByText('4')).toBeInTheDocument();
-      });
-    });
-
-    it('should update visits when times per period changes', async () => {
-      render(<Calculator />);
-      const user = userEvent.setup();
-
-      const timesInput = screen.getByLabelText('How many times?') as HTMLInputElement;
-
-      // Change to 2 times per month = 24 visits per year
-      await user.tripleClick(timesInput);
-      await user.keyboard('2');
-
-      await waitFor(() => {
-        expect(screen.getByText(/24/)).toBeInTheDocument();
-      });
-    });
-  });
-
-  describe('default values', () => {
-    it('should have correct default ages', () => {
-      render(<Calculator />);
-
-      const yourAgeInput = document.getElementById('your-age') as HTMLInputElement;
-      const theirAgeInput = document.getElementById('their-age') as HTMLInputElement;
-
-      expect(yourAgeInput.value).toBe('30');
-      expect(theirAgeInput.value).toBe('75');
-    });
-
-    it('should have female as default sex', () => {
-      render(<Calculator />);
-
-      const yourSexSelect = document.getElementById('your-sex') as HTMLSelectElement;
-      const theirSexSelect = document.getElementById('their-sex') as HTMLSelectElement;
-
-      expect(yourSexSelect).toHaveValue('female');
-      expect(theirSexSelect).toHaveValue('female');
-    });
-
-    it('should have grandmother_maternal as default relationship', () => {
-      render(<Calculator />);
-
-      const relationshipSelect = screen.getByLabelText('Relationship');
-
-      expect(relationshipSelect).toHaveValue('grandmother_maternal');
-    });
-
-    it('should have monthly as default frequency period', () => {
-      render(<Calculator />);
-
-      const monthlyButton = screen.getByRole('button', { name: 'Monthly' });
-
-      expect(monthlyButton).toHaveAttribute('aria-pressed', 'true');
-    });
-
-    it('should have Chile as default country', () => {
-      render(<Calculator />);
-
-      const yourCountrySelect = document.getElementById('your-country') as HTMLSelectElement;
-      const theirCountrySelect = document.getElementById('their-country') as HTMLSelectElement;
-
-      expect(yourCountrySelect).toHaveValue('CHL');
-      expect(theirCountrySelect).toHaveValue('CHL');
     });
   });
 });

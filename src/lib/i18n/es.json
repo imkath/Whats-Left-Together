@@ -86,7 +86,57 @@
     },
     "resultsRegion": "Resultados del cálculo",
     "resultsHeading": "Resultados del cálculo",
-    "stepLabel": "{step} de {total}"
+    "stepLabel": "{step} de {total}",
+    "wizard": {
+      "progress": "Paso {step} de {total}",
+      "back": "Atrás",
+      "next": "Siguiente",
+      "calculate": "Ver cuántas nos quedan",
+      "step1Title": "¿A quién quieres ver más veces?",
+      "step1Help": "Esa persona con la que querrías pasar más tiempo en persona.",
+      "nameLabel": "¿Cómo se llama?",
+      "nameOptional": "opcional",
+      "namePlaceholder": "Un nombre o apodo",
+      "step2TitleNamed": "Sobre {name}",
+      "step2Title": "Sobre esa persona",
+      "step3Title": "Y ahora, sobre ti",
+      "step4TitleNamed": "¿Cada cuánto ves a {name}?",
+      "step4Title": "¿Cada cuánto se ven?",
+      "ageOfNamed": "¿Qué edad tiene {name}?",
+      "ageOfGeneric": "¿Qué edad tiene?",
+      "yourAgeQ": "¿Cuántos años tienes?",
+      "theirSexNamed": "Sexo biológico de {name}",
+      "theirSexGeneric": "Su sexo biológico",
+      "yourSexQ": "Tu sexo biológico",
+      "differentCountry": "Vive en otro país",
+      "youElsewhere": "Vivo en otro país",
+      "sameCountryNote": "Vives en el mismo país",
+      "countryOfNamed": "¿En qué país vive {name}?",
+      "countryOfGeneric": "¿En qué país vive?",
+      "countryYou": "¿En qué país vives?",
+      "countrySearch": "Escribe para buscar tu país",
+      "presetDaily": "Casi a diario",
+      "presetWeekly": "Cada semana",
+      "presetMonthly": "Una vez al mes",
+      "presetRarely": "Pocas veces al año",
+      "presetCustom": "Otra frecuencia",
+      "freqExclude": "Cuentan los encuentros en persona: visitas, viajes, fines de semana juntos. No las videollamadas.",
+      "summaryNamed": "Verás a {name} unas {visits} veces al año",
+      "summaryGeneric": "Unas {visits} veces al año"
+    },
+    "relShort": {
+      "mother": "madre",
+      "father": "padre",
+      "grandmother_maternal": "abuela",
+      "grandmother_paternal": "abuela",
+      "grandfather_maternal": "abuelo",
+      "grandfather_paternal": "abuelo",
+      "partner": "pareja",
+      "friend_female": "amiga",
+      "friend_male": "amigo",
+      "other_family": "familiar",
+      "other": "ser querido"
+    }
   },
   "results": {
     "visualization": {
@@ -94,7 +144,8 @@
       "yAxisLabel": "Encuentros Estimados",
       "overlayLine1": "Cada punto es una oportunidad. Tienes aproximadamente",
       "overlayCount": "{count}",
-      "overlayLine2": "encuentros estimados restantes."
+      "overlayLine2": "encuentros estimados restantes.",
+      "overlayLine2Named": "encuentros que te quedan con {person}."
     },
     "stats": {
       "rangeTitle": "Rango Estimado de Visitas",
@@ -149,6 +200,8 @@
     "timeAlreadySpent": "Tiempo ya compartido",
     "timeAlreadySpentPercent": "~{percent}% del tiempo típico juntos ya se vivió",
     "seeMethodology": "Ver cómo funciona",
+    "personNamed": "tu {relation} {name}",
+    "personGeneric": "tu {relation}",
     "relationLabels": {
       "mother": "tu madre",
       "father": "tu padre",

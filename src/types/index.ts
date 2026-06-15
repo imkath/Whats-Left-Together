@@ -22,6 +22,8 @@ export interface PersonInput {
   age: number;
   sex: Sex;
   country: string;
+  /** Optional name/nickname, used to personalize copy ("tu abuela María"). */
+  name?: string;
 }
 
 export interface RelationshipInput {
