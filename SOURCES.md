@@ -316,7 +316,7 @@ Cada vez que se actualicen los datos, documentar en `data/DOWNLOAD_LOG.md`:
 - Archivo: WPP2024_Life_Table_Complete.csv
 - URL: https://population.un.org/wpp/downloads?folder=Standard+Projections&group=Mortality
 - Hash SHA256: [hash del archivo]
-- Procesado con: scripts/process-life-tables.js
+- Procesado con: scripts/xlsx-to-csv.py y scripts/process-life-tables-f06.js
 
 ## WHO GHO
 
