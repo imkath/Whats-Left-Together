@@ -339,5 +339,5 @@ Para preguntas metodológicas, sugerencias o reportar errores, utiliza el formul
 
 **Última actualización**: 2025-01-21
 **Versión del modelo**: 2.0 (Monte Carlo)
-**Datos**: WPP-2024 (datos reales integrados - 81 países, año 2023)
+**Datos**: WPP-2024 (datos reales integrados - 197 países y áreas, año 2023)
 **Simulaciones**: 10,000 iteraciones Monte Carlo para intervalos de confianza

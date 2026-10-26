@@ -163,13 +163,13 @@ export default async function LocaleLayout({
               'Calculadora de visitas restantes',
               'Datos de la ONU actualizados',
               'Simulación Monte Carlo',
-              'Soporte para 81 países',
+              'Soporte para 197 países y áreas',
             ]
           : [
               'Remaining visits calculator',
               'Updated UN data',
               'Monte Carlo simulation',
-              'Support for 81 countries',
+              'Support for 197 countries and areas',
             ],
     },
     // WebSite schema for sitelinks search
@@ -299,7 +299,7 @@ export default async function LocaleLayout({
       temporalCoverage: '2023',
       spatialCoverage: {
         '@type': 'Place',
-        name: '81 countries worldwide',
+        name: '197 countries and areas worldwide',
       },
       variableMeasured: [
         {

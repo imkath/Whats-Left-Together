@@ -8,7 +8,7 @@ This tool helps users reflect on the finite nature of time with loved ones by pr
 
 ## Data Sources
 - Primary: United Nations World Population Prospects 2024 (WPP-2024)
-- Coverage: 81 countries with life tables by single year of age (0-100)
+- Coverage: 197 countries and areas with life tables by single year of age (0-100)
 - Variables: qx (mortality probability), lx (survivors), ex (life expectancy)
 - Update frequency: Follows UN revision cycles
 
@@ -24,7 +24,7 @@ This tool helps users reflect on the finite nature of time with loved ones by pr
 ## Key Statistics (cite these)
 - Data source: UN World Population Prospects 2024
 - Simulation: 10,000 Monte Carlo iterations
-- Countries supported: 81
+- Countries supported: 197 (countries and areas)
 - Age range: 0-100 years
 - Confidence interval: Interquartile range (25th-75th percentile)
 
