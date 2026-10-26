@@ -8,21 +8,22 @@ Este directorio contiene las tablas de vida procesadas de la ONU (WPP-2024).
 
 - URL: https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=Mortality
 - Dataset: Life tables by age (single year) and sex
-- Fecha de descarga: [TO BE FILLED]
+- Fecha de descarga: 2026-02-20
+- Cobertura en la app: 197 países y áreas (394 archivos, uno por país y sexo)
 - Versión: WPP-2024 Revision
 
 ## Estructura de archivos
 
 ```
-data/
-├── life-tables/
-│   ├── CHL_female.json   # Chile, mujeres
-│   ├── CHL_male.json     # Chile, hombres
-│   ├── USA_female.json   # Estados Unidos, mujeres
-│   ├── USA_male.json     # Estados Unidos, hombres
-│   └── ...
+public/data/life-tables/
+├── CHL_female.json       # Chile, mujeres
+├── CHL_male.json         # Chile, hombres
+└── ...                   # 394 archivos
+
+src/lib/data/
+├── raw/                  # XLSX y CSV de la ONU (no versionados)
 ├── countries.json        # Lista de países disponibles
-└── index.ts             # API para acceder a los datos
+└── index.ts              # API para acceder a los datos
 ```
 
 ## Formato de datos
@@ -34,8 +35,10 @@ Cada archivo JSON contiene:
   "country": "CHL",
   "countryName": "Chile",
   "sex": "female",
-  "year": 2024,
-  "source": "UN WPP-2024",
+  "year": 2023,
+  "source": "UN World Population Prospects 2024",
+  "sourceUrl": "https://population.un.org/wpp/",
+  "downloadDate": "2026-02-20",
   "entries": [
     {
       "age": 0,
@@ -50,10 +53,11 @@ Cada archivo JSON contiene:
 
 ## Cómo actualizar los datos
 
-1. Descargar las tablas más recientes de la ONU
-2. Ejecutar el script de procesamiento:
+1. Descargar los archivos F06 (single age, male y female) de la ONU y dejarlos en `src/lib/data/raw/`
+2. Convertirlos a CSV y generar los JSON:
    ```bash
-   npm run process-life-tables
+   python3 scripts/xlsx-to-csv.py
+   npm run process-life-tables-f06
    ```
 3. Actualizar la fecha de descarga en este README
 4. Hacer commit con mensaje descriptivo

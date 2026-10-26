@@ -22,7 +22,7 @@ Este documento lista todas las fuentes de datos confiables y trazables utilizada
 - Tablas de vida por país, sexo y edad
 - Probabilidad de supervivencia (lₓ)
 - Esperanza de vida residual (eₓ)
-- Cobertura: 237 países/áreas
+- Cobertura: 237 países/áreas (What's Left Together incluye 197 de ellos)
 - Edición: 2024 (muy reciente)
 
 **Cómo lo usamos**:

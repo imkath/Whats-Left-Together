@@ -93,7 +93,8 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 │   │   └── i18n/               # Translations (es.json, en.json)
 │   └── types/                  # TypeScript definitions
 ├── scripts/
-│   └── process_life_tables.py  # UN data processing script
+│   ├── xlsx-to-csv.py              # UN XLSX -> CSV
+│   └── process-life-tables-f06.js  # CSV -> JSON life tables
 └── METHODOLOGY.md              # Scientific documentation
 ```
 
@@ -102,11 +103,14 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 Life tables are pre-processed from UN Excel files:
 
 ```bash
-# Install Python dependencies
-pip install pandas openpyxl
+# Install Python dependency
+pip install openpyxl
 
-# Process UN data (requires source XLSX files in src/lib/data/raw/)
-python3 scripts/process_life_tables.py
+# 1. Convert the UN XLSX files in src/lib/data/raw/ to CSV
+python3 scripts/xlsx-to-csv.py
+
+# 2. Generate public/data/life-tables/*.json (year 2023)
+npm run process-life-tables-f06
 ```
 
 **Source files needed**:

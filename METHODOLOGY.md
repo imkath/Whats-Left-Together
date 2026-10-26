@@ -47,7 +47,7 @@ Utilizamos las **tablas de vida oficial de la ONU**:
 **UN World Population Prospects 2024 (WPP-2024)**
 
 - Dataset: Life tables by single year of age and sex
-- Cobertura: 237 países y áreas
+- Cobertura: 237 países y áreas (What's Left Together incluye 197 de ellos)
 - Periodo: 1950-2100 (proyecciones medias)
 - Actualización: Julio 2024
 
@@ -337,7 +337,7 @@ Para preguntas metodológicas, sugerencias o reportar errores, utiliza el formul
 
 ---
 
-**Última actualización**: 2025-01-21
+**Última actualización**: 2026-10-26
 **Versión del modelo**: 2.0 (Monte Carlo)
 **Datos**: WPP-2024 (datos reales integrados - 197 países y áreas, año 2023)
 **Simulaciones**: 10,000 iteraciones Monte Carlo para intervalos de confianza
