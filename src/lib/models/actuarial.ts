@@ -121,7 +121,6 @@ function sampleDeathYear(lifeTable: LifeTable, currentAge: number, random: () =>
  * Calculate expected encounters between two people
  * Uses Monte Carlo simulation for statistically valid confidence intervals
  *
- * This is the CORE calculation of the entire project.
  */
 export function calculateExpectedEncounters(
   input: RelationshipInput,

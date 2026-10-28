@@ -77,7 +77,8 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **i18n**: next-intl
-- **Data Processing**: Python (pandas) + Node.js
+- **Data Processing**: Python (openpyxl) + Node.js
+- **Hosting**: Cloudflare Pages, deployed by GitHub Actions on every push to `main`
 
 ## Project Structure
 
@@ -138,7 +139,13 @@ Download from: https://population.un.org/wpp/downloads?folder=Standard%20Project
 
 ## Feedback
 
-If you have suggestions, find bugs, or want to share your thoughts, use the feedback form available in the footer of the website.
+Use the feedback form in the site footer. Messages are sent by email through `src/app/api/feedback/route.ts`, which needs three values in the Cloudflare Pages project settings: `BREVO_API_KEY`, `FEEDBACK_FROM` and `FEEDBACK_TO`. None of them belong in the repository.
+
+## Security
+
+- Security headers (CSP, HSTS, frame and referrer policies) are set in `src/middleware.ts` for pages and in `public/_headers` for static files.
+- The feedback endpoint only accepts same-origin JSON, limits size and length, and drops bot submissions with a honeypot and a minimum fill time.
+- The calculation runs in the browser. Ages and names never leave it; the only request is the static life table for the chosen country and sex.
 
 ## License
 
@@ -153,13 +160,13 @@ This project is intended for ethical and educational use. Users are expected to:
 If you use this project in research or publications:
 
 ```
-What's Left Together (2025). A statistical calculator for expected encounters
+What's Left Together (2026). A statistical calculator for expected encounters
 based on UN World Population Prospects 2024.
 https://whatslefttogether.com
 ```
 
 ---
 
-**Last updated**: 2025-01-21
+**Last updated**: 2026-10-27
 **Data version**: UN WPP-2024 (year 2023)
 **Countries**: 197 countries and areas

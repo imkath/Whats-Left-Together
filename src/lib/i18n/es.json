@@ -659,7 +659,7 @@
   "feedback": {
     "title": "Enviar comentarios",
     "close": "Cerrar",
-    "intro": "Tu opinión nos ayuda a mejorar. Cuéntanos qué piensas o si encontraste algún problema.",
+    "intro": "Si algo no funciona, falta un país o tienes una idea, cuéntalo aquí. Lo lee la persona que hizo el sitio.",
     "typeLabel": "Tipo de comentario",
     "types": {
       "suggestion": "Sugerencia",
@@ -671,17 +671,18 @@
     "emailLabel": "Correo electrónico",
     "optional": "opcional",
     "emailPlaceholder": "tu@email.com",
-    "emailNote": "Solo si quieres que te contactemos sobre tu comentario.",
+    "emailNote": "Solo se usa para responderte sobre este comentario. No se guarda en ninguna lista ni se comparte.",
     "send": "Enviar",
     "sending": "Enviando…",
-    "successTitle": "¡Gracias!",
-    "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto.",
+    "successTitle": "Comentario enviado",
+    "successMessage": "Gracias por escribir. Si dejaste tu correo, la respuesta llega ahí.",
     "required": "requerido",
     "messagePlaceholders": {
       "suggestion": "Cuéntanos tu idea o qué mejorarías de la herramienta…",
       "bug": "Describe el problema que encontraste. ¿Cuándo ocurre? ¿Qué estabas haciendo?",
       "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario…"
-    }
+    },
+    "errorMessage": "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo en un rato; tu texto sigue aquí."
   },
   "validation": {
     "summaryTitle": "Por favor corrige lo siguiente:",

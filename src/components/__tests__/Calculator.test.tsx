@@ -50,7 +50,7 @@ describe('Calculator wizard', () => {
     jest.clearAllMocks();
   });
 
-  describe('step 1 — the person', () => {
+  describe('step 1: the person', () => {
     it('renders the relationship and optional name fields', () => {
       render(<Calculator />);
       expect(screen.getByText('Calculator')).toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('Calculator wizard', () => {
     });
   });
 
-  describe('step 2 — about them', () => {
+  describe('step 2: about them', () => {
     it('shows their age (default 75) and a sex toggle defaulting to female', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
@@ -115,7 +115,7 @@ describe('Calculator wizard', () => {
     });
   });
 
-  describe('step 3 — about you', () => {
+  describe('step 3: about you', () => {
     it('shows your age (default 30)', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
@@ -126,7 +126,7 @@ describe('Calculator wizard', () => {
     });
   });
 
-  describe('step 4 — frequency', () => {
+  describe('step 4: frequency', () => {
     it('shows presets with the monthly preset active by default', async () => {
       render(<Calculator />);
       const user = userEvent.setup();

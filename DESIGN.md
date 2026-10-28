@@ -1,6 +1,6 @@
 # DESIGN.md
 
-Sistema de diseño de What's Left Together. Lo lee cualquiera que toque la UI, persona o modelo.
+Sistema de diseño de What's Left Together. Cualquier cambio de UI parte de aquí.
 
 ## Para quién
 

@@ -90,7 +90,6 @@ export async function generateMetadata({
       title: seo.twitterTitle,
       description: seo.twitterDescription,
       images: [`${SITE_URL}/og-image.png`],
-      creator: '@whatslefttogether',
     },
     robots: {
       index: true,
@@ -131,7 +130,7 @@ export default async function LocaleLayout({
 
   const seo = messages.seo;
 
-  // Multiple JSON-LD schemas for comprehensive SEO
+  // Structured data: the app, the site, the publisher and the FAQ.
   const jsonLdSchemas = [
     // WebApplication schema
     {
@@ -174,7 +173,7 @@ export default async function LocaleLayout({
               'Support for 197 countries and areas',
             ],
     },
-    // WebSite schema for sitelinks search
+    // WebSite schema
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
@@ -182,14 +181,6 @@ export default async function LocaleLayout({
       name: "What's Left Together",
       url: SITE_URL,
       inLanguage: [locale === 'es' ? 'es-ES' : 'en-US'],
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${SITE_URL}/${locale}?q={search_term_string}`,
-        },
-        'query-input': 'required name=search_term_string',
-      },
     },
     // Organization schema
     {
@@ -201,7 +192,7 @@ export default async function LocaleLayout({
       logo: `${SITE_URL}/icon-512.png`,
       sameAs: [],
     },
-    // FAQ schema (great for rich snippets)
+    // FAQ schema
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',

@@ -256,7 +256,7 @@ export default function Calculator({ intro }: { intro?: React.ReactNode }) {
     if (!result.success) {
       const errors: Record<string, string> = {};
       let firstStep: number | null = null;
-      (result.error as ZodError).errors.forEach((err) => {
+      (result.error as ZodError).issues.forEach((err) => {
         const path = err.path.join('.');
         if (!errors[path]) errors[path] = err.message;
         const s = stepOfPath(path);

@@ -287,7 +287,7 @@
       "bothAlive": "Both",
       "youAlive": "You",
       "themAlive": "The other person",
-      "intro": "This chart shows how that probability changes over time — for you, for them, and for both of you at the same time.",
+      "intro": "This chart shows how that probability changes over time for you, for them and for both of you at the same time.",
       "title": "Survival probability year by year",
       "description": "This chart shows the probability of both being alive each future year, based on life tables from {source}."
     },
@@ -677,7 +677,7 @@
   "feedback": {
     "title": "Send feedback",
     "close": "Close",
-    "intro": "Your feedback helps us improve. Tell us what you think or if you found any issues.",
+    "intro": "If something breaks, a country is missing or you have an idea, write it here. The person who built the site reads it.",
     "typeLabel": "Feedback type",
     "types": {
       "suggestion": "Suggestion",
@@ -689,17 +689,18 @@
     "emailLabel": "Email",
     "optional": "optional",
     "emailPlaceholder": "your@email.com",
-    "emailNote": "Only if you want us to contact you about your feedback.",
+    "emailNote": "Only used to reply to this message. It is not added to any list or shared.",
     "send": "Send",
     "sending": "Sending…",
-    "successTitle": "Thank you!",
-    "successMessage": "Your feedback has been received. We'll review it soon.",
+    "successTitle": "Message sent",
+    "successMessage": "Thanks for writing. If you left your email, the reply will go there.",
     "required": "required",
     "messagePlaceholders": {
       "suggestion": "Tell us your idea or what could be improved in the tool…",
       "bug": "Describe the problem you encountered. When does it happen? What were you doing?",
       "other": "Share your thoughts, questions, or any other feedback…"
-    }
+    },
+    "errorMessage": "It couldn't be sent. Check your connection and try again in a while; your text is still here."
   },
   "validation": {
     "summaryTitle": "Please fix the following:",

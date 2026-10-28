@@ -49,7 +49,7 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
   };
 
   // bothAlive (the data that's alive) carries the single accent: crepúsculo.
-  // The individual curves stay monochrome — two warm grays, subordinate.
+  // The individual curves stay in gray so the shared curve leads.
   const presence = dark ? '#B48C97' : '#834E60';
   const seriesColors = [
     presence, // bothAlive

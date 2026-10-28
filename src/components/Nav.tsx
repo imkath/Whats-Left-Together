@@ -67,7 +67,7 @@ export default function Nav() {
         <Link
           href={`/${locale}`}
           className="flex-shrink-0 flex items-center"
-          aria-label="What's Left Together — Home"
+          aria-label="What's Left Together, home"
         >
           <svg
             width="24"

@@ -259,14 +259,14 @@ Este segundo caso refleja la realidad de abuelos en edad avanzada: el tiempo res
 
 ### 6.1. Qué NO es esta herramienta
 
-❌ **No es**:
+**No es**:
 
 - Una predicción médica individual
 - Un consejo sobre decisiones de vida
 - Una herramienta diagnóstica
 - Un motivo para decisiones extremas (ej. "ya es muy tarde para reconectar")
 
-✅ **Es**:
+**Es**:
 
 - Una aproximación basada en promedios poblacionales
 - Un espejo estadístico para reflexión

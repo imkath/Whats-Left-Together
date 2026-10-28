@@ -9,6 +9,9 @@
 
 import { z } from 'zod';
 
+// The site's CSP forbids eval, so skip Zod's eval probe instead of tripping a CSP report.
+z.config({ jitless: true });
+
 /** Translator bound to the `validation` namespace (e.g. `useTranslations('validation')`). */
 export type ValidationTranslator = (
   key: string,
@@ -50,18 +53,16 @@ export function buildRelationshipInputSchema(t: ValidationTranslator) {
   const personSchema = z.object({
     age: z
       .number({
-        required_error: t('ageRequired'),
-        invalid_type_error: t('ageInvalid'),
+        error: (issue) => (issue.input === undefined ? t('ageRequired') : t('ageInvalid')),
       })
       .int(t('ageInteger'))
       .min(0, t('ageMin'))
       .max(100, t('ageMax', { max: 100 })),
     sex: z.enum(['male', 'female'], {
-      required_error: t('sexRequired'),
-      invalid_type_error: t('sexInvalid'),
+      error: (issue) => (issue.input === undefined ? t('sexRequired') : t('sexInvalid')),
     }),
     country: z
-      .string({ required_error: t('countryRequired') })
+      .string({ error: t('countryRequired') })
       .length(3, t('countryInvalid'))
       .regex(/^[A-Z]{3}$/, t('countryInvalid')),
   });
@@ -71,8 +72,8 @@ export function buildRelationshipInputSchema(t: ValidationTranslator) {
       you: personSchema,
       them: personSchema,
       relationType: z.enum(RELATION_TYPES, {
-        required_error: t('relationRequired'),
-        invalid_type_error: t('relationInvalid'),
+        error: (issue) =>
+          issue.input === undefined ? t('relationRequired') : t('relationInvalid'),
       }),
       visitsPerYear: z
         .number()

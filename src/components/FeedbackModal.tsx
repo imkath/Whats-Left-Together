@@ -1,138 +1,126 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { CloseCircle, SendSquare, ChatLine } from '@solar-icons/react';
-import { useTranslations } from 'next-intl';
+import { CloseCircle, SendSquare } from '@solar-icons/react';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface FeedbackModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type Status = 'idle' | 'sending' | 'sent' | 'error';
+type FeedbackType = 'suggestion' | 'bug' | 'other';
+
 export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const t = useTranslations('feedback');
-  const [feedbackType, setFeedbackType] = useState<'suggestion' | 'bug' | 'other'>('suggestion');
+  const locale = useLocale();
+  const [feedbackType, setFeedbackType] = useState<FeedbackType>('suggestion');
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const [website, setWebsite] = useState('');
+  const [status, setStatus] = useState<Status>('idle');
+  const openedAt = useRef(0);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (isOpen) {
+      openedAt.current = Date.now();
       document.body.style.overflow = 'hidden';
       closeButtonRef.current?.focus();
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
-
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
+      if (e.key === 'Escape' && isOpen) onClose();
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  const isEmailRequired = feedbackType === 'suggestion';
+  const reset = () => {
+    setMessage('');
+    setEmail('');
+    setWebsite('');
+    setFeedbackType('suggestion');
+    setStatus('idle');
+  };
+
+  const handleClose = () => {
+    if (status === 'sent') reset();
+    onClose();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
-    if (isEmailRequired && !email.trim()) return;
+    if (message.trim().length < 5 || status === 'sending') return;
 
-    setIsSubmitting(true);
-
-    const endpoint = process.env.NEXT_PUBLIC_FEEDBACK_ENDPOINT;
-    if (endpoint) {
-      try {
-        await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: feedbackType,
-            message,
-            email,
-            timestamp: new Date().toISOString(),
-          }),
-        });
-      } catch {
-        // Fail silently — the user already submitted, we don't want to alarm them
-      }
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: feedbackType,
+          message: message.trim(),
+          email: email.trim(),
+          locale,
+          website,
+          elapsedMs: Date.now() - openedAt.current,
+        }),
+      });
+      setStatus(res.ok ? 'sent' : 'error');
+    } catch {
+      setStatus('error');
     }
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    setTimeout(() => {
-      setMessage('');
-      setEmail('');
-      setFeedbackType('suggestion');
-      setIsSubmitted(false);
-      onClose();
-    }, 2000);
   };
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-neutral-950/60 z-50 flex items-center justify-center p-4"
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) handleClose();
       }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="feedback-title"
       aria-describedby="feedback-description"
     >
-      <div
-        ref={modalRef}
-        className="bg-neutral-50 dark:bg-neutral-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
-          <div className="flex items-center gap-2">
-            <ChatLine
-              size={20}
-              className="text-primary-600 dark:text-primary-400"
-              aria-hidden="true"
-            />
-            <h2 id="feedback-title" className="text-lg font-semibold">
-              {t('title')}
-            </h2>
-          </div>
+      <div className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-neutral-200 dark:border-neutral-700">
+          <h2 id="feedback-title" className="text-lg font-bold">
+            {t('title')}
+          </h2>
           <button
             ref={closeButtonRef}
-            onClick={onClose}
-            className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+            type="button"
+            onClick={handleClose}
+            className="btn-quiet -mr-3"
             aria-label={t('close')}
           >
             <CloseCircle size={20} aria-hidden="true" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-4">
-          {isSubmitted ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-presence/15 rounded-full flex items-center justify-center mx-auto mb-4">
-                <SendSquare size={32} className="text-presence" aria-hidden="true" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">{t('successTitle')}</h3>
+        <div className="p-6">
+          {status === 'sent' ? (
+            <div className="py-6" role="status">
+              <h3 className="text-lg font-bold mb-2">{t('successTitle')}</h3>
               <p className="text-neutral-600 dark:text-neutral-400">{t('successMessage')}</p>
+              <button type="button" onClick={handleClose} className="btn-secondary mt-6">
+                {t('close')}
+              </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <p
                 id="feedback-description"
                 className="text-sm text-neutral-600 dark:text-neutral-400"
@@ -140,21 +128,23 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 {t('intro')}
               </p>
 
-              {/* Feedback type */}
               <div>
-                <label className="block text-sm font-medium mb-2">{t('typeLabel')}</label>
-                <div className="flex gap-2" role="radiogroup" aria-label={t('typeLabel')}>
+                <span id="feedback-type-label" className="field-label">
+                  {t('typeLabel')}
+                </span>
+                <div
+                  className="grid grid-cols-3 gap-2"
+                  role="radiogroup"
+                  aria-labelledby="feedback-type-label"
+                >
                   {(['suggestion', 'bug', 'other'] as const).map((type) => (
                     <button
                       key={type}
                       type="button"
+                      role="radio"
+                      aria-checked={feedbackType === type}
                       onClick={() => setFeedbackType(type)}
-                      aria-pressed={feedbackType === type}
-                      className={`px-3 py-1.5 text-sm rounded-full border transition-colors ${
-                        feedbackType === type
-                          ? 'bg-primary-600 text-neutral-50 border-primary-600 dark:bg-primary-200 dark:text-neutral-900 dark:border-primary-200'
-                          : 'border-neutral-300 dark:border-neutral-600 hover:border-primary-400 dark:hover:border-primary-500'
-                      }`}
+                      className="choice text-center"
                     >
                       {t(`types.${type}`)}
                     </button>
@@ -162,63 +152,72 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 </div>
               </div>
 
-              {/* Message */}
               <div>
-                <label htmlFor="feedback-message" className="block text-sm font-medium mb-2">
-                  {t('messageLabel')} <span className="text-presence">*</span>
+                <label htmlFor="feedback-message" className="field-label">
+                  {t('messageLabel')}
                 </label>
                 <textarea
                   id="feedback-message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  rows={4}
+                  rows={5}
+                  maxLength={2000}
                   required
-                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                  className="input-field resize-y"
                   placeholder={t(`messagePlaceholders.${feedbackType}`)}
                 />
               </div>
 
-              {/* Email */}
               <div>
-                <label htmlFor="feedback-email" className="block text-sm font-medium mb-2">
+                <label htmlFor="feedback-email" className="field-label">
                   {t('emailLabel')}{' '}
-                  {isEmailRequired ? (
-                    <span className="text-presence">*</span>
-                  ) : (
-                    <span className="text-neutral-500 font-normal">({t('optional')})</span>
-                  )}
+                  <span className="font-normal text-neutral-500">({t('optional')})</span>
                 </label>
                 <input
                   id="feedback-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required={isEmailRequired}
+                  maxLength={254}
                   autoComplete="email"
                   spellCheck={false}
-                  className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="input-field"
                   placeholder={t('emailPlaceholder')}
                 />
-                <p className="text-xs text-neutral-500 mt-1">{t('emailNote')}</p>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+                  {t('emailNote')}
+                </p>
               </div>
 
-              {/* Submit */}
+              {/* Hidden from people and assistive tech; bots tend to fill it. */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="feedback-website">Website</label>
+                <input
+                  id="feedback-website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
+
+              {status === 'error' && (
+                <p
+                  role="alert"
+                  className="text-sm px-4 py-3 surface border border-neutral-900 dark:border-neutral-100"
+                >
+                  {t('errorMessage')}
+                </p>
+              )}
+
               <button
                 type="submit"
-                disabled={isSubmitting || !message.trim() || (isEmailRequired && !email.trim())}
-                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={status === 'sending' || message.trim().length < 5}
+                className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? (
-                  <>
-                    <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                    {t('sending')}
-                  </>
-                ) : (
-                  <>
-                    <SendSquare size={16} aria-hidden="true" />
-                    {t('send')}
-                  </>
-                )}
+                <SendSquare size={18} aria-hidden="true" />
+                {status === 'sending' ? t('sending') : t('send')}
               </button>
             </form>
           )}
