@@ -571,7 +571,8 @@
     "sections": {
       "purpose": {
         "title": "Why this tool exists",
-        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we’ll have “time later” to see the important people in our lives.",
+        "p1": "What's Left Together exists because of my grandmother. She lives in another region, we don't see each other as often as I'd like, and she has Alzheimer's. She is one of the most important people in my life and I miss her every day.",
+        "p1b": "Because of her, I'd like those of us who have grandparents who cared for us and loved us to see them, keep them company and value them while they are here. We don't know how much time we have left with them, and once it's too late there is nothing left to do. The same goes for anyone we love, whatever their age.",
         "p2": "Physical distance, work obligations, and the inertia of daily life make us postpone visits, calls, or simply being present. We assume there will always be a next time.",
         "p3": "This tool doesn't aim to scare, but to make explicit something that normally remains abstract: if we keep living as we do now, with the same frequency of encounters, how many more times will we actually see each other?"
       },
@@ -579,7 +580,9 @@
         "title": "Inspiration",
         "p1": "This project is inspired by Tim Urban’s article “The Tail End” (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
         "p2": "Unlike that article, which uses generic estimates, this tool incorporates official demographic data by age, country, and sex, to make the estimate more precise and personalized.",
-        "linkText": "“The Tail End”"
+        "linkText": "“The Tail End”",
+        "campaign": "I was also inspired by the campaign <link>“Tenemos que vernos más”</link> (“We have to see each other more”, Ruavieja, Spain, 2018), which estimated how many days you have left with someone from how often you meet and Spain's official life expectancy.",
+        "study": "Seeing someone often seems to matter. In a study of over 450,000 UK adults (<link>Foster et al., BMC Medicine, 2023</link>), people who were never visited by family or friends had a 39% higher risk of death than those visited daily, and the risk started to rise when visits fell below once a month. This is an observed association: it does not prove that visiting someone lengthens their life, and the study is about adults aged 38 to 73, not grandparents specifically."
       },
       "audience": {
         "title": "Who this tool is for",

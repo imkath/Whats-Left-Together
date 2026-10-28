@@ -57,6 +57,10 @@ export default function AboutPage() {
                 </p>
 
                 <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
+                  {t('sections.purpose.p1b')}
+                </p>
+
+                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
                   {t('sections.purpose.p2')}
                 </p>
 
@@ -93,8 +97,38 @@ export default function AboutPage() {
                 </a>
               </p>
 
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
                 {t('sections.inspiration.p2')}
+              </p>
+
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed mb-4">
+                {t.rich('sections.inspiration.campaign', {
+                  link: (chunks) => (
+                    <a
+                      href="https://www.reasonwhy.es/actualidad/ruavieja-tenemos-vernos-mas-2018"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary-700 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 underline font-medium"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                })}
+              </p>
+
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                {t.rich('sections.inspiration.study', {
+                  link: (chunks) => (
+                    <a
+                      href="https://doi.org/10.1186/s12916-023-03055-7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary-700 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 underline font-medium"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                })}
               </p>
             </div>
           </section>

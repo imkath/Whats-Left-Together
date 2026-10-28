@@ -553,7 +553,8 @@
     "sections": {
       "purpose": {
         "title": "Por qué existe esta herramienta",
-        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos “tiempo después” para ver a las personas importantes en nuestras vidas.",
+        "p1": "What's Left Together nació por mi abuela. Vive en otra región, no nos vemos tan seguido como quisiera y tiene Alzheimer. Es una de las personas más importantes de mi vida y la extraño todos los días.",
+        "p1b": "Por ella me gustaría que quienes tenemos abuelos que nos cuidaron y nos quisieron los veamos, los acompañemos y los valoremos mientras están. No sabemos cuánto nos queda con ellos, y cuando sea tarde ya no habrá nada que hacer. Lo mismo vale para cualquier persona que queramos, tenga la edad que tenga.",
         "p2": "La distancia física, las obligaciones laborales, y la inercia del día a día hacen que posterguemos visitas, llamadas, o simplemente estar presentes. Asumimos que siempre habrá una próxima vez.",
         "p3": "Esta herramienta no pretende asustar, sino hacer explícito algo que normalmente permanece abstracto: si seguimos viviendo como hasta ahora, con la misma frecuencia de encuentros, ¿cuántas veces más nos veremos realmente?"
       },
@@ -561,7 +562,9 @@
         "title": "Inspiración",
         "p1": "Este proyecto está inspirado en el artículo “The Tail End” de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
         "p2": "A diferencia de ese artículo, que usa estimaciones genéricas, esta herramienta incorpora datos demográficos oficiales por edad, país y sexo, para hacer la estimación más precisa y personalizada.",
-        "linkText": "“The Tail End”"
+        "linkText": "“The Tail End”",
+        "campaign": "También me inspiró la campaña <link>“Tenemos que vernos más”</link> (Ruavieja, España, 2018), que calculaba cuántos días te quedan con alguien a partir de cada cuánto se ven y de la esperanza de vida del INE de España.",
+        "study": "Ver a alguien seguido parece importar. En un estudio con más de 450.000 adultos del Reino Unido (<link>Foster et al., BMC Medicine, 2023</link>), quienes nunca recibían visitas de familiares o amigos tuvieron un riesgo de muerte 39% mayor que quienes las recibían a diario, y el riesgo empezaba a subir cuando las visitas eran menos de una vez al mes. Es una asociación observada: no prueba que visitar a alguien alargue su vida, y el estudio no trata de abuelos en particular, sino de adultos de 38 a 73 años."
       },
       "audience": {
         "title": "Para quién es esta herramienta",
