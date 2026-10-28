@@ -82,11 +82,14 @@ export async function POST(request: Request) {
   }
 
   const lines = [
+    `Proyecto: What's Left Together (whatslefttogether.com/${data.locale})`,
     `Tipo: ${TYPE_LABEL[data.type]}`,
-    `Idioma del sitio: ${data.locale}`,
     `Correo para responder: ${data.email || 'no dejó correo'}`,
     '',
     data.message,
+    '',
+    '--',
+    "Enviado desde el formulario de comentarios de What's Left Together.",
   ];
 
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -99,7 +102,7 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       sender: { name: "What's Left Together", email: env.FEEDBACK_FROM },
       to: [{ email: env.FEEDBACK_TO }],
-      subject: `What's Left Together, comentario nuevo (${TYPE_LABEL[data.type].toLowerCase()})`,
+      subject: `[What's Left Together] ${TYPE_LABEL[data.type]}`,
       // Plain text only: whatever the visitor typed is never rendered as HTML.
       textContent: lines.join('\n'),
     }),
