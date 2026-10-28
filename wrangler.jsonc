@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "whats-left-together",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Without this, esbuild wraps functions in __name(), which breaks the inline
+  // theme script that next-themes serializes into the HTML.
+  "keep_names": false,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // whatslefttogether.com is attached as a Worker custom domain in the dashboard,
+  // so CI only needs permission to upload the script.
+  "workers_dev": true,
+  "preview_urls": false
+}

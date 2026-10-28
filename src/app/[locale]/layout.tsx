@@ -15,8 +15,6 @@ const schibsted = Schibsted_Grotesk({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://whatslefttogether.com';
 
-export const runtime = 'edge';
-
 export async function generateMetadata({
   params,
 }: {

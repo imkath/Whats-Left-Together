@@ -1,9 +1,8 @@
 import { z } from 'zod';
 
-export const runtime = 'edge';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 
-// Sender, recipient and Brevo key live in the Cloudflare Pages project settings,
-// never in the repository.
+// Sender, recipient and Brevo key are Worker secrets, never part of the repository.
 type FeedbackEnv = {
   BREVO_API_KEY?: string;
   FEEDBACK_FROM?: string;
@@ -31,12 +30,11 @@ const FeedbackSchema = z.object({
 
 const TYPE_LABEL = { suggestion: 'Sugerencia', bug: 'Problema', other: 'Otro' } as const;
 
-async function readEnv(): Promise<FeedbackEnv> {
+function readEnv(): FeedbackEnv {
   try {
-    const { getRequestContext } = await import('@cloudflare/next-on-pages');
-    return getRequestContext().env as FeedbackEnv;
+    return getCloudflareContext().env as FeedbackEnv;
   } catch {
-    // Outside Cloudflare (local dev) the values come from .env.local.
+    // Outside the Worker (tests, plain next dev) the values come from process.env.
     return process.env as FeedbackEnv;
   }
 }
@@ -76,7 +74,7 @@ export async function POST(request: Request) {
   // Answer bots as if it worked, so they learn nothing from the response.
   if (data.website || data.elapsedMs < MIN_FILL_MS) return json(202);
 
-  const env = await readEnv();
+  const env = readEnv();
   if (!env.BREVO_API_KEY || !env.FEEDBACK_FROM || !env.FEEDBACK_TO) {
     return json(503, { error: 'unavailable' });
   }

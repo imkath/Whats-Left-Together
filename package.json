@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cf": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -16,11 +15,15 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "prepare": "husky",
-    "process-life-tables-f06": "node scripts/process-life-tables-f06.js"
+    "process-life-tables-f06": "node scripts/process-life-tables-f06.js",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@nivo/core": "^0.99.0",
     "@nivo/line": "^0.99.0",
+    "@opennextjs/cloudflare": "^1.20.13",
     "@solar-icons/react": "^1.1.0",
     "next": "^15.5.28",
     "next-intl": "^4.14.9",
@@ -30,7 +33,6 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@testing-library/dom": "10.4.1",
@@ -54,11 +56,14 @@
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.5.0",
-    "vercel": "47.0.4"
+    "wrangler": "^4.154.0"
   },
   "overrides": {
     "next": {
       "postcss": "^8.5.32"
+    },
+    "@node-minify/core": {
+      "glob": "^10.5.0"
     }
   }
 }

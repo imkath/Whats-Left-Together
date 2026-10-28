@@ -26,6 +26,12 @@ npm install
 npm run dev
 
 # Open http://localhost:3000
+
+# Run the production build in the Workers runtime
+npm run preview
+
+# Deploy (CI does this on every push to main)
+npm run deploy
 ```
 
 ## Data Sources
@@ -78,7 +84,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for complete mathematical model and scienti
 - **Styling**: Tailwind CSS
 - **i18n**: next-intl
 - **Data Processing**: Python (openpyxl) + Node.js
-- **Hosting**: Cloudflare Pages, deployed by GitHub Actions on every push to `main`
+- **Hosting**: a Cloudflare Worker built with the [OpenNext adapter](https://opennext.js.org/cloudflare), deployed by GitHub Actions on every push to `main`
 
 ## Project Structure
 
@@ -139,7 +145,7 @@ Download from: https://population.un.org/wpp/downloads?folder=Standard%20Project
 
 ## Feedback
 
-Use the feedback form in the site footer. Messages are sent by email through `src/app/api/feedback/route.ts`, which needs three values in the Cloudflare Pages project settings: `BREVO_API_KEY`, `FEEDBACK_FROM` and `FEEDBACK_TO`. None of them belong in the repository.
+Use the feedback form in the site footer. Messages are sent by email through `src/app/api/feedback/route.ts`, which needs three Worker secrets: `BREVO_API_KEY`, `FEEDBACK_FROM` and `FEEDBACK_TO` (`npx wrangler secret put NAME`). None of them belong in the repository; for local testing put them in `.dev.vars`.
 
 ## Security
 

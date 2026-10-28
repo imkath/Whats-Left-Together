@@ -4,6 +4,13 @@
 
 import { POST } from '../route';
 
+// Outside a Worker there is no Cloudflare context, so the route reads process.env.
+jest.mock('@opennextjs/cloudflare', () => ({
+  getCloudflareContext: () => {
+    throw new Error('not running in a Worker');
+  },
+}));
+
 const ORIGIN = 'https://whatslefttogether.com';
 
 const valid = {

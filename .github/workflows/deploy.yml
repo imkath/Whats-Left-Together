@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare Workers
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   check:
-    name: Lint, Type Check & Build
+    name: Lint, Types, Tests & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +29,14 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
-      - name: Build
-        run: npx next build
+      - name: Tests
+        run: npx jest --ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Build for Cloudflare
+        run: npx opennextjs-cloudflare build
 
   deploy:
     name: Deploy to Cloudflare
@@ -53,13 +59,13 @@ jobs:
         run: npm ci
 
       - name: Build for Cloudflare
-        run: npx @cloudflare/next-on-pages
+        run: npx opennextjs-cloudflare build
         env:
           NODE_ENV: production
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .vercel/output/static --project-name=whats-left-together --branch=${{ github.ref_name }}
+          command: deploy

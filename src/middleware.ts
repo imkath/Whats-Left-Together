@@ -7,8 +7,8 @@ const handleI18n = createMiddleware({
   localeDetection: true,
 });
 
-// Cloudflare Pages ignores the headers() block of next.config.js, so the security
-// headers for every page are set here. Static files get theirs from public/_headers.
+// Security headers for every page are set here. Static files are served by the
+// Worker's asset binding and get theirs from public/_headers.
 const CSP = [
   "default-src 'self'",
   // Next.js and next-themes inject small inline scripts; nothing loads from elsewhere.
@@ -47,5 +47,5 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
   // Every route except the API, Next internals and files with an extension.
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };
