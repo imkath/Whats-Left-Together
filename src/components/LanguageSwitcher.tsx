@@ -1,46 +1,44 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+
+const OPTIONS = [
+  { code: 'es', label: 'ES', aria: 'Ver en español' },
+  { code: 'en', label: 'EN', aria: 'View in English' },
+] as const;
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
-  const router = useRouter();
   const pathname = usePathname();
 
-  const switchLocale = (newLocale: string) => {
-    if (newLocale === locale) return;
-
-    const segments = pathname.split('/').filter(Boolean);
-    const pathWithoutLocale = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
-
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+  const switchLocale = (next: string) => {
+    if (next === locale) return;
+    const rest = pathname.split('/').filter(Boolean).slice(1).join('/');
+    // The locale is the root layout segment, so a client-side push remounts <html>
+    // and the theme class blinks off. A full load lets next-themes set it before paint.
+    window.location.assign(`/${next}${rest ? `/${rest}` : ''}${window.location.search}`);
   };
 
   return (
-    <div className="flex items-center gap-0.5 rounded-lg bg-neutral-200/60 dark:bg-neutral-700/60 p-0.5">
-      <button
-        onClick={() => switchLocale('es')}
-        aria-label="Cambiar a español"
-        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${
-          locale === 'es'
-            ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-white shadow-sm'
-            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
-        }`}
-      >
-        ES
-      </button>
-      <button
-        onClick={() => switchLocale('en')}
-        aria-label="Switch to English"
-        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 ${
-          locale === 'en'
-            ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-white shadow-sm'
-            : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
-        }`}
-      >
-        EN
-      </button>
+    <div className="flex items-center gap-0.5 rounded-md border border-neutral-200 dark:border-neutral-700 p-0.5">
+      {OPTIONS.map((o) => (
+        <button
+          key={o.code}
+          type="button"
+          lang={o.code}
+          onClick={() => switchLocale(o.code)}
+          aria-label={o.aria}
+          aria-pressed={locale === o.code}
+          className={`px-2.5 py-1 text-xs font-medium rounded-[4px] transition-colors duration-150 ${
+            locale === o.code
+              ? 'bg-neutral-900 text-neutral-50 dark:bg-neutral-100 dark:text-neutral-900'
+              : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
     </div>
   );
 }
