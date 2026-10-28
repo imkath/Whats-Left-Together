@@ -1,23 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 
-// Warm ink ramp: paper (50) -> ink (950). Drives light surfaces and, by
-// inversion, dark text. The brand is monochrome (the logo is ink on paper),
-// so the decorative palettes collapse into this single warm-neutral system.
+// Neutral ink ramp: white (50) -> ink (900). The logo is black ink on white, so the
+// whole UI is monochrome and the only hue is `presence`. See DESIGN.md.
 const ink = {
-  50: '#F6F2EA', // paper
-  100: '#ECE6DB', // tiza / warm surface
-  200: '#E3DCCF', // line
-  300: '#D2C8B8',
-  400: '#A89E8E',
-  500: '#7D7365',
-  600: '#5E5648',
-  700: '#423B31',
-  800: '#2A241E',
-  900: '#17130F', // pizarra / ink
-  950: '#110E0B',
+  50: '#FFFFFF', // page
+  100: '#F4F4F3', // surface
+  200: '#E6E6E4', // line
+  300: '#D0D0CD',
+  400: '#9A9A96',
+  500: '#6E6E6A', // secondary text, 5.1:1 on white
+  600: '#52524F',
+  700: '#3A3A38',
+  800: '#232322',
+  900: '#111111', // ink
+  950: '#0A0A0A',
 };
 
 module.exports = {
+  // Hover styles only on devices that hover, so taps don't leave buttons stuck gray.
+  future: { hoverOnlyWhenSupported: true },
   darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -28,22 +29,29 @@ module.exports = {
     extend: {
       colors: {
         neutral: ink,
-        // Formerly gold/brown accents. Collapsed into the monochrome ink system:
-        // emphasis comes from weight and ink, never from a decorative hue.
+        // Kept as aliases so older pages keep compiling; they resolve to ink.
         accent: ink,
         primary: ink,
-        // The single color of the system: crepúsculo. Reserved for "what is still
-        // alive" (median encounters, the "both alive" series). Flips light/dark via
-        // the --presence CSS variable defined in globals.css.
+        // The single color: what is still alive (the result and its squares).
         presence: 'rgb(var(--presence) / <alpha-value>)',
         warm: {
-          50: '#FAF7F1',
-          100: '#F1ECE2',
-          200: '#E3DCCF',
+          50: '#F4F4F3',
+          100: '#F4F4F3',
+          200: '#E6E6E4',
         },
       },
       fontFamily: {
-        sans: ['Sora', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        DEFAULT: '6px',
+        md: '6px',
+        lg: '10px',
+        xl: '10px',
+        '2xl': '10px',
+      },
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.2, 0, 0, 1)',
       },
     },
   },

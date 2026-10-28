@@ -50,11 +50,11 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
 
   // bothAlive (the data that's alive) carries the single accent: crepúsculo.
   // The individual curves stay monochrome — two warm grays, subordinate.
-  const presence = dark ? '#9C7E86' : '#834E60';
+  const presence = dark ? '#B48C97' : '#834E60';
   const seriesColors = [
     presence, // bothAlive
-    dark ? '#A89E8E' : '#6B6258', // youAlive (warm gray)
-    dark ? '#7D7365' : '#A89E8E', // themAlive (warm gray, distinct lightness)
+    dark ? '#D0D0CD' : '#111111', // youAlive (ink)
+    dark ? '#6E6E6A' : '#9A9A96', // themAlive (gray, distinct lightness)
   ];
 
   // Nivo expects series format: [{ id, data: [{ x, y }] }]
@@ -85,20 +85,20 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
       domain: { line: { stroke: 'transparent' } },
       ticks: {
         line: { stroke: 'transparent' },
-        text: { fontSize: 11, fill: dark ? '#9A9186' : '#6B6258' },
+        text: { fontSize: 11, fill: dark ? '#9A9A96' : '#6E6E6A' },
       },
     },
     grid: {
       line: {
-        stroke: dark ? 'rgba(236,230,219,0.08)' : '#E3DCCF',
+        stroke: dark ? '#232322' : '#F4F4F3',
         strokeDasharray: '3 3',
       },
     },
     crosshair: {
-      line: { stroke: dark ? '#5E5648' : '#D2C8B8', strokeWidth: 1 },
+      line: { stroke: dark ? '#3A3A38' : '#D0D0CD', strokeWidth: 1 },
     },
     legends: {
-      text: { fontSize: 12, fill: dark ? '#9A9186' : '#6B6258' },
+      text: { fontSize: 12, fill: dark ? '#9A9A96' : '#6E6E6A' },
     },
   };
 
@@ -150,13 +150,13 @@ export default function VisualizationChart({ data, forceDark = false }: Visualiz
           sliceTooltip={({ slice }: SliceTooltipProps<ChartSeries>) => (
             <div
               style={{
-                background: dark ? '#1F1A15' : '#F6F2EA',
-                border: `1px solid ${dark ? '#2C261F' : '#E3DCCF'}`,
+                background: dark ? '#232322' : '#FFFFFF',
+                border: `1px solid ${dark ? '#3A3A38' : '#E6E6E4'}`,
                 borderRadius: '12px',
                 padding: '10px 14px',
                 fontSize: '12px',
-                color: dark ? '#ECE6DB' : '#423B31',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                color: dark ? '#F4F4F3' : '#111111',
+                boxShadow: 'none',
                 minWidth: 210,
                 maxWidth: 'min(90vw, 280px)',
               }}

@@ -54,20 +54,25 @@ describe('Calculator wizard', () => {
     it('renders the relationship and optional name fields', () => {
       render(<Calculator />);
       expect(screen.getByText('Calculator')).toBeInTheDocument();
-      expect(screen.getByLabelText('Relationship')).toBeInTheDocument();
+      expect(screen.getByRole('radiogroup')).toBeInTheDocument();
       expect(document.getElementById('them-name')).toBeInTheDocument();
     });
 
     it('defaults the relationship to grandmother_maternal', () => {
       render(<Calculator />);
-      expect(screen.getByLabelText('Relationship')).toHaveValue('grandmother_maternal');
+      expect(
+        screen.getByRole('radio', { name: 'relationChoices.grandmother_maternal' })
+      ).toHaveAttribute('aria-checked', 'true');
     });
 
     it('updates the relationship', async () => {
       render(<Calculator />);
       const user = userEvent.setup();
-      await user.selectOptions(screen.getByLabelText('Relationship'), 'father');
-      expect(screen.getByLabelText('Relationship')).toHaveValue('father');
+      await user.click(screen.getByRole('radio', { name: 'relationChoices.father' }));
+      expect(screen.getByRole('radio', { name: 'relationChoices.father' })).toHaveAttribute(
+        'aria-checked',
+        'true'
+      );
     });
 
     it('captures an optional name', async () => {
@@ -152,7 +157,17 @@ describe('Calculator wizard', () => {
       const user = userEvent.setup();
       await next(user);
       await user.click(screen.getByRole('button', { name: 'back' }));
-      expect(screen.getByLabelText('Relationship')).toBeInTheDocument();
+      expect(screen.getByRole('radiogroup')).toBeInTheDocument();
+    });
+
+    it('stops at the frequency step instead of submitting from step 3', async () => {
+      render(<Calculator />);
+      const user = userEvent.setup();
+      await next(user);
+      await next(user);
+      await next(user);
+      expect(screen.getByRole('button', { name: 'presetMonthly' })).toBeInTheDocument();
+      expect(screen.queryByTestId('results')).not.toBeInTheDocument();
     });
 
     it('shows results after calculating with defaults', async () => {

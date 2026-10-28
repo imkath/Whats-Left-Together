@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
-import { Sora } from 'next/font/google';
+import { Schibsted_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 
-const sora = Sora({
+const schibsted = Schibsted_Grotesk({
   subsets: ['latin'],
+  weight: ['400', '500', '700', '800'],
+  display: 'swap',
   variable: '--font-sans',
 });
 
@@ -400,12 +402,10 @@ export default async function LocaleLayout({
   ];
 
   return (
-    <html lang={locale} className={sora.variable} suppressHydrationWarning>
+    <html lang={locale} className={schibsted.variable} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#17130F" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#F6F2EA" media="(prefers-color-scheme: light)" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
         {/* GEO: Link to LLMs.txt for AI crawlers */}
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Information" />
         {jsonLdSchemas.map((schema, index) => (

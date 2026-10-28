@@ -23,9 +23,11 @@
   "hero": {
     "title": "Lo que nos queda juntos",
     "label": "Herramienta de reflexión estadística",
-    "subtitle": "Un espejo estadístico de cuántas veces más podrías ver a las personas que quieres, si sigues viviendo como hasta ahora.",
+    "subtitle": "Cuántas veces más podrías ver en persona a alguien que quieres, si todo sigue como hasta ahora.",
     "belowButton": "Basado en tablas de vida oficiales por edad y país. No es una predicción. Es una llamada de atención.",
-    "cta": "Calcular cuántas veces más"
+    "cta": "Empezar",
+    "note": "Usa las tablas de vida de la ONU para 197 países. Es un promedio de población: no sabe nada de la salud de nadie en particular.",
+    "howLink": "Cómo se calcula"
   },
   "calculator": {
     "title": "¿Cuántas veces más se verán?",
@@ -36,14 +38,18 @@
     "theirAge": "¿Cuántos años tiene?",
     "theirSex": "Sexo biológico",
     "relationship": "¿Qué relación tienen?",
-    "frequency": "Cuántas veces se ven en persona al año, en promedio",
+    "frequency": "¿Cada cuánto se ven?",
     "frequencyNote": "Incluye visitas, viajes, fines de semana juntos, pero no videollamadas.",
     "age": "¿Cuántos años tienes?",
     "sex": "Sexo biológico",
-    "country": "¿En qué país vives?",
+    "country": {
+      "using": "Se usarán las tablas de vida de {country}.",
+      "current": "elegido",
+      "noMatch": "No encontramos «{query}». Prueba con otra forma de escribirlo.",
+      "rejected": "«{query}» no está en la lista, así que se mantiene {country}."
+    },
     "theirCountry": "¿En qué país vive?",
     "visitsPerYear": "visitas por año",
-    "frequency": "¿Cada cuánto se ven?",
     "frequencyPeriodLabel": "¿Con qué frecuencia se ven en persona?",
     "timesPerPeriodLabel": "¿Cuántas veces?",
     "timesPerPeriodNote": "Máximo {max} veces {period}",
@@ -129,7 +135,16 @@
       "orExact": "O indica un número exacto",
       "freqExclude": "Cuentan los encuentros en persona: visitas, viajes, fines de semana juntos. No las videollamadas.",
       "summaryNamed": "Verás a {name} unas {visits} veces al año",
-      "summaryGeneric": "Unas {visits} veces al año"
+      "summaryGeneric": "Unas {visits} veces al año",
+      "stepNames": {
+        "1": "Quién",
+        "2": "Su edad",
+        "3": "Tú",
+        "4": "Frecuencia"
+      },
+      "relationQ": "¿Quién es?",
+      "summaryThem": "{age} años · {country}",
+      "keepGoing": "Puedes cambiar cualquier respuesta después."
     },
     "relShort": {
       "mother": "madre",
@@ -143,6 +158,16 @@
       "friend_male": "amigo",
       "other_family": "familiar",
       "other": "ser querido"
+    },
+    "relationChoices": {
+      "mother": "Mamá",
+      "father": "Papá",
+      "grandmother_maternal": "Abuela",
+      "grandfather_maternal": "Abuelo",
+      "partner": "Pareja",
+      "friend": "Amiga o amigo",
+      "other_family": "Otro familiar",
+      "other": "Otra persona"
     }
   },
   "results": {
@@ -240,9 +265,9 @@
       "now": "Ahora",
       "futureYears": "Años futuros",
       "plusYears": "+{years} años",
-      "bothAlive": "Ambos vivos",
-      "youAlive": "Tú vivo/a",
-      "themAlive": "Ellos vivos",
+      "bothAlive": "Ambos",
+      "youAlive": "Tú",
+      "themAlive": "La otra persona",
       "intro": "Este gráfico muestra cómo cambia esa probabilidad con el tiempo, para ti, para la otra persona, y para ambos al mismo tiempo.",
       "title": "Probabilidad de supervivencia año a año",
       "description": "Este gráfico muestra la probabilidad de que ambos estén vivos en cada año futuro, basado en las tablas de vida de {source}."
@@ -261,10 +286,45 @@
       "ageExceedsThem": "Las tablas de vida solo incluyen datos hasta 100 años para la persona que quieres ver. Los datos más allá de esa edad no están disponibles en nuestra fuente.",
       "networkError": "Error de conexión. Verifica tu conexión a internet e intenta de nuevo.",
       "calculationError": "Error al calcular. Por favor verifica los datos ingresados.",
-      "calculating": "Calculando\u2026",
+      "calculating": "Calculando…",
       "boundaryTitle": "Algo salió mal",
       "boundaryMessage": "Ocurrió un error inesperado. Por favor, recarga la página e intenta de nuevo.",
       "boundaryReload": "Recargar página"
+    },
+    "v2": {
+      "lead": "Si todo sigue igual",
+      "timesWith": "veces más con {person}",
+      "range": "Lo más probable es que sean entre {min} y {max}.",
+      "years": "Equivale a unos {yearsMin} a {yearsMax} años en que ambos sigan vivos, viéndose {visits} veces al año.",
+      "gridTitle": "Año por año",
+      "gridCaption": "Cada cuadrado es una visita posible. Los que se apagan son las que, en promedio, ya no ocurrirían porque uno de los dos falta.",
+      "gridUnit": "Cada cuadrado equivale a {n} visitas.",
+      "gridMore": "Y {count} años más con probabilidad baja.",
+      "gridAria": "{years} años, desde {from}. La probabilidad de que ambos sigan vivos baja de {start}% a {end}%.",
+      "whatIfTitle": "Lo que sí depende de ti",
+      "whatIfIntro": "La edad no se puede cambiar. La frecuencia sí.",
+      "whatIfPerYear": "{n} al año",
+      "whatIfNow": "hoy",
+      "whatIfTimes": "{count} veces",
+      "freq": {
+        "yearly3": "Pocas veces al año",
+        "monthly": "Una vez al mes",
+        "biweekly": "Dos veces al mes",
+        "weekly": "Cada semana"
+      },
+      "share": "Compartir",
+      "shareText": "Calculé cuántas veces más voy a ver a alguien que quiero. Hazlo tú también:",
+      "copied": "Enlace copiado",
+      "edit": "Cambiar respuestas",
+      "another": "Calcular con otra persona",
+      "survivalTitle": "Probabilidad de que ambos sigan vivos",
+      "survivalIn5": "{percent}% dentro de 5 años",
+      "caveatsTitle": "Qué calculamos y qué no",
+      "source": "Fuente: {source}, estimaciones de {year}.",
+      "nextRevision": "Es la revisión más reciente de la ONU. La siguiente se publica el 11 de julio de 2027 y la herramienta se actualizará entonces.",
+      "legendOn": "Visita que, en promedio, todavía ocurre",
+      "legendOff": "Visita que se pierde",
+      "gridAxis": "A la izquierda, el año y la edad que tendría {person}."
     }
   },
   "methodology": {
@@ -297,20 +357,20 @@
     }
   },
   "why": {
-    "title": "Por qué importa",
-    "intro": "Cuando percibimos que el tiempo es limitado, priorizamos lo que realmente importa.",
+    "title": "Por qué contar visitas",
+    "intro": "Hablar de años juntos suena a mucho. Contar visitas lo vuelve concreto.",
     "seeMethodology": "Ver metodología completa",
     "section1": {
-      "title": "El tiempo se consume sin que lo notemos",
-      "text": "Datos del American Time Use Survey muestran que la mayor parte del tiempo con padres se concentra antes de los 20 años. Después, la frecuencia disminuye dramáticamente."
+      "title": "El tiempo juntos se concentra temprano",
+      "text": "Según la American Time Use Survey, la mayor parte del tiempo que pasamos con nuestros padres ocurre antes de los 20 años. Después baja mucho y casi nunca lo notamos."
     },
     "section2": {
-      "title": "Teoría de la selectividad socioemocional",
-      "text": "Cuando percibimos que el tiempo es limitado, priorizamos relaciones cercanas y metas emocionales por encima de la exploración. (Carstensen, 1999)"
+      "title": "Saber que es limitado cambia las prioridades",
+      "text": "La teoría de la selectividad socioemocional (Carstensen, 1999) describe que, cuando el tiempo se percibe acotado, la gente prioriza a las personas cercanas por sobre lo nuevo."
     },
     "section3": {
-      "title": "No es para asustar, es para actuar",
-      "text": "El objetivo no es generar angustia, sino hacer explícita una realidad que normalmente permanece abstracta. Con esa información, puedes decidir mejor."
+      "title": "Un número para decidir",
+      "text": "El resultado no busca asustar. Sirve para ver algo que suele quedar en abstracto y decidir con eso, por ejemplo llamar hoy o mover una visita que se venía postergando."
     }
   },
   "footer": {
@@ -418,7 +478,7 @@
       "item2": "Después de esa edad, la frecuencia de encuentros disminuye dramáticamente",
       "item3": "El patrón es similar para abuelos, con concentración aún más temprana",
       "conclusion": "Esto significa que <strong>la mayoría del tiempo ya se consumió</strong>, incluso cuando ambos siguen vivos.",
-      "whyNotImplemented": "<strong>¿Por qué no mostramos este dato?</strong> Decidimos no incluir el porcentaje de \u201ctiempo ya pasado\u201d en la calculadora porque el objetivo de esta herramienta es <strong>motivar acción hacia el futuro</strong>, no generar culpa sobre el pasado. Mostrar que \u201cya pasaste el 85% del tiempo con tu madre\u201d puede provocar desesperanza o resignación, contradiciendo el propósito de la herramienta. Además, estos datos provienen de encuestas estadounidenses que pueden no reflejar la realidad de otras culturas donde la convivencia familiar es diferente.",
+      "whyNotImplemented": "<strong>¿Por qué no mostramos este dato?</strong> Decidimos no incluir el porcentaje de “tiempo ya pasado” en la calculadora porque el objetivo de esta herramienta es <strong>motivar acción hacia el futuro</strong>, no generar culpa sobre el pasado. Mostrar que “ya pasaste el 85% del tiempo con tu madre” puede provocar desesperanza o resignación, contradiciendo el propósito de la herramienta. Además, estos datos provienen de encuestas estadounidenses que pueden no reflejar la realidad de otras culturas donde la convivencia familiar es diferente.",
       "viewData": "→ Ver datos de uso del tiempo"
     },
     "mathModel": {
@@ -493,15 +553,15 @@
     "sections": {
       "purpose": {
         "title": "Por qué existe esta herramienta",
-        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos \u201ctiempo despu\u00e9s\u201d para ver a las personas importantes en nuestras vidas.",
+        "p1": "What's Left Together nació de una reflexión personal: muchas veces damos por sentado que tendremos “tiempo después” para ver a las personas importantes en nuestras vidas.",
         "p2": "La distancia física, las obligaciones laborales, y la inercia del día a día hacen que posterguemos visitas, llamadas, o simplemente estar presentes. Asumimos que siempre habrá una próxima vez.",
         "p3": "Esta herramienta no pretende asustar, sino hacer explícito algo que normalmente permanece abstracto: si seguimos viviendo como hasta ahora, con la misma frecuencia de encuentros, ¿cuántas veces más nos veremos realmente?"
       },
       "inspiration": {
         "title": "Inspiración",
-        "p1": "Este proyecto está inspirado en el art\u00edculo \u201cThe Tail End\u201d de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
+        "p1": "Este proyecto está inspirado en el artículo “The Tail End” de Tim Urban (Wait But Why, 2015), que visualiza el tiempo restante con seres queridos de una forma visceral y memorable.",
         "p2": "A diferencia de ese artículo, que usa estimaciones genéricas, esta herramienta incorpora datos demográficos oficiales por edad, país y sexo, para hacer la estimación más precisa y personalizada.",
-        "linkText": "\u201cThe Tail End\u201d"
+        "linkText": "“The Tail End”"
       },
       "audience": {
         "title": "Para quién es esta herramienta",
@@ -511,7 +571,7 @@
         },
         "card2": {
           "title": "Quienes priorizan carrera o metas personales",
-          "text": "Si estás enfocado en tu desarrollo profesional o proyectos personales y sientes que \u201cdespu\u00e9s habr\u00e1 tiempo\u201d para visitas familiares."
+          "text": "Si estás enfocado en tu desarrollo profesional o proyectos personales y sientes que “después habrá tiempo” para visitas familiares."
         },
         "card3": {
           "title": "Personas en relaciones a distancia",
@@ -607,38 +667,38 @@
       "other": "Otro"
     },
     "messageLabel": "Tu mensaje",
-    "messagePlaceholder": "Describe tu sugerencia, problema o comentario\u2026",
+    "messagePlaceholder": "Describe tu sugerencia, problema o comentario…",
     "emailLabel": "Correo electrónico",
     "optional": "opcional",
     "emailPlaceholder": "tu@email.com",
     "emailNote": "Solo si quieres que te contactemos sobre tu comentario.",
     "send": "Enviar",
-    "sending": "Enviando\u2026",
+    "sending": "Enviando…",
     "successTitle": "¡Gracias!",
     "successMessage": "Tu comentario ha sido recibido. Lo revisaremos pronto.",
     "required": "requerido",
     "messagePlaceholders": {
-      "suggestion": "Cu\u00e9ntanos tu idea o qu\u00e9 mejorar\u00edas de la herramienta\u2026",
+      "suggestion": "Cuéntanos tu idea o qué mejorarías de la herramienta…",
       "bug": "Describe el problema que encontraste. ¿Cuándo ocurre? ¿Qué estabas haciendo?",
-      "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario\u2026"
+      "other": "Comparte tus pensamientos, preguntas o cualquier otro comentario…"
     }
   },
   "validation": {
     "summaryTitle": "Por favor corrige lo siguiente:",
     "ageRequired": "Indica la edad",
-    "ageInvalid": "La edad debe ser un n\u00famero",
-    "ageInteger": "La edad debe ser un n\u00famero entero",
+    "ageInvalid": "La edad debe ser un número",
+    "ageInteger": "La edad debe ser un número entero",
     "ageMin": "La edad no puede ser negativa",
-    "ageMax": "La edad no puede superar los {max} a\u00f1os",
-    "sexRequired": "Selecciona el sexo biol\u00f3gico",
-    "sexInvalid": "Selecciona una opci\u00f3n v\u00e1lida",
-    "countryRequired": "Selecciona un pa\u00eds",
-    "countryInvalid": "Selecciona un pa\u00eds v\u00e1lido",
-    "relationRequired": "Selecciona el tipo de relaci\u00f3n",
-    "relationInvalid": "Selecciona una opci\u00f3n v\u00e1lida",
+    "ageMax": "La edad no puede superar los {max} años",
+    "sexRequired": "Selecciona el sexo biológico",
+    "sexInvalid": "Selecciona una opción válida",
+    "countryRequired": "Selecciona un país",
+    "countryInvalid": "Selecciona un país válido",
+    "relationRequired": "Selecciona el tipo de relación",
+    "relationInvalid": "Selecciona una opción válida",
     "visitsMin": "La frecuencia no puede ser negativa",
-    "visitsMax": "No puede superar las {max} visitas al a\u00f1o",
-    "timesMin": "Indica cu\u00e1ntas veces se ven (al menos 1)",
-    "olderThanYou": "Para madre, padre o abuelos, la otra persona debe ser mayor que t\u00fa"
+    "visitsMax": "No puede superar las {max} visitas al año",
+    "timesMin": "Indica cuántas veces se ven (al menos 1)",
+    "olderThanYou": "Para madre, padre o abuelos, la otra persona debe ser mayor que tú"
   }
 }

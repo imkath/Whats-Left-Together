@@ -1,79 +1,44 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { AltArrowDown } from '@solar-icons/react';
+import { useTranslations, useLocale } from 'next-intl';
+import Link from 'next/link';
 
+/**
+ * Intro column that sits beside the calculator. The wordmark is the title, so
+ * nothing competes with it: one sentence, one honest note, one link.
+ */
 export default function Hero() {
   const t = useTranslations('hero');
+  const locale = useLocale();
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-neutral-900 dark:bg-neutral-950 light-hero">
-      {/* Animated dot pattern background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        {/* Radial gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] light-hero-gradient" />
-
-        {/* Subtle dot-grid substrate (a faint nod to the pixel/encounter unit).
-            The logo carries its own dissolution, so no floating particles collide with it. */}
-        <div
-          className="absolute inset-0 opacity-[0.12] dark:opacity-[0.12] light-hero-dots"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #ECE6DB 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
-          }}
+    <div className="lg:pt-10">
+      <h1 className="sr-only">{t('title')}</h1>
+      <picture>
+        <source srcSet="/logo-wslt.webp" type="image/webp" />
+        <img
+          src="/logo-wslt.png"
+          alt="What's Left Together"
+          width={2445}
+          height={293}
+          className="w-full max-w-[34rem] h-auto dark:invert"
+          fetchPriority="high"
         />
-      </div>
+      </picture>
 
-      <div className="relative z-10 container-custom text-center px-4">
-        {/* Small label */}
-        <div className="animate-fade-in">
-          <span className="inline-block text-accent-600 dark:text-accent-400/80 text-xs tracking-[0.3em] uppercase font-medium mb-8">
-            {t('label')}
-          </span>
-        </div>
+      <p className="mt-8 text-xl md:text-2xl leading-snug text-neutral-900 dark:text-neutral-100 max-w-[30rem]">
+        {t('subtitle')}
+      </p>
 
-        {/* Main title */}
-        <h1 className="sr-only">{t('title')}</h1>
-        <picture className="animate-fade-in">
-          <source srcSet="/logo-wslt.webp" type="image/webp" />
-          <img
-            src="/logo-wslt.png"
-            alt="What's Left Together"
-            width={800}
-            height={80}
-            className="w-full max-w-2xl mx-auto h-auto mb-8 dark:invert hover:opacity-90 transition-opacity duration-300"
-            fetchPriority="high"
-          />
-        </picture>
-
-        {/* Emotional subtitle */}
-        <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto mb-4 leading-relaxed animate-slide-up font-light">
-          {t('subtitle')}
-        </p>
-
-        {/* Divider */}
-        <div className="w-16 h-px bg-presence/60 mx-auto my-8 animate-fade-in" />
-
-        {/* Below text */}
-        <p className="text-sm text-neutral-400 dark:text-neutral-500 max-w-lg mx-auto mb-12 leading-relaxed animate-slide-up italic">
-          {t('belowButton')}
-        </p>
-
-        {/* CTA Button */}
-        <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          <a
-            href="#calculator"
-            className="inline-flex items-center gap-3 px-6 py-3.5 md:px-8 md:py-4 bg-neutral-900 text-neutral-50 hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 font-semibold rounded-full transition-colors duration-150 shadow-md hover:shadow-lg active:scale-[0.98] text-base md:text-lg group whitespace-nowrap"
-          >
-            {t('cta')}
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
-        <AltArrowDown size={24} className="text-neutral-400 dark:text-neutral-500" />
-      </div>
-    </section>
+      <p className="mt-5 text-sm text-neutral-500 dark:text-neutral-400 max-w-[28rem]">
+        {t('note')}{' '}
+        <Link
+          href={`/${locale}/methodology`}
+          className="text-neutral-900 dark:text-neutral-100 underline underline-offset-4 decoration-neutral-300 hover:decoration-neutral-900 dark:decoration-neutral-600 dark:hover:decoration-neutral-100"
+        >
+          {t('howLink')}
+        </Link>
+      </p>
+    </div>
   );
 }

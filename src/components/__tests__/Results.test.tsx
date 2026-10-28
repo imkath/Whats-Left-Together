@@ -138,6 +138,12 @@ jest.mock('next-intl', () => ({
       'assumptions.point4': 'No tiene en cuenta eventos imprevistos.',
       'assumptions.dataFreshness': 'Datos actualizados con las últimas tablas de vida disponibles.',
       seeMethodology: 'Ver cómo funciona',
+      // Redesigned result (results.v2; bare keys, the mock ignores the namespace)
+      timesWith: `veces más con ${params?.person}`,
+      range: `Lo más probable es que sean entre ${params?.min} y ${params?.max}.`,
+      years: `Unos ${params?.yearsMin} a ${params?.yearsMax} años.`,
+      source: `Fuente: ${params?.source}, estimaciones de ${params?.year}.`,
+      gridAxis: `El año y la edad de ${params?.person}.`,
     };
     return translations[key] || key;
   },

@@ -48,11 +48,11 @@ export default function AgeField({
     setByYear((v) => !v);
   };
 
-  const errClass = invalid ? 'border-neutral-800 dark:border-neutral-200' : '';
+  const errClass = invalid ? 'border-neutral-900 dark:border-neutral-100 border-2' : '';
 
   return (
     <div>
-      <label htmlFor={id} className="block text-xs text-neutral-500 dark:text-neutral-400 mb-1.5">
+      <label htmlFor={id} className="field-label">
         {byYear ? yearLabel : ageLabel}
       </label>
       {byYear ? (
@@ -88,7 +88,7 @@ export default function AgeField({
       <button
         type="button"
         onClick={toggle}
-        className="mt-1.5 text-xs text-neutral-500 dark:text-neutral-400 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-presence rounded-sm"
+        className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 underline underline-offset-4 rounded-sm"
       >
         {byYear ? useAgeLabel : useBirthYearLabel}
       </button>

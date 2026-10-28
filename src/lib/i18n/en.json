@@ -23,9 +23,11 @@
   "hero": {
     "title": "What's Left Together",
     "label": "Statistical reflection tool",
-    "subtitle": "A statistical mirror of how many times you might still see the people you love, if you keep living the way you do now.",
+    "subtitle": "How many more times you might see someone you love in person, if things stay as they are.",
     "belowButton": "Based on official life tables by age and country. It is not a prediction. It is a wake-up call.",
-    "cta": "Calculate your remaining visits"
+    "cta": "Start",
+    "note": "Built on UN life tables for 197 countries. It is a population average and knows nothing about anyone's actual health.",
+    "howLink": "How it's calculated"
   },
   "calculator": {
     "title": "How many more times will you see each other?",
@@ -36,14 +38,18 @@
     "theirAge": "How old are they?",
     "theirSex": "Biological sex",
     "relationship": "What's your relationship?",
-    "frequency": "How many times you see each other in person per year, on average",
+    "frequency": "How often do you meet?",
     "frequencyNote": "Includes visits, trips, weekends together, but not video calls.",
     "age": "How old are you?",
     "sex": "Biological sex",
-    "country": "Where do you live?",
+    "country": {
+      "using": "Life tables for {country} will be used.",
+      "current": "selected",
+      "noMatch": "No country matches “{query}”. Try another spelling.",
+      "rejected": "“{query}” isn't on the list, so {country} stays selected."
+    },
     "theirCountry": "Where do they live?",
     "visitsPerYear": "visits per year",
-    "frequency": "How often do you meet?",
     "frequencyPeriodLabel": "How often do you see each other in person?",
     "timesPerPeriodLabel": "How many times?",
     "timesPerPeriodNote": "Maximum {max} times {period}",
@@ -129,7 +135,16 @@
       "orExact": "Or enter an exact number",
       "freqExclude": "Count in-person meetings: visits, trips, weekends together. Not video calls.",
       "summaryNamed": "You'll see {name} about {visits} times a year",
-      "summaryGeneric": "About {visits} times a year"
+      "summaryGeneric": "About {visits} times a year",
+      "stepNames": {
+        "1": "Who",
+        "2": "Their age",
+        "3": "You",
+        "4": "Frequency"
+      },
+      "relationQ": "Who is it?",
+      "summaryThem": "{age} years old · {country}",
+      "keepGoing": "You can change any answer later."
     },
     "relShort": {
       "mother": "mother",
@@ -143,6 +158,16 @@
       "friend_male": "friend",
       "other_family": "family member",
       "other": "loved one"
+    },
+    "relationChoices": {
+      "mother": "Mom",
+      "father": "Dad",
+      "grandmother_maternal": "Grandmother",
+      "grandfather_maternal": "Grandfather",
+      "partner": "Partner",
+      "friend": "Friend",
+      "other_family": "Other relative",
+      "other": "Someone else"
     }
   },
   "results": {
@@ -249,7 +274,7 @@
       "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
       "networkError": "Connection error. Check your internet connection and try again.",
       "calculationError": "Calculation error. Please verify the entered data.",
-      "calculating": "Calculating\u2026",
+      "calculating": "Calculating…",
       "boundaryTitle": "Something went wrong",
       "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
       "boundaryReload": "Reload page"
@@ -259,12 +284,47 @@
       "now": "Now",
       "futureYears": "Future years",
       "plusYears": "+{years} years",
-      "bothAlive": "Both alive",
-      "youAlive": "You alive",
-      "themAlive": "Them alive",
+      "bothAlive": "Both",
+      "youAlive": "You",
+      "themAlive": "The other person",
       "intro": "This chart shows how that probability changes over time — for you, for them, and for both of you at the same time.",
       "title": "Survival probability year by year",
       "description": "This chart shows the probability of both being alive each future year, based on life tables from {source}."
+    },
+    "v2": {
+      "lead": "If nothing changes",
+      "timesWith": "more times with {person}",
+      "range": "Most likely somewhere between {min} and {max}.",
+      "years": "That is about {yearsMin} to {yearsMax} years with both of you alive, seeing each other {visits} times a year.",
+      "gridTitle": "Year by year",
+      "gridCaption": "Each square is a possible visit. The ones that fade out are the visits that, on average, would not happen because one of you is gone.",
+      "gridUnit": "Each square stands for {n} visits.",
+      "gridMore": "And {count} more years at low probability.",
+      "gridAria": "{years} years starting in {from}. The chance that both of you are alive drops from {start}% to {end}%.",
+      "whatIfTitle": "The part that is up to you",
+      "whatIfIntro": "Age can't be changed. How often you meet can.",
+      "whatIfPerYear": "{n} a year",
+      "whatIfNow": "now",
+      "whatIfTimes": "{count} times",
+      "freq": {
+        "yearly3": "A few times a year",
+        "monthly": "Once a month",
+        "biweekly": "Twice a month",
+        "weekly": "Every week"
+      },
+      "share": "Share",
+      "shareText": "I worked out how many more times I'll see someone I love. Try it yourself:",
+      "copied": "Link copied",
+      "edit": "Change answers",
+      "another": "Try another person",
+      "survivalTitle": "Chance that both of you are alive",
+      "survivalIn5": "{percent}% five years from now",
+      "caveatsTitle": "What this calculates and what it doesn't",
+      "source": "Source: {source}, {year} estimates.",
+      "nextRevision": "This is the UN's latest revision. The next one is due on 11 July 2027 and the tool will be updated then.",
+      "legendOn": "A visit that, on average, still happens",
+      "legendOff": "A visit that is lost",
+      "gridAxis": "On the left, the year and the age {person} would be."
     }
   },
   "methodology": {
@@ -297,20 +357,20 @@
     }
   },
   "why": {
-    "title": "Why It Matters",
-    "intro": "When we perceive time as limited, we prioritize what truly matters.",
+    "title": "Why count visits",
+    "intro": "Years together sounds like a lot. Counting visits makes it concrete.",
     "seeMethodology": "See full methodology",
     "section1": {
-      "title": "Time passes without us noticing",
-      "text": "Data from the American Time Use Survey shows that most time with parents is concentrated before age 20. After that, frequency drops dramatically."
+      "title": "Time together peaks early",
+      "text": "According to the American Time Use Survey, most of the time we spend with our parents happens before we turn 20. After that it drops sharply, and we rarely notice."
     },
     "section2": {
-      "title": "Socioemotional Selectivity Theory",
-      "text": "When we perceive that time is limited, we prioritize close relationships and emotional goals over exploration. (Carstensen, 1999)"
+      "title": "Knowing it's limited shifts priorities",
+      "text": "Socioemotional selectivity theory (Carstensen, 1999) describes how people put close relationships ahead of novelty when time feels limited."
     },
     "section3": {
-      "title": "Not to scare, but to act",
-      "text": "The goal isn't to create anxiety, but to make explicit a reality that usually remains abstract. With that information, you can decide better."
+      "title": "A number to decide with",
+      "text": "The result isn't meant to scare. It makes something abstract visible so you can act on it, like calling today or booking the visit you keep putting off."
     }
   },
   "footer": {
@@ -355,7 +415,7 @@
     "ageExceedsThem": "Life tables only include data up to age 100 for the person you want to see. Data beyond that age is not available in our source.",
     "networkError": "Connection error. Check your internet connection and try again.",
     "calculationError": "Calculation error. Please verify the entered data.",
-    "calculating": "Calculating\u2026",
+    "calculating": "Calculating…",
     "boundaryTitle": "Something went wrong",
     "boundaryMessage": "An unexpected error occurred. Please reload the page and try again.",
     "boundaryReload": "Reload page"
@@ -436,7 +496,7 @@
       "item2": "After that age, frequency of encounters drops dramatically",
       "item3": "The pattern is similar for grandparents, with even earlier concentration",
       "conclusion": "This means that <strong>most of the time has already been spent</strong>, even when both are still alive.",
-      "whyNotImplemented": "<strong>Why don't we show this data?</strong> We decided not to include the \u201ctime already spent\u201d percentage in the calculator because the goal of this tool is to <strong>motivate action toward the future</strong>, not generate guilt about the past. Showing that \u201cyou\u2019ve already spent 85% of your time with your mother\u201d can provoke hopelessness or resignation, contradicting the tool's purpose. Additionally, this data comes from American surveys that may not reflect the reality of other cultures where family coexistence patterns differ.",
+      "whyNotImplemented": "<strong>Why don't we show this data?</strong> We decided not to include the “time already spent” percentage in the calculator because the goal of this tool is to <strong>motivate action toward the future</strong>, not generate guilt about the past. Showing that “you’ve already spent 85% of your time with your mother” can provoke hopelessness or resignation, contradicting the tool's purpose. Additionally, this data comes from American surveys that may not reflect the reality of other cultures where family coexistence patterns differ.",
       "viewData": "View time use data"
     },
     "mathModel": {
@@ -511,15 +571,15 @@
     "sections": {
       "purpose": {
         "title": "Why this tool exists",
-        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we\u2019ll have \u201ctime later\u201d to see the important people in our lives.",
+        "p1": "What's Left Together was born from a personal reflection: we often take for granted that we’ll have “time later” to see the important people in our lives.",
         "p2": "Physical distance, work obligations, and the inertia of daily life make us postpone visits, calls, or simply being present. We assume there will always be a next time.",
         "p3": "This tool doesn't aim to scare, but to make explicit something that normally remains abstract: if we keep living as we do now, with the same frequency of encounters, how many more times will we actually see each other?"
       },
       "inspiration": {
         "title": "Inspiration",
-        "p1": "This project is inspired by Tim Urban\u2019s article \u201cThe Tail End\u201d (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
+        "p1": "This project is inspired by Tim Urban’s article “The Tail End” (Wait But Why, 2015), which visualizes the time remaining with loved ones in a visceral and memorable way.",
         "p2": "Unlike that article, which uses generic estimates, this tool incorporates official demographic data by age, country, and sex, to make the estimate more precise and personalized.",
-        "linkText": "\u201cThe Tail End\u201d"
+        "linkText": "“The Tail End”"
       },
       "audience": {
         "title": "Who this tool is for",
@@ -529,7 +589,7 @@
         },
         "card2": {
           "title": "Those prioritizing career or personal goals",
-          "text": "If you're focused on professional development or personal projects and feel that \u201cthere will be time later\u201d for family visits."
+          "text": "If you're focused on professional development or personal projects and feel that “there will be time later” for family visits."
         },
         "card3": {
           "title": "People in long-distance relationships",
@@ -625,20 +685,20 @@
       "other": "Other"
     },
     "messageLabel": "Your message",
-    "messagePlaceholder": "Describe your suggestion, issue, or feedback\u2026",
+    "messagePlaceholder": "Describe your suggestion, issue, or feedback…",
     "emailLabel": "Email",
     "optional": "optional",
     "emailPlaceholder": "your@email.com",
     "emailNote": "Only if you want us to contact you about your feedback.",
     "send": "Send",
-    "sending": "Sending\u2026",
+    "sending": "Sending…",
     "successTitle": "Thank you!",
     "successMessage": "Your feedback has been received. We'll review it soon.",
     "required": "required",
     "messagePlaceholders": {
-      "suggestion": "Tell us your idea or what could be improved in the tool\u2026",
+      "suggestion": "Tell us your idea or what could be improved in the tool…",
       "bug": "Describe the problem you encountered. When does it happen? What were you doing?",
-      "other": "Share your thoughts, questions, or any other feedback\u2026"
+      "other": "Share your thoughts, questions, or any other feedback…"
     }
   },
   "validation": {

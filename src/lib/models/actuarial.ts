@@ -217,7 +217,7 @@ export function calculateExpectedEncounters(
       youLifeExpectancy,
       themLifeExpectancy,
       dataSource: 'UN World Population Prospects 2024',
-      dataYear: 2024,
+      dataYear: 2023,
     },
   };
 }

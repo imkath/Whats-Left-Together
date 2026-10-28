@@ -60,9 +60,9 @@ export default function Nav() {
   return (
     <nav
       aria-label="Site navigation"
-      className="sticky top-0 z-40 bg-neutral-50/80 dark:bg-neutral-900/80 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-800/60"
+      className="sticky top-0 z-40 bg-neutral-50/95 dark:bg-neutral-900/95 backdrop-blur border-b border-neutral-200 dark:border-neutral-800"
     >
-      <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12">
         {/* Logo */}
         <Link
           href={`/${locale}`}
@@ -118,7 +118,7 @@ export default function Nav() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative text-sm font-medium transition-colors duration-150 pb-1 focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 rounded-sm outline-none whitespace-nowrap ${
+                  className={`relative text-sm font-medium transition-colors duration-150 pb-1 whitespace-nowrap ${
                     active
                       ? 'text-neutral-900 dark:text-white'
                       : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200'
@@ -126,7 +126,7 @@ export default function Nav() {
                 >
                   {link.label}
                   {active && (
-                    <span className="absolute left-0 right-0 -bottom-[7px] h-0.5 bg-neutral-900 dark:bg-white rounded-full" />
+                    <span className="absolute left-0 right-0 -bottom-[7px] h-px bg-neutral-900 dark:bg-white" />
                   )}
                 </Link>
               </li>
@@ -146,7 +146,7 @@ export default function Nav() {
           <LanguageSwitcher />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors focus-visible:ring-2 focus-visible:ring-accent-500 outline-none"
+            className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors "
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
           >
@@ -187,7 +187,7 @@ export default function Nav() {
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm font-medium transition-colors duration-150 ${
                       active
-                        ? 'text-presence bg-presence/10'
+                        ? 'text-neutral-900 dark:text-neutral-50 bg-neutral-100 dark:bg-neutral-800'
                         : 'text-neutral-600 dark:text-neutral-400 active:bg-neutral-100 dark:active:bg-neutral-800'
                     }`}
                   >
@@ -195,7 +195,9 @@ export default function Nav() {
                       size={16}
                       weight={active ? 'Bold' : 'Linear'}
                       className={
-                        active ? 'text-presence' : 'text-neutral-400 dark:text-neutral-500'
+                        active
+                          ? 'text-neutral-900 dark:text-neutral-50'
+                          : 'text-neutral-400 dark:text-neutral-500'
                       }
                     />
                     {link.label}
