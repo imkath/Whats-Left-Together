@@ -78,7 +78,7 @@ export async function generateMetadata({
       description: seo.ogDescription,
       images: [
         {
-          url: `${SITE_URL}/og-image.png`,
+          url: `${SITE_URL}/og-image-${locale === 'en' ? 'en' : 'es'}.png`,
           width: 1200,
           height: 630,
           alt: seo.ogTitle,
@@ -89,7 +89,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: seo.twitterTitle,
       description: seo.twitterDescription,
-      images: [`${SITE_URL}/og-image.png`],
+      images: [`${SITE_URL}/og-image-${locale === 'en' ? 'en' : 'es'}.png`],
     },
     robots: {
       index: true,
@@ -157,7 +157,7 @@ export default async function LocaleLayout({
       },
       inLanguage: locale === 'es' ? 'es-ES' : 'en-US',
       isAccessibleForFree: true,
-      screenshot: `${SITE_URL}/og-image.png`,
+      screenshot: `${SITE_URL}/og-image-${locale === 'en' ? 'en' : 'es'}.png`,
       featureList:
         locale === 'es'
           ? [

@@ -7,7 +7,7 @@ How search engines and AI crawlers see the site, and where each piece lives.
 `src/app/[locale]/layout.tsx` builds the metadata per locale from the `seo` object in `src/lib/i18n/es.json` and `en.json`: title, description, keywords, Open Graph and the Twitter card. The About and Methodology pages have their own `seo` objects in the same files.
 
 - Canonical URL per locale, with `hreflang` alternates for `es` and `en`.
-- Share image: `public/og-image.png` (1200 x 630).
+- Share images: `public/og-image-es.png` and `public/og-image-en.png` (1200 x 630), one per locale, with the logo, the question the tool answers and the visit grid.
 - Search Console verification comes from `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`. Bing uses `public/BingSiteAuth.xml`.
 
 ## Structured data
